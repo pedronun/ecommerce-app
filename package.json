@@ -12,10 +12,11 @@
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "type-check": "tsc --noEmit",
-    "validate": "yarn type-check && yarn lint && yarn format:check"
+    "validate": "yarn type-check && yarn lint && yarn format:check",
+    "prepare": "husky"
   },
   "engines": {
-    "node": ">=20.19.4",
+    "node": ">=23.8.0",
     "npm": ">=10.0.0",
     "yarn": ">=1.22.0"
   },
@@ -38,8 +39,19 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-native": "^5.0.0",
     "globals": "^16.5.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "prettier": "^3.7.4",
     "typescript": "~5.9.2"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
   },
   "private": true
 }
