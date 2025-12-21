@@ -16,7 +16,7 @@
     "prepare": "husky"
   },
   "engines": {
-    "node": ">=23.8.0",
+    "node": ">=20.19.4",
     "npm": ">=10.0.0",
     "yarn": ">=1.22.0"
   },
@@ -25,8 +25,8 @@
     "expo-status-bar": "~3.0.9",
     "react": "19.1.0",
     "react-native": "0.81.5",
-    "react-native-gesture-handler": "^2.30.0",
-    "react-native-reanimated": "^4.2.1"
+    "react-native-gesture-handler": "~2.28.0",
+    "react-native-reanimated": "~4.1.1"
   },
   "devDependencies": {
     "@types/react": "~19.1.0",
