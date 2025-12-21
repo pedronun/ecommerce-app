@@ -1,22 +1,6 @@
 import { ViewStyle, TextStyle } from 'react-native';
 import { ButtonVariant, ButtonSize } from './Button.types';
-
-interface Theme {
-  colors: {
-    primary: string;
-    secondary: string;
-    error: string;
-  };
-  spacing: Record<number, number>;
-  radius: {
-    md: number;
-  };
-  typography: {
-    fontSize: Record<string, number>;
-    fontWeight: Record<string, string | number>;
-    lineHeight: Record<string, number>;
-  };
-}
+import { Theme } from '@design-system/theme/theme';
 
 export const getSizeStyles = (size: ButtonSize, theme: Theme): ViewStyle => {
   const sizes: Record<ButtonSize, ViewStyle> = {

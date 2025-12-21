@@ -1,24 +1,5 @@
 import { ViewStyle, TextStyle } from 'react-native';
-
-interface Theme {
-  colors: {
-    text: {
-      primary: string;
-      secondary: string;
-      disabled: string;
-      hint: string;
-    };
-    error: string;
-    border: string;
-    background: string;
-    primary: string;
-  };
-  spacing: Record<number, number>;
-  radius: { md: number };
-  typography: {
-    fontSize: Record<string, number>;
-  };
-}
+import { Theme } from '@design-system/theme/theme';
 
 export const getContainerStyles = (theme: Theme): ViewStyle => ({
   marginBottom: theme.spacing[4],

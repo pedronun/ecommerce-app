@@ -1,17 +1,6 @@
 import { ViewStyle } from 'react-native';
 import { SkeletonVariant } from './Skeleton.types';
-
-interface Theme {
-  colors: {
-    border: string;
-  };
-  radius: {
-    full: number;
-    lg: number;
-    md: number;
-  };
-  spacing: Record<number, number>;
-}
+import { Theme } from '@design-system/theme/theme';
 
 export const getVariantStyles = (variant: SkeletonVariant, theme: Theme): ViewStyle => {
   const variants: Record<SkeletonVariant, ViewStyle> = {

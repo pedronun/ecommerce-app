@@ -1,13 +1,6 @@
 import { StyleSheet, ViewStyle } from 'react-native';
 import { BottomSheetSnapPoint } from './BottomSheet.types';
-
-interface Theme {
-  colors: {
-    surface: string;
-  };
-  radius: { xl: number };
-  spacing: Record<number, number>;
-}
+import { Theme } from '@design-system/theme/theme';
 
 export const BACKDROP_COLOR = 'rgba(0, 0, 0, 0.5)';
 export const HANDLE_COLOR = '#CCCCCC';

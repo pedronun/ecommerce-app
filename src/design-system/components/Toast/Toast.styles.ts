@@ -1,5 +1,6 @@
 import { StyleSheet, Platform } from 'react-native';
 import { ToastType } from './Toast.types';
+import { Theme } from '@design-system/theme/theme';
 
 export const TOAST_HEIGHT = 80;
 export const TOP_OFFSET = Platform.OS === 'ios' ? 50 : 20;
@@ -34,15 +35,6 @@ export const styles = StyleSheet.create({
     marginLeft: 12,
   },
 });
-
-interface Theme {
-  colors: {
-    success: string;
-    error: string;
-    warning: string;
-    info: string;
-  };
-}
 
 export const getToastBackgroundColor = (type: ToastType, theme: Theme): string => {
   const colors: Record<ToastType, string> = {

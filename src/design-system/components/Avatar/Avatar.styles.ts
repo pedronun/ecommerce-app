@@ -1,15 +1,6 @@
 import { ViewStyle, TextStyle, ImageStyle } from 'react-native';
 import { AvatarSize } from './Avatar.types';
-
-interface Theme {
-  colors: {
-    primary: string;
-  };
-  typography: {
-    fontWeight: { semibold: string };
-  };
-  radius: { full: number };
-}
+import { Theme } from '@design-system/theme/theme';
 
 export const getSizeStyles = (size: AvatarSize): ViewStyle => {
   const sizes: Record<AvatarSize, ViewStyle> = {

@@ -1,16 +1,6 @@
 import { ViewStyle } from 'react-native';
 import { CardVariant } from './Card.types';
-
-interface Theme {
-  colors: {
-    surface: string;
-    border: string;
-    background: string;
-  };
-  spacing: Record<number, number>;
-  radius: { lg: number };
-  shadows: { md: ViewStyle };
-}
+import { Theme } from '@design-system/theme/theme';
 
 export const getVariantStyles = (variant: CardVariant, theme: Theme): ViewStyle => {
   const variants: Record<CardVariant, ViewStyle> = {

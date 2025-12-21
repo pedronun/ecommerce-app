@@ -1,26 +1,6 @@
 import { ViewStyle, TextStyle } from 'react-native';
 import { ChipVariant } from './Chip.types';
-
-interface Theme {
-  colors: {
-    primary: string;
-    success: string;
-    error: string;
-    border: string;
-    text: {
-      primary: string;
-      secondary: string;
-      disabled: string;
-      hint: string;
-    };
-  };
-  spacing: Record<number, number>;
-  radius: { full: number };
-  typography: {
-    fontSize: Record<string, number>;
-    fontWeight: Record<string, string>;
-  };
-}
+import { Theme } from '@design-system/theme/theme';
 
 export const getVariantStyles = (
   variant: ChipVariant,

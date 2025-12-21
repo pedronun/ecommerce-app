@@ -1,22 +1,6 @@
 import { ViewStyle, TextStyle } from 'react-native';
 import { BadgeVariant, BadgeSize } from './Badge.types';
-
-interface Theme {
-  colors: {
-    primary: string;
-    secondary: string;
-    success: string;
-    error: string;
-    warning: string;
-    info: string;
-  };
-  spacing: Record<number, number>;
-  radius: { full: number };
-  typography: {
-    fontWeight: { semibold: string };
-    fontSize: Record<string, number>;
-  };
-}
+import { Theme } from '@design-system/theme/theme';
 
 export const getSizeStyles = (size: BadgeSize, theme: Theme, dot: boolean): ViewStyle => {
   if (dot) {
