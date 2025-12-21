@@ -55,6 +55,7 @@ git commit -m "feat(button): adiciona nova prop variant"
 Um hook de git pre-commit foi configurado para verificar automaticamente.
 
 Se você tentar fazer commit sem atualizar a documentação:
+
 ```
 ❌ ERRO: Mudanças detectadas no Design System!
 📝 Você modificou arquivos do Design System mas não atualizou a documentação.
@@ -63,6 +64,7 @@ Se você tentar fazer commit sem atualizar a documentação:
 ### 💡 Dica
 
 **Configure o hook para ativar:**
+
 ```bash
 # Dê permissão de execução ao hook
 chmod +x .husky/pre-commit
@@ -75,4 +77,3 @@ npx husky install
 ---
 
 **Esta regra é inegociável e existe para manter a qualidade do projeto.**
-

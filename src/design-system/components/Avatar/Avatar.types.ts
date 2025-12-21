@@ -8,4 +8,3 @@ export interface AvatarProps extends ViewProps {
   name?: string;
   backgroundColor?: string;
 }
-

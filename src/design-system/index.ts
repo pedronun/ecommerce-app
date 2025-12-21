@@ -13,4 +13,3 @@ export type { Theme } from './theme/theme';
 
 // Componentes
 export * from './components';
-

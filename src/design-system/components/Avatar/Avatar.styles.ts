@@ -43,4 +43,3 @@ export const getImageStyles = (): ImageStyle => ({
   width: '100%',
   height: '100%',
 });
-

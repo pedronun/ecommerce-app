@@ -48,7 +48,7 @@ export const Input: React.FC<InputProps> = ({
 
         <TextInput
           style={[getInputFieldStyles(theme), inputStyle]}
-          placeholderTextColor={`${theme.colors.text  }60`}
+          placeholderTextColor={`${theme.colors.text.secondary}60`}
           onFocus={(e) => {
             setIsFocused(true);
             onFocus?.(e);

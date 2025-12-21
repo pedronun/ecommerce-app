@@ -1,16 +1,7 @@
-/**
- * Componente Divider
- * Linha divisória horizontal ou vertical
- */
-
 import React from 'react';
-import { View, ViewProps, ViewStyle } from 'react-native';
+import { View, ViewStyle } from 'react-native';
 import { useTheme } from '../../theme/ThemeContext';
-
-export interface DividerProps extends ViewProps {
-  orientation?: 'horizontal' | 'vertical';
-  size?: number;
-}
+import { DividerProps } from './Divider.types';
 
 export const Divider: React.FC<DividerProps> = ({
   orientation = 'horizontal',
@@ -29,4 +20,3 @@ export const Divider: React.FC<DividerProps> = ({
 
   return <View style={[dividerStyle, style]} {...props} />;
 };
-

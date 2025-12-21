@@ -102,4 +102,3 @@ export const colors = {
 } as const;
 
 export type ColorToken = typeof colors;
-

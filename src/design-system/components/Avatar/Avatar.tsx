@@ -7,7 +7,12 @@ import React from 'react';
 import { View, Image, Text } from 'react-native';
 import { useTheme } from '../../theme/ThemeContext';
 import { AvatarProps } from './Avatar.types';
-import { getSizeStyles, getContainerStyles, getTextSizeStyles, getImageStyles } from './Avatar.styles';
+import {
+  getSizeStyles,
+  getContainerStyles,
+  getTextSizeStyles,
+  getImageStyles,
+} from './Avatar.styles';
 
 const getInitials = (name: string): string => {
   const names = name.trim().split(' ');

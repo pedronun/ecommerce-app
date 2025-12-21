@@ -100,4 +100,3 @@ export const darkTheme: Theme = {
   radius,
   shadows,
 };
-

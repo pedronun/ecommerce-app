@@ -3,16 +3,19 @@
 ## 📦 Pacotes Instalados
 
 ### ESLint
+
 - `eslint` - Linter principal
 - `@typescript-eslint/eslint-plugin` - Regras TypeScript
 - `@typescript-eslint/parser` - Parser TypeScript
 
 ### React/React Native
+
 - `eslint-plugin-react` - Regras React
 - `eslint-plugin-react-hooks` - Regras Hooks
 - `eslint-plugin-react-native` - Regras React Native
 
 ### Prettier
+
 - `prettier` - Formatador de código
 - `eslint-config-prettier` - Desabilita regras conflitantes
 - `eslint-plugin-prettier` - Integra Prettier com ESLint
@@ -44,6 +47,7 @@ yarn validate
 ### .eslintrc.js
 
 Arquivo principal de configuração do ESLint com:
+
 - ✅ Suporte a TypeScript
 - ✅ Regras React/React Native
 - ✅ Integração com Prettier
@@ -52,6 +56,7 @@ Arquivo principal de configuração do ESLint com:
 ### .prettierrc
 
 Configuração do Prettier:
+
 - Semi-colons: Sim
 - Aspas simples: Sim
 - Largura de linha: 100
@@ -61,6 +66,7 @@ Configuração do Prettier:
 ## 📋 Regras Principais
 
 ### React Native
+
 ```javascript
 'react-native/no-unused-styles': 'error',        // Estilos não usados
 'react-native/split-platform-components': 'warn', // Separar código iOS/Android
@@ -68,12 +74,14 @@ Configuração do Prettier:
 ```
 
 ### TypeScript
+
 ```javascript
 '@typescript-eslint/no-explicit-any': 'warn',    // Evitar 'any'
 '@typescript-eslint/no-unused-vars': 'error',    // Variáveis não usadas
 ```
 
 ### Geral
+
 ```javascript
 'no-console': ['warn', { allow: ['warn', 'error'] }], // Só warn e error
 'no-debugger': 'error',                          // Sem debugger em produção
@@ -81,6 +89,7 @@ Configuração do Prettier:
 ```
 
 ### Design System (regras específicas)
+
 ```javascript
 // src/design-system/**
 '@typescript-eslint/no-explicit-any': 'error',   // Mais restritivo
@@ -92,6 +101,7 @@ Configuração do Prettier:
 ### Extensões Recomendadas
 
 O arquivo `.vscode/extensions.json` recomenda:
+
 - ESLint
 - Prettier
 - TypeScript
@@ -101,6 +111,7 @@ O arquivo `.vscode/extensions.json` recomenda:
 ### Configuração Automática
 
 O arquivo `.vscode/settings.json` configura:
+
 - ✅ Formatação automática ao salvar
 - ✅ Fix do ESLint ao salvar
 - ✅ Prettier como formatador padrão
@@ -159,6 +170,7 @@ const data: any = fetchData();
 ### Ignorar arquivo inteiro
 
 Adicione no `.eslintignore`:
+
 ```
 src/generated/*.ts
 ```
@@ -166,6 +178,7 @@ src/generated/*.ts
 ## 🎨 Integração com Pre-commit
 
 O hook pre-commit já verifica:
+
 1. Mudanças no Design System
 2. Documentação atualizada
 
@@ -186,28 +199,33 @@ yarn type-check
 ## 🔍 Regras Customizadas por Contexto
 
 ### Design System
+
 - Mais restritivo
 - Sem `any`
 - Cores devem usar tokens
 
 ### Exemplos/Demo
+
 - Permite inline styles
 - Permite console.log
 - Menos restritivo
 
 ### Configurações
+
 - Permite require()
 - Permite console.log
 
 ## 🎓 Boas Práticas
 
 ### ✅ Faça
+
 - Execute `yarn lint:fix` antes de commitar
 - Use `yarn validate` antes de fazer PR
 - Configure seu editor para formatar ao salvar
 - Corrija warnings gradualmente
 
 ### ❌ Evite
+
 - Desabilitar regras globalmente
 - Ignorar muitos arquivos
 - Fazer commit com erros de linting
@@ -225,4 +243,3 @@ yarn type-check
 **Status:** ✅ Configurado e pronto para uso!
 
 Execute `yarn lint` para verificar seu código agora.
-

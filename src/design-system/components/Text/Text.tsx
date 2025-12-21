@@ -20,7 +20,7 @@ export const Text: React.FC<TextProps> = ({
   const { theme } = useTheme();
 
   const textStyle = {
-    color: color || theme.colors.text,
+    color: color || theme.colors.text.primary,
     textAlign: align,
     ...getVariantStyles(variant, theme),
   };

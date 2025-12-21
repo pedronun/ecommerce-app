@@ -1,8 +1,3 @@
-/**
- * Componente Card
- * Container para agrupar conteúdo relacionado
- */
-
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { useTheme } from '../../theme/ThemeContext';
@@ -24,8 +19,14 @@ export const Card: React.FC<CardProps> = ({
   };
 
   if (onPress) {
+    const { onBlur, onFocus, ...touchableProps } = props;
     return (
-      <TouchableOpacity style={[cardStyle, style]} onPress={onPress} activeOpacity={0.7} {...props}>
+      <TouchableOpacity
+        style={[cardStyle, style]}
+        onPress={onPress}
+        activeOpacity={0.7}
+        {...touchableProps}
+      >
         {children}
       </TouchableOpacity>
     );

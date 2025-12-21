@@ -9,16 +9,19 @@ Este projeto é um aplicativo mobile de e-commerce completo, desenvolvido utiliz
 ## 🚀 Tecnologias Utilizadas
 
 ### Core
+
 - **[React Native](https://reactnative.dev/)** `0.81.5` - Framework para desenvolvimento mobile
 - **[Expo](https://expo.dev/)** `~54.0.30` - Plataforma para desenvolvimento React Native
 - **[TypeScript](https://www.typescriptlang.org/)** `~5.9.2` - Superset JavaScript com tipagem estática
 - **[React](https://react.dev/)** `19.1.0` - Biblioteca JavaScript para interfaces
 
 ### Animações e Gestos
+
 - **[React Native Reanimated](https://docs.swmansion.com/react-native-reanimated/)** `4.2.1` - Animações de alta performance (60 FPS)
 - **[React Native Gesture Handler](https://docs.swmansion.com/react-native-gesture-handler/)** `2.30.0` - Gestos nativos
 
 ### Ferramentas de Desenvolvimento
+
 - **[Yarn](https://yarnpkg.com/)** `1.22.22` - Gerenciador de pacotes
 - **Node.js** `23.8.0` - Runtime JavaScript
 - **[ESLint](https://eslint.org/)** - Linter para JavaScript/TypeScript
@@ -27,12 +30,14 @@ Este projeto é um aplicativo mobile de e-commerce completo, desenvolvido utiliz
 ## ✨ Recursos Principais
 
 ### 🎨 Design System Completo
+
 - 11 componentes reutilizáveis e customizáveis
 - Sistema de tokens (cores, tipografia, espaçamento, etc.)
 - Suporte a temas Light/Dark
 - Animações fluidas e performáticas
 
 ### 📦 Componentes Básicos (8)
+
 - ✅ **Button** - Botão com 5 variantes e 3 tamanhos
 - ✅ **Text** - Texto com variantes tipográficas
 - ✅ **Input** - Campo de entrada com validação
@@ -43,11 +48,13 @@ Este projeto é um aplicativo mobile de e-commerce completo, desenvolvido utiliz
 - ✅ **Divider** - Linhas divisórias
 
 ### 🎬 Componentes Animados (3)
+
 - ✅ **Skeleton** - Loading states animados com shimmer
 - ✅ **BottomSheet** - Modal deslizante com gestos
 - ✅ **Toast** - Notificações temporárias
 
 ### 🎯 Características Técnicas
+
 - ⚡ **Animações 60 FPS** - Executadas na UI thread
 - 👆 **Gestos Nativos** - Processados nativamente
 - 🌓 **Modo Claro/Escuro** - Suporte completo a temas
@@ -108,27 +115,32 @@ ecommerce-app/
 ### Passo a Passo
 
 1. **Clone o repositório**
+
 ```bash
 git clone <url-do-repositorio>
 cd ecommerce-app
 ```
 
 2. **Instale as dependências**
+
 ```bash
 yarn install
 ```
 
 3. **Configure o Node.js (opcional)**
+
 ```bash
 nvm use 23.8
 ```
 
 4. **Inicie o projeto**
+
 ```bash
 yarn start
 ```
 
 5. **Execute no dispositivo/emulador**
+
 ```bash
 # Android
 yarn android
@@ -144,10 +156,10 @@ yarn web
 
 ```json
 {
-  "start": "expo start",           // Inicia o servidor de desenvolvimento
-  "android": "expo run:android",   // Executa no Android
-  "ios": "expo run:ios",          // Executa no iOS
-  "web": "expo start --web"       // Executa no navegador
+  "start": "expo start", // Inicia o servidor de desenvolvimento
+  "android": "expo run:android", // Executa no Android
+  "ios": "expo run:ios", // Executa no iOS
+  "web": "expo start --web" // Executa no navegador
 }
 ```
 
@@ -215,6 +227,7 @@ function MyComponent() {
 ## 🎨 Sistema de Tokens
 
 ### Cores
+
 ```tsx
 import { colors } from './src/design-system';
 
@@ -225,6 +238,7 @@ import { colors } from './src/design-system';
 ```
 
 ### Espaçamento
+
 ```tsx
 import { spacing } from './src/design-system';
 
@@ -235,6 +249,7 @@ import { spacing } from './src/design-system';
 ```
 
 ### Tipografia
+
 ```tsx
 import { typography } from './src/design-system';
 
@@ -245,6 +260,7 @@ import { typography } from './src/design-system';
 ## 🔧 Configurações Importantes
 
 ### babel.config.js
+
 ```js
 module.exports = {
   presets: ['babel-preset-expo'],
@@ -255,6 +271,7 @@ module.exports = {
 ```
 
 ### tsconfig.json
+
 ```json
 {
   "extends": "expo/tsconfig.base",
@@ -298,17 +315,20 @@ expo start --clear
 ## 📊 Métricas do Projeto
 
 ### Componentes
+
 - 🎨 **11 componentes** reutilizáveis
 - 🎬 **3 componentes** com animações
 - 📦 **8 componentes** básicos
 
 ### Design System
+
 - 🎨 **5 tipos** de tokens
 - 🌓 **2 temas** completos (light/dark)
 - 📐 **13 variantes** tipográficas
 - 🎨 **100+ cores** na paleta
 
 ### Qualidade de Código
+
 - ✅ **100% TypeScript** - Totalmente tipado
 - ✅ **0 erros** de linting
 - ✅ **Componentização** eficiente
@@ -317,12 +337,14 @@ expo start --clear
 ## 🎯 Performance
 
 ### Otimizações Implementadas
+
 - ⚡ **Animações na UI Thread** - Não bloqueia JavaScript
 - 🚀 **Gestos Nativos** - Processamento nativo
 - 💾 **Componentes Leves** - Sem dependências pesadas
 - 🎨 **Renderização Otimizada** - Uso eficiente de React
 
 ### Benchmarks
+
 - 📱 **FPS**: 60 FPS constantes nas animações
 - ⚡ **Tempo de Inicialização**: < 2s
 - 💾 **Tamanho do Bundle**: Otimizado com Expo
@@ -330,12 +352,14 @@ expo start --clear
 ## 📚 Documentação
 
 ### Arquivos de Documentação
+
 - 📖 **README.md** - Este arquivo (documentação principal)
 - 📘 **src/design-system/README.md** - Documentação completa do Design System
 - 📗 **src/design-system/ANIMATED_COMPONENTS.md** - Guia dos componentes animados
 - 📙 **src/design-system/QUICKSTART.md** - Guia rápido de 5 minutos
 
 ### Links Úteis
+
 - [React Native Docs](https://reactnative.dev/docs/getting-started)
 - [Expo Docs](https://docs.expo.dev/)
 - [React Native Reanimated Docs](https://docs.swmansion.com/react-native-reanimated/)
@@ -366,6 +390,7 @@ expo start --clear
    - Manutenibilidade
 
 ### Conceitos Demonstrados
+
 - ✅ Componentização e reutilização
 - ✅ Context API para estado global
 - ✅ Custom Hooks
@@ -377,6 +402,7 @@ expo start --clear
 ## 🔜 Roadmap / Próximas Implementações
 
 ### Features de E-commerce
+
 - [ ] **ProductCard** - Card de produto com imagem e detalhes
 - [ ] **SearchBar** - Barra de pesquisa com filtros
 - [ ] **Rating** - Sistema de avaliação com estrelas
@@ -384,6 +410,7 @@ expo start --clear
 - [ ] **Carousel** - Carrossel de produtos/banners
 
 ### Funcionalidades do App
+
 - [ ] **Navegação** - React Navigation configurado
 - [ ] **Estado Global** - Context API ou Redux
 - [ ] **API Integration** - Consumo de API REST
@@ -392,6 +419,7 @@ expo start --clear
 - [ ] **Favoritos** - Lista de produtos favoritos
 
 ### Melhorias Técnicas
+
 - [ ] **Testes Unitários** - Jest e Testing Library
 - [ ] **Testes E2E** - Detox
 - [ ] **CI/CD** - GitHub Actions
@@ -456,4 +484,3 @@ Desenvolvido como Trabalho de Conclusão de Curso (TCC)
 Design System completo e funcional. Próximas etapas: Features de e-commerce e integração com backend.
 
 **Última atualização:** Dezembro 2024
-

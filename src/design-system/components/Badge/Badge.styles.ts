@@ -71,4 +71,3 @@ export const getTextSizeStyles = (size: BadgeSize, theme: Theme): TextStyle => {
   };
   return sizes[size];
 };
-

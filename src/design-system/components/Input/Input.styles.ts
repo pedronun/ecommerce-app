@@ -2,7 +2,12 @@ import { ViewStyle, TextStyle } from 'react-native';
 
 interface Theme {
   colors: {
-    text: string;
+    text: {
+      primary: string;
+      secondary: string;
+      disabled: string;
+      hint: string;
+    };
     error: string;
     border: string;
     background: string;
@@ -21,7 +26,7 @@ export const getContainerStyles = (theme: Theme): ViewStyle => ({
 
 export const getLabelStyles = (theme: Theme): TextStyle => ({
   fontSize: theme.typography.fontSize.sm,
-  color: theme.colors.text,
+  color: theme.colors.text.primary,
   marginBottom: theme.spacing[1],
 });
 
@@ -39,7 +44,7 @@ export const getInputWrapperStyles = (theme: Theme, hasError: boolean): ViewStyl
 export const getInputFieldStyles = (theme: Theme): TextStyle => ({
   flex: 1,
   fontSize: theme.typography.fontSize.base,
-  color: theme.colors.text,
+  color: theme.colors.text.primary,
   paddingVertical: theme.spacing[2],
 });
 
@@ -49,8 +54,7 @@ export const getIconWrapperStyles = (theme: Theme, position: 'left' | 'right'): 
 
 export const getHelperTextStyles = (theme: Theme, isError: boolean): TextStyle => ({
   fontSize: theme.typography.fontSize.xs,
-  color: isError ? theme.colors.error : theme.colors.text,
+  color: isError ? theme.colors.error : theme.colors.text.secondary,
   marginTop: theme.spacing[1],
   opacity: isError ? 1 : 0.6,
 });
-

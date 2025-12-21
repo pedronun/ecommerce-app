@@ -3,7 +3,7 @@ import { BottomSheetSnapPoint } from './BottomSheet.types';
 
 interface Theme {
   colors: {
-    card: string;
+    surface: string;
   };
   radius: { xl: number };
   spacing: Record<number, number>;
@@ -36,7 +36,7 @@ export const styles = StyleSheet.create({
 });
 
 export const getSheetContainerStyles = (theme: Theme): ViewStyle => ({
-  backgroundColor: theme.colors.card,
+  backgroundColor: theme.colors.surface,
   borderTopLeftRadius: theme.radius.xl,
   borderTopRightRadius: theme.radius.xl,
   paddingTop: theme.spacing[3],
@@ -46,7 +46,10 @@ export const getHandleContainerStyles = (theme: Theme): ViewStyle => ({
   paddingBottom: theme.spacing[2],
 });
 
-export const calculateSnapPoint = (snapPoint: BottomSheetSnapPoint, screenHeight: number): number => {
+export const calculateSnapPoint = (
+  snapPoint: BottomSheetSnapPoint,
+  screenHeight: number
+): number => {
   if (typeof snapPoint === 'number') {
     return snapPoint;
   }
@@ -59,4 +62,3 @@ export const calculateSnapPoint = (snapPoint: BottomSheetSnapPoint, screenHeight
 
   return snapPoints[snapPoint] || snapPoints.half;
 };
-

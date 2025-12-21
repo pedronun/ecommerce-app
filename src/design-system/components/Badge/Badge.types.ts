@@ -7,4 +7,3 @@ export interface BadgeProps {
   size?: BadgeSize;
   dot?: boolean;
 }
-

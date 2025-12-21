@@ -108,13 +108,29 @@ Sistema de sombras com 6 níveis (none, xs, sm, md, lg, xl) otimizado para iOS e
 
 ### Uso do ThemeProvider
 
-O ThemeProvider agora possui persistência automática usando AsyncStorage. A preferência do usuário é salva e restaurada automaticamente ao abrir o app.
+O ThemeProvider agora possui:
+
+- **Persistência automática** usando AsyncStorage
+- **SplashScreen animada integrada** exibida durante o carregamento
+- **Restauração automática** do tema ao abrir o app
 
 ```tsx
 import { ThemeProvider } from './design-system';
 
 function App() {
-  return <ThemeProvider initialMode="light">{/* Seu app aqui */}</ThemeProvider>;
+  return (
+    <ThemeProvider
+      initialMode="light"
+      showSplash={true}
+      minSplashDuration={2000}
+      splashConfig={{
+        backgroundColor: '#0066FF',
+        iconColor: '#FFFFFF',
+      }}
+    >
+      {/* Seu app aqui */}
+    </ThemeProvider>
+  );
 }
 ```
 
@@ -122,7 +138,9 @@ function App() {
 
 - **Persistência automática**: A escolha do tema é salva no AsyncStorage
 - **Restauração ao iniciar**: O tema salvo é carregado automaticamente ao abrir o app
+- **SplashScreen integrada**: Animação customizada exibida durante o carregamento
 - **Estado de carregamento**: Propriedade `isLoading` para gerenciar o carregamento inicial
+- **Animações avançadas**: Círculos expansivos, pulso e rotação com Reanimated
 
 ### Hook useTheme
 

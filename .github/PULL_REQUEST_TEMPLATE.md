@@ -1,7 +1,7 @@
 ---
 name: Pull Request - Design System
 about: Template para PRs que modificam o Design System
-title: "[COMPONENT/TOKEN/THEME] "
+title: '[COMPONENT/TOKEN/THEME] '
 labels: design-system
 ---
 
@@ -21,6 +21,7 @@ Descreva as mudanças feitas no Design System.
 ## ✅ Checklist Obrigatório
 
 ### Código
+
 - [ ] Código TypeScript sem erros
 - [ ] Linter sem warnings
 - [ ] Componente testado em light mode
@@ -29,17 +30,20 @@ Descreva as mudanças feitas no Design System.
 - [ ] Usa tokens do design system
 
 ### Documentação (OBRIGATÓRIO)
+
 - [ ] **`DESIGN_SYSTEM_SUMMARY.md` atualizado**
 - [ ] Exemplos de código atualizados
 - [ ] Props documentadas
 - [ ] Características listadas
 
 ### Exportações
+
 - [ ] Componente exportado em `components/index.ts`
 - [ ] Tipos exportados
 - [ ] Re-exportado em `design-system/index.ts`
 
 ### Testes
+
 - [ ] Testado em iOS (simulador ou device)
 - [ ] Testado em Android (emulador ou device)
 - [ ] Sem erros no console
@@ -50,9 +54,11 @@ Descreva as mudanças feitas no Design System.
 <!-- Adicione screenshots ou GIFs demonstrando as mudanças -->
 
 ### Light Mode
+
 <!-- Screenshot aqui -->
 
 ### Dark Mode
+
 <!-- Screenshot aqui -->
 
 ## 🔄 Breaking Changes
@@ -66,12 +72,15 @@ Descreva as mudanças feitas no Design System.
 ## 📋 Arquivos Modificados
 
 ### Design System
+
 - `src/design-system/...` - descrição
 
 ### Documentação
+
 - `src/design-system/DESIGN_SYSTEM_SUMMARY.md` - descrição
 
 ### Exemplos (se aplicável)
+
 - `src/examples/...` - descrição
 
 ## 🧪 Como Testar
@@ -90,9 +99,9 @@ Descreva as mudanças feitas no Design System.
 ## ⚠️ Lembrete para Revisores
 
 Ao revisar este PR, verifique:
+
 - ✅ DESIGN_SYSTEM_SUMMARY.md foi atualizado?
 - ✅ Código segue padrões do projeto?
 - ✅ Props estão documentadas?
 - ✅ Exemplos funcionam?
 - ✅ Sem duplicação de código?
-

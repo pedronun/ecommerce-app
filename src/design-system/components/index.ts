@@ -26,7 +26,7 @@ export type { AvatarProps } from './Avatar';
 export { Chip } from './Chip';
 export type { ChipProps } from './Chip';
 
-export { Skeleton, SkeletonText, SkeletonCircle, SkeletonCard, SkeletonList } from './Skeleton';
+export { Skeleton, SkeletonText, SkeletonCard, SkeletonList } from './Skeleton';
 export type { SkeletonProps } from './Skeleton';
 
 export { BottomSheet } from './BottomSheet';
@@ -47,3 +47,6 @@ export type {
   FeatherIconName,
   AntDesignIconName,
 } from './Icon';
+
+export { SplashScreen } from './SplashScreen';
+export type { SplashScreenProps } from './SplashScreen';

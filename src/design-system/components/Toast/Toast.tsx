@@ -3,7 +3,14 @@
  * Notificações temporárias que aparecem na tela
  */
 
-import React, { useEffect, createContext, useContext, useState, ReactNode, useCallback } from 'react';
+import React, {
+  useEffect,
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useCallback,
+} from 'react';
 import { View, Dimensions } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -16,7 +23,13 @@ import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { useTheme } from '../../theme/ThemeContext';
 import { Text } from '../Text';
 import { ToastOptions, ToastContextValue, ToastComponentProps } from './Toast.types';
-import { styles, TOAST_HEIGHT, getToastBackgroundColor, getToastIcon, WHITE_COLOR } from './Toast.styles';
+import {
+  styles,
+  TOAST_HEIGHT,
+  getToastBackgroundColor,
+  getToastIcon,
+  WHITE_COLOR,
+} from './Toast.styles';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -158,7 +171,11 @@ const ToastComponent: React.FC<ToastComponentProps> = ({
           </View>
           {action && (
             <View style={styles.actionContainer}>
-              <Text variant="button" style={{ color: WHITE_COLOR, fontSize: 14 }} onPress={action.onPress}>
+              <Text
+                variant="button"
+                style={{ color: WHITE_COLOR, fontSize: 14 }}
+                onPress={action.onPress}
+              >
                 {action.label}
               </Text>
             </View>

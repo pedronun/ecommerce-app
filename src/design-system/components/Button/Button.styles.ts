@@ -11,6 +11,11 @@ interface Theme {
   radius: {
     md: number;
   };
+  typography: {
+    fontSize: Record<string, number>;
+    fontWeight: Record<string, string | number>;
+    lineHeight: Record<string, number>;
+  };
 }
 
 export const getSizeStyles = (size: ButtonSize, theme: Theme): ViewStyle => {
@@ -58,24 +63,21 @@ export const getVariantStyles = (variant: ButtonVariant, theme: Theme): ViewStyl
 };
 
 export const getTextSizeStyles = (size: ButtonSize, theme: Theme): TextStyle => {
-  const typography = theme.typography as {
-    fontSize: Record<string, number>;
-    fontWeight: Record<string, string>;
-  };
+  const { fontSize } = theme.typography;
   const sizes: Record<ButtonSize, TextStyle> = {
     sm: {
-      fontSize: typography.fontSize.sm,
+      fontSize: fontSize.sm,
     },
     md: {
-      fontSize: typography.fontSize.base,
+      fontSize: fontSize.base,
     },
     lg: {
-      fontSize: typography.fontSize.lg,
+      fontSize: fontSize.lg,
     },
   };
   return {
     ...sizes[size],
-    fontWeight: typography.fontWeight.semibold,
+    fontWeight: '600',
   };
 };
 
@@ -106,4 +108,3 @@ export const getLoadingColor = (variant: ButtonVariant, theme: Theme): string =>
   }
   return '#FFFFFF';
 };
-

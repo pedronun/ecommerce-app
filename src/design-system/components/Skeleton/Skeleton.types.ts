@@ -13,4 +13,3 @@ export interface SkeletonProps {
 export interface SkeletonPresetProps {
   animation?: boolean;
 }
-

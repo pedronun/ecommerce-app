@@ -7,4 +7,3 @@ export interface CardProps extends ViewProps {
   variant?: CardVariant;
   onPress?: () => void;
 }
-

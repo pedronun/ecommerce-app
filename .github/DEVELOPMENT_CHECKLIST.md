@@ -12,6 +12,7 @@ Use este checklist ao trabalhar com o Design System.
 ## 🎨 Ao Criar/Modificar Componente
 
 ### Código
+
 - [ ] Componente criado em `src/design-system/components/[Nome]/`
 - [ ] Arquivo principal: `[Nome].tsx`
 - [ ] Arquivo de exportação: `index.ts`
@@ -21,6 +22,7 @@ Use este checklist ao trabalhar com o Design System.
 - [ ] Estilos seguem tokens do design system
 
 ### Documentação (OBRIGATÓRIO)
+
 - [ ] **`DESIGN_SYSTEM_SUMMARY.md` atualizado**
   - [ ] Seção do componente adicionada/atualizada
   - [ ] Exemplo de código incluído
@@ -30,6 +32,7 @@ Use este checklist ao trabalhar com o Design System.
 - [ ] Comentários no código (se lógica complexa)
 
 ### Exportações
+
 - [ ] Componente exportado em `components/index.ts`
 - [ ] Tipos exportados em `components/index.ts`
 - [ ] Re-exportado em `design-system/index.ts`
@@ -37,11 +40,13 @@ Use este checklist ao trabalhar com o Design System.
 ## 🎯 Ao Modificar Tokens
 
 ### Código
+
 - [ ] Token atualizado em `src/design-system/tokens/`
 - [ ] Tipos TypeScript atualizados
 - [ ] Consistência com outros tokens verificada
 
 ### Documentação (OBRIGATÓRIO)
+
 - [ ] **`DESIGN_SYSTEM_SUMMARY.md` atualizado**
   - [ ] Seção de tokens atualizada
   - [ ] Novos valores documentados
@@ -51,11 +56,13 @@ Use este checklist ao trabalhar com o Design System.
 ## 🌓 Ao Modificar Tema
 
 ### Código
+
 - [ ] `theme.ts` atualizado
 - [ ] `lightTheme` e `darkTheme` consistentes
 - [ ] Tipos TypeScript corretos
 
 ### Documentação (OBRIGATÓRIO)
+
 - [ ] **`DESIGN_SYSTEM_SUMMARY.md` atualizado**
   - [ ] Seção de tema atualizada
   - [ ] Mudanças documentadas
@@ -84,12 +91,14 @@ Use este checklist ao trabalhar com o Design System.
 ## 📝 Antes do Commit
 
 ### Arquivos Modificados
+
 - [ ] Código do componente/token/tema
 - [ ] **`DESIGN_SYSTEM_SUMMARY.md` (OBRIGATÓRIO)**
 - [ ] Exemplos (se aplicável)
 - [ ] `index.ts` de exportações
 
 ### Qualidade
+
 - [ ] Sem `console.log` ou debug code
 - [ ] Sem código comentado desnecessário
 - [ ] Imports organizados
@@ -97,6 +106,7 @@ Use este checklist ao trabalhar com o Design System.
 - [ ] Sem erros de linting
 
 ### Commit
+
 - [ ] Mensagem segue convenção (feat/fix/docs/etc)
 - [ ] Descrição clara do que mudou
 - [ ] Referência a issue (se aplicável)
@@ -112,6 +122,7 @@ Use este checklist ao trabalhar com o Design System.
 ## 📋 Exemplo de Commits Válidos
 
 ✅ **CORRETO:**
+
 ```bash
 git add src/design-system/components/Button/Button.tsx
 git add src/design-system/DESIGN_SYSTEM_SUMMARY.md
@@ -119,6 +130,7 @@ git commit -m "feat(button): adiciona variante success"
 ```
 
 ❌ **INCORRETO:**
+
 ```bash
 git add src/design-system/components/Button/Button.tsx
 git commit -m "feat(button): adiciona variante success"
@@ -130,6 +142,7 @@ git commit -m "feat(button): adiciona variante success"
 > **Nenhuma mudança no Design System deve ser commitada sem atualizar o `DESIGN_SYSTEM_SUMMARY.md`**
 
 Se você modificou:
+
 - Um componente → Atualize a seção do componente
 - Um token → Atualize a seção de tokens
 - Um tema → Atualize a seção de tema
@@ -141,9 +154,9 @@ Se você modificou:
 ## 📞 Dúvidas?
 
 Se não tiver certeza se precisa atualizar a documentação:
+
 - **Resposta:** Sim, provavelmente precisa!
 - Quando em dúvida, atualize.
 - É melhor ter documentação extra do que faltando.
 
 **Documentação = Parte do Código!**
-

@@ -7,22 +7,31 @@ interface Theme {
     success: string;
     error: string;
     border: string;
-    text: string;
+    text: {
+      primary: string;
+      secondary: string;
+      disabled: string;
+      hint: string;
+    };
   };
   spacing: Record<number, number>;
   radius: { full: number };
   typography: {
     fontSize: Record<string, number>;
-    fontWeight: { medium: string };
+    fontWeight: Record<string, string>;
   };
 }
 
-export const getVariantStyles = (variant: ChipVariant, selected: boolean, theme: Theme): ViewStyle => {
+export const getVariantStyles = (
+  variant: ChipVariant,
+  selected: boolean,
+  theme: Theme
+): ViewStyle => {
   if (selected) {
     const selectedVariants: Record<ChipVariant, ViewStyle> = {
       default: {
-        backgroundColor: `${theme.colors.text  }20`,
-        borderColor: theme.colors.text,
+        backgroundColor: `${theme.colors.text.primary}20`,
+        borderColor: theme.colors.text.primary,
       },
       primary: {
         backgroundColor: theme.colors.primary,
@@ -46,15 +55,15 @@ export const getVariantStyles = (variant: ChipVariant, selected: boolean, theme:
       borderColor: theme.colors.border,
     },
     primary: {
-      backgroundColor: `${theme.colors.primary  }20`,
+      backgroundColor: `${theme.colors.primary}20`,
       borderColor: theme.colors.primary,
     },
     success: {
-      backgroundColor: `${theme.colors.success  }20`,
+      backgroundColor: `${theme.colors.success}20`,
       borderColor: theme.colors.success,
     },
     error: {
-      backgroundColor: `${theme.colors.error  }20`,
+      backgroundColor: `${theme.colors.error}20`,
       borderColor: theme.colors.error,
     },
   };
@@ -67,7 +76,7 @@ export const getTextColor = (variant: ChipVariant, selected: boolean, theme: The
   }
 
   const colors: Record<ChipVariant, string> = {
-    default: theme.colors.text,
+    default: theme.colors.text.primary,
     primary: theme.colors.primary,
     success: theme.colors.success,
     error: theme.colors.error,
@@ -86,6 +95,5 @@ export const getBaseChipStyles = (theme: Theme): ViewStyle => ({
 
 export const getTextStyles = (theme: Theme): TextStyle => ({
   fontSize: theme.typography.fontSize.sm,
-  fontWeight: theme.typography.fontWeight.medium,
+  fontWeight: '500' as TextStyle['fontWeight'],
 });
-

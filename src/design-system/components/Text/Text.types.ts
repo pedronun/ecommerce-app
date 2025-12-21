@@ -17,4 +17,3 @@ export interface TextProps extends RNTextProps {
   align?: 'left' | 'center' | 'right' | 'justify';
   children: React.ReactNode;
 }
-

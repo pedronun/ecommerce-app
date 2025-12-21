@@ -63,4 +63,3 @@ export const getToastIcon = (type: ToastType): string => {
   };
   return icons[type];
 };
-

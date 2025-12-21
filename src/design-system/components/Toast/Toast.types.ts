@@ -21,4 +21,3 @@ export interface ToastComponentProps extends ToastOptions {
   visible: boolean;
   onHide: () => void;
 }
-

@@ -3,9 +3,9 @@ import { CardVariant } from './Card.types';
 
 interface Theme {
   colors: {
-    card: string;
+    surface: string;
     border: string;
-    cardAlt: string;
+    background: string;
   };
   spacing: Record<number, number>;
   radius: { lg: number };
@@ -15,16 +15,16 @@ interface Theme {
 export const getVariantStyles = (variant: CardVariant, theme: Theme): ViewStyle => {
   const variants: Record<CardVariant, ViewStyle> = {
     elevated: {
-      backgroundColor: theme.colors.card,
+      backgroundColor: theme.colors.surface,
       ...theme.shadows.md,
     },
     outlined: {
-      backgroundColor: theme.colors.card,
+      backgroundColor: theme.colors.surface,
       borderWidth: 1,
       borderColor: theme.colors.border,
     },
     filled: {
-      backgroundColor: theme.colors.cardAlt,
+      backgroundColor: theme.colors.background,
     },
   };
   return variants[variant];
@@ -34,4 +34,3 @@ export const getBaseCardStyles = (theme: Theme): ViewStyle => ({
   borderRadius: theme.radius.lg,
   padding: theme.spacing[4],
 });
-

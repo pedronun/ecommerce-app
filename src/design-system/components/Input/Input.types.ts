@@ -9,4 +9,3 @@ export interface InputProps extends Omit<TextInputProps, 'style'> {
   containerStyle?: ViewStyle;
   inputStyle?: TextStyle;
 }
-

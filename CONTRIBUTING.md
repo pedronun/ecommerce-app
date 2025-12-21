@@ -20,6 +20,7 @@ Obrigado por contribuir com o projeto E-commerce App! Este guia ajudará você a
 #### Arquivos que Requerem Atualização de Documentação:
 
 Ao modificar arquivos em:
+
 ```
 src/design-system/
 ├── tokens/           → Atualizar seção "Tokens" no DESIGN_SYSTEM_SUMMARY.md
@@ -61,18 +62,21 @@ git push origin feature/update-button-component
 ## 🔍 Padrões de Código
 
 ### TypeScript
+
 - ✅ Sempre use TypeScript
 - ✅ Defina interfaces para todas as props
 - ✅ Use tipos específicos, evite `any`
 - ✅ Exporte tipos junto com componentes
 
 ### Componentes
+
 - ✅ Um componente por arquivo
 - ✅ Use React.FC para componentes funcionais
 - ✅ Documente props com comentários JSDoc
 - ✅ Mantenha componentes pequenos e focados
 
 ### Nomenclatura
+
 - ✅ PascalCase para componentes: `Button.tsx`
 - ✅ camelCase para funções e variáveis: `handleClick`
 - ✅ UPPER_CASE para constantes: `MAX_WIDTH`
@@ -91,6 +95,7 @@ Siga o padrão [Conventional Commits](https://www.conventionalcommits.org/):
 ```
 
 ### Tipos:
+
 - `feat`: Nova funcionalidade
 - `fix`: Correção de bug
 - `docs`: Apenas documentação
@@ -100,6 +105,7 @@ Siga o padrão [Conventional Commits](https://www.conventionalcommits.org/):
 - `chore`: Tarefas de manutenção
 
 ### Exemplos:
+
 ```bash
 feat(button): adiciona variante success
 fix(input): corrige validação de email
@@ -136,7 +142,7 @@ Este arquivo deve sempre estar sincronizado com o código. Ao fazer alterações
 
 ### Estrutura da Documentação:
 
-```markdown
+````markdown
 ### [NomeDoComponente]
 
 [Descrição breve]
@@ -145,10 +151,13 @@ Este arquivo deve sempre estar sincronizado com o código. Ao fazer alterações
 // Exemplo de uso atualizado
 <Component prop="valor" />
 ```
+````
 
 **Props:**
+
 - `prop1`: tipo - descrição
 - `prop2`: tipo - descrição
+
 ```
 
 ## ⚠️ Breaking Changes
@@ -172,6 +181,7 @@ Se sua mudança quebra compatibilidade:
 ## ✅ Checklist Antes do Commit
 
 ```
+
 □ Código funciona corretamente
 □ TypeScript sem erros
 □ Linter sem warnings
@@ -180,6 +190,7 @@ Se sua mudança quebra compatibilidade:
 □ Commit message segue convenção
 □ Props documentadas
 □ Mudanças testadas
+
 ```
 
 ## 🤝 Revisão de Código
@@ -204,3 +215,4 @@ Se tiver dúvidas sobre como contribuir:
 
 **Lembre-se:** Documentação é parte do código! Um componente sem documentação é um componente incompleto.
 
+```
