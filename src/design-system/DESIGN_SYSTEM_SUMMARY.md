@@ -108,6 +108,8 @@ Sistema de sombras com 6 níveis (none, xs, sm, md, lg, xl) otimizado para iOS e
 
 ### Uso do ThemeProvider
 
+O ThemeProvider agora possui persistência automática usando AsyncStorage. A preferência do usuário é salva e restaurada automaticamente ao abrir o app.
+
 ```tsx
 import { ThemeProvider } from './design-system';
 
@@ -116,13 +118,23 @@ function App() {
 }
 ```
 
+**Características:**
+
+- **Persistência automática**: A escolha do tema é salva no AsyncStorage
+- **Restauração ao iniciar**: O tema salvo é carregado automaticamente ao abrir o app
+- **Estado de carregamento**: Propriedade `isLoading` para gerenciar o carregamento inicial
+
 ### Hook useTheme
 
 ```tsx
 import { useTheme } from './design-system';
 
 function MyComponent() {
-  const { theme, mode, toggleTheme } = useTheme();
+  const { theme, mode, toggleTheme, isLoading } = useTheme();
+
+  if (isLoading) {
+    return <ActivityIndicator />;
+  }
 
   return (
     <View style={{ backgroundColor: theme.colors.background }}>
@@ -131,6 +143,13 @@ function MyComponent() {
   );
 }
 ```
+
+**Retorno do hook:**
+
+- `theme`: Objeto com todas as configurações de tema (cores, espaçamentos, etc.)
+- `mode`: Modo atual ('light' ou 'dark')
+- `toggleTheme`: Função para alternar entre os temas (persiste automaticamente)
+- `isLoading`: Boolean indicando se o tema está sendo carregado do storage
 
 ## 🧩 Componentes
 
