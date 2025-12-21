@@ -1,8 +1,3 @@
-/**
- * Contexto de Tema
- * Gerencia o tema (light/dark) da aplicação com persistência usando AsyncStorage
- */
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { lightTheme, darkTheme, Theme } from './theme';
@@ -47,7 +42,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   children,
   initialMode = 'light',
   showSplash = true,
-  minSplashDuration = 2000,
+  minSplashDuration = 4000,
   splashConfig,
 }) => {
   const [mode, setMode] = useState<ThemeMode>(initialMode);
@@ -103,6 +98,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
       <SplashScreen
         backgroundColor={splashConfig?.backgroundColor || theme.colors.primary[500]}
         iconColor={splashConfig?.iconColor || '#FFFFFF'}
+        minSplashDuration={minSplashDuration}
         onAnimationEnd={() => {
           if (!isLoading) {
             setShowSplashScreen(false);

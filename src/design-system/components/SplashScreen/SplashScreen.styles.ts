@@ -40,7 +40,6 @@ export const createStyles = (primaryColor: string, backgroundColor: string) =>
       },
       shadowOpacity: 0.3,
       shadowRadius: 20,
-      elevation: 10,
     },
     cartIcon: {
       width: 60,
