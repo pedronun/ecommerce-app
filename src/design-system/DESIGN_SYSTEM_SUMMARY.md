@@ -61,6 +61,7 @@ design-system/
 │   ├── Divider/
 │   ├── Avatar/
 │   ├── Chip/
+│   ├── Icon/           # Novo: Ícones vetoriais
 │   ├── Skeleton/       # Novo: Loading states animados
 │   ├── BottomSheet/    # Novo: Modal deslizante
 │   ├── Toast/          # Novo: Notificações
@@ -277,6 +278,65 @@ Tag ou filtro compacto.
 - `onDelete`: () => void
 - `leftIcon`: React.ReactNode
 
+### Icon
+
+Componente de ícones vetoriais com suporte a múltiplas famílias de ícones do @expo/vector-icons.
+
+```tsx
+// Ícone básico (MaterialIcons por padrão)
+<Icon name="home" />
+
+// Ícone com família customizada
+<Icon family="MaterialCommunityIcons" name="cart" size={32} color="blue" />
+
+// Ícone pressionável
+<Icon name="settings" onPress={() => console.log('Clicado')} />
+
+// Ícone com estilos customizados
+<Icon
+  family="FontAwesome5"
+  name="star"
+  size={20}
+  color={theme.colors.rating}
+/>
+
+// Ícone desabilitado
+<Icon name="lock" disabled />
+```
+
+**Props:**
+
+- `family`: Família de ícones (padrão: 'MaterialIcons')
+  - Famílias disponíveis: 'MaterialIcons', 'MaterialCommunityIcons', 'FontAwesome', 'FontAwesome5', 'Ionicons', 'Feather', 'AntDesign', 'Entypo', 'EvilIcons', 'Fontisto', 'Foundation', 'SimpleLineIcons', 'Octicons', 'Zocial'
+- `name`: string (nome do ícone)
+- `size`: number (padrão: 24)
+- `color`: string (padrão: theme.colors.text.primary)
+- `onPress`: () => void
+- `disabled`: boolean
+- `style`: ViewStyle
+
+**Características:**
+
+- Suporte a todas as famílias de ícones do @expo/vector-icons
+- Integração com o sistema de temas
+- Ícones pressionáveis opcionais
+- TypeScript com autocompletar para nomes de ícones
+- Fallback automático em caso de ícone não encontrado
+
+**Tipos auxiliares para autocompletar:**
+
+```tsx
+import type {
+  MaterialIconName,
+  MaterialCommunityIconName,
+  FontAwesomeIconName,
+  FontAwesome5IconName,
+  IonIconName,
+  FeatherIconName,
+  AntDesignIconName,
+} from './design-system';
+```
+
 ### Skeleton
 
 Placeholder animado para estados de carregamento.
@@ -413,6 +473,7 @@ import {
   Text,
   Input,
   Card,
+  Icon,
   Skeleton,
   BottomSheet,
   ToastProvider,
@@ -423,6 +484,7 @@ import {
 
 // Ou importações específicas
 import { Button } from './design-system/components/Button';
+import { Icon } from './design-system/components/Icon';
 import { colors } from './design-system/tokens/colors';
 
 // IMPORTANTE: Para componentes animados, envolver app com:
@@ -452,6 +514,7 @@ import {
   Input,
   Badge,
   Avatar,
+  Icon,
   Skeleton,
   SkeletonText,
   BottomSheet,
@@ -509,13 +572,28 @@ function ProductScreen() {
           Descrição detalhada do produto aqui...
         </Text>
 
-        <Input label="Quantidade" placeholder="1" keyboardType="numeric" />
+        <Input
+          label="Quantidade"
+          placeholder="1"
+          keyboardType="numeric"
+          leftIcon={<Icon name="shopping-cart" size={20} />}
+        />
 
         <View style={{ flexDirection: 'row', gap: theme.spacing[2] }}>
-          <Button variant="outline" style={{ flex: 1 }} onPress={() => setShowFilters(true)}>
+          <Button
+            variant="outline"
+            style={{ flex: 1 }}
+            onPress={() => setShowFilters(true)}
+            leftIcon={<Icon name="filter-list" size={18} />}
+          >
             Filtros
           </Button>
-          <Button variant="primary" style={{ flex: 2 }} onPress={handleAddToCart}>
+          <Button
+            variant="primary"
+            style={{ flex: 2 }}
+            onPress={handleAddToCart}
+            leftIcon={<Icon name="add-shopping-cart" size={18} />}
+          >
             Adicionar ao Carrinho
           </Button>
         </View>
@@ -562,13 +640,15 @@ O design system utiliza as seguintes bibliotecas:
 
 - `react-native-reanimated`: Animações performáticas (60 FPS)
 - `react-native-gesture-handler`: Gestos nativos
+- `@expo/vector-icons`: Biblioteca de ícones vetoriais (inclui MaterialIcons, FontAwesome, Ionicons, etc.)
 
 ### Configuração
 
 1. **Instalar dependências:**
 
 ```bash
-yarn add react-native-reanimated react-native-gesture-handler
+# As bibliotecas já estão incluídas com o Expo
+yarn add react-native-reanimated react-native-gesture-handler @expo/vector-icons
 ```
 
 2. **Configurar babel.config.js:**

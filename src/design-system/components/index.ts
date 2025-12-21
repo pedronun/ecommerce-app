@@ -34,3 +34,16 @@ export type { BottomSheetProps } from './BottomSheet';
 
 export { ToastProvider, useToast } from './Toast';
 export type { ToastOptions } from './Toast';
+
+export { Icon } from './Icon';
+export type {
+  IconProps,
+  IconFamily,
+  MaterialIconName,
+  MaterialCommunityIconName,
+  FontAwesomeIconName,
+  FontAwesome5IconName,
+  IonIconName,
+  FeatherIconName,
+  AntDesignIconName,
+} from './Icon';
