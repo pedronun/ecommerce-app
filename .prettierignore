@@ -1,0 +1,25 @@
+# Arquivos que o Prettier deve ignorar
+
+# Dependências
+node_modules/
+.expo/
+.expo-shared/
+
+# Build outputs
+dist/
+build/
+
+# iOS/Android
+ios/
+android/
+
+# Lockfiles
+yarn.lock
+package-lock.json
+
+# Logs
+*.log
+
+# Metro
+.metro-health-check*
+
