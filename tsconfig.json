@@ -15,6 +15,7 @@
       "@contexts/*": ["./src/contexts/*"],
       "@constants/*": ["./src/constants/*"],
       "@checkout/*": ["./src/checkout/*"],
+      "@design-system/*": ["./src/design-system/*"]
     },
     "module": "esnext"
   },
