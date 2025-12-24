@@ -65,6 +65,7 @@ design-system/
 │   ├── Skeleton/       # Novo: Loading states animados
 │   ├── BottomSheet/    # Novo: Modal deslizante
 │   ├── Toast/          # Novo: Notificações
+│   ├── TabBar/         # Novo: Barra de navegação flutuante
 │   └── index.ts
 └── index.ts             # Ponto de entrada principal
 ```
@@ -497,6 +498,69 @@ toast.hide();
 - Auto-dismiss configurável
 - Posicionamento top/bottom
 
+### TabBar
+
+Barra de navegação flutuante com efeito de elevação, ideal para navegação principal do app.
+
+```tsx
+const [activeTab, setActiveTab] = useState('home');
+
+const tabs = [
+  { key: 'home', label: 'Início', icon: 'home' },
+  { key: 'search', label: 'Buscar', icon: 'search' },
+  { key: 'cart', label: 'Carrinho', icon: 'shopping-cart', badge: 3 },
+  { key: 'profile', label: 'Perfil', icon: 'person' },
+];
+
+<TabBar items={tabs} activeKey={activeTab} onTabPress={(key) => setActiveTab(key)} />;
+
+// TabBar sem labels
+<TabBar items={tabs} activeKey={activeTab} onTabPress={setActiveTab} showLabels={false} />;
+
+// TabBar com cores customizadas
+<TabBar
+  items={tabs}
+  activeKey={activeTab}
+  onTabPress={setActiveTab}
+  activeColor="#FF5722"
+  inactiveColor="#9E9E9E"
+/>;
+
+// TabBar com ícones de diferentes famílias
+const tabsCustom = [
+  { key: 'home', label: 'Início', icon: 'home', iconFamily: 'MaterialIcons' },
+  { key: 'search', label: 'Buscar', icon: 'magnify', iconFamily: 'MaterialCommunityIcons' },
+  { key: 'cart', label: 'Carrinho', icon: 'shopping-bag', iconFamily: 'Feather', badge: 5 },
+  { key: 'profile', label: 'Perfil', icon: 'user', iconFamily: 'Feather' },
+];
+```
+
+**Props:**
+
+- `items`: TabBarItem[] - Array de itens da tab bar
+  - `key`: string - Identificador único
+  - `label`: string - Texto exibido
+  - `icon`: string - Nome do ícone
+  - `iconFamily`: string (opcional) - Família do ícone (MaterialIcons por padrão)
+  - `badge`: number (opcional) - Número a exibir no badge
+- `activeKey`: string - Key da tab ativa
+- `onTabPress`: (key: string) => void - Callback ao pressionar uma tab
+- `showLabels`: boolean (padrão: true) - Mostrar/ocultar labels
+- `activeColor`: string (opcional) - Cor customizada para item ativo
+- `inactiveColor`: string (opcional) - Cor customizada para item inativo
+- `style`: ViewStyle (opcional) - Estilos adicionais
+
+**Características:**
+
+- **Efeito flutuante**: Posicionada com margem do fundo e laterais com sombra grande
+- **Animações suaves**: Transições animadas ao mudar de tab usando Animated API
+- **Badge support**: Exibe contadores com formatação automática (99+)
+- **Integração com tema**: Usa cores, espaçamentos e sombras do design system
+- **Ícones flexíveis**: Suporte a múltiplas famílias de ícones
+- **Responsiva**: Tabs se ajustam automaticamente ao espaço disponível
+- **Customizável**: Cores e estilos podem ser personalizados
+- **Acessível**: Feedback visual claro para tab ativa
+
 ## 📚 Uso
 
 ### Importação
@@ -515,6 +579,7 @@ import {
   BottomSheet,
   ToastProvider,
   useToast,
+  TabBar,
   colors,
   spacing,
 } from './design-system';
@@ -522,6 +587,7 @@ import {
 // Ou importações específicas
 import { Button } from './design-system/components/Button';
 import { Icon } from './design-system/components/Icon';
+import { TabBar } from './design-system/components/TabBar';
 import { colors } from './design-system/tokens/colors';
 
 // IMPORTANTE: Para componentes animados, envolver app com:
@@ -742,3 +808,9 @@ Para expandir o design system, considere adicionar:
    - Storybook para visualização de componentes
    - Testes unitários
    - Guia de contribuição
+
+---
+
+**Changelog:**
+
+- **v2.1** (2024-12-24): Adicionado componente TabBar com efeito flutuante

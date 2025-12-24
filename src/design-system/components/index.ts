@@ -50,3 +50,6 @@ export type {
 
 export { SplashScreen } from './SplashScreen';
 export type { SplashScreenProps } from './SplashScreen';
+
+export { TabBar } from './TabBar';
+export type { TabBarProps, TabBarItem } from './TabBar';

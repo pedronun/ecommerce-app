@@ -1,7 +1,3 @@
-/**
- * Exportação central de todos os tokens do Design System
- */
-
 export { colors } from './colors';
 export type { ColorToken } from './colors';
 

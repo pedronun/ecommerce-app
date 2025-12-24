@@ -1,16 +1,17 @@
 import { ToastProvider } from '@design-system/components/Toast';
 import { ThemeProvider } from '@design-system/theme/ThemeContext';
-import { Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import Routes from './src/routes/routes';
 
 export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ThemeProvider initialMode="light">
         <ToastProvider>
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Hello World</Text>
-          </View>
+          <NavigationContainer>
+            <Routes />
+          </NavigationContainer>
         </ToastProvider>
       </ThemeProvider>
     </GestureHandlerRootView>
