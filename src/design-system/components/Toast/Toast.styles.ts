@@ -2,7 +2,7 @@ import { StyleSheet, Platform } from 'react-native';
 import { ToastType } from './Toast.types';
 import { Theme } from '@design-system/theme/theme';
 
-export const TOAST_HEIGHT = 80;
+export const TOAST_HEIGHT = 60;
 export const TOP_OFFSET = Platform.OS === 'ios' ? 50 : 20;
 export const WHITE_COLOR = '#FFFFFF';
 

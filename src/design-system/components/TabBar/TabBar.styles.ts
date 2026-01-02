@@ -54,7 +54,7 @@ export const getBadgeStyles = (theme: Theme): ViewStyle => ({
   position: 'absolute',
   top: -4,
   right: -8,
-  backgroundColor: theme.colors.error,
+  backgroundColor: theme.colors.primary,
   borderRadius: theme.radius.full,
   minWidth: 18,
   height: 18,
@@ -66,7 +66,7 @@ export const getBadgeStyles = (theme: Theme): ViewStyle => ({
 });
 
 export const getBadgeTextStyles = (theme: Theme): TextStyle => ({
-  color: theme.colors.text.primary,
+  color: theme.colors.surface,
   fontSize: 10,
   fontWeight: '600',
   lineHeight: 14,

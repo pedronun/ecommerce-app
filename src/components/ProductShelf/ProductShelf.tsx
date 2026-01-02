@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Icon, Skeleton } from '@design-system/components';
+import { useCart } from '@contexts/useCart';
+import { Button, Icon, Skeleton, useToast } from '@design-system/components';
 import { useTheme } from '@design-system/theme/ThemeContext';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { Image, Text, TouchableOpacity, TouchableOpacityProps, View } from 'react-native';
 import { getBaseStyles, getCompactContentStyles, getVariantStyles } from './ProductShelf.styles';
 import { ProductShelfProps } from './ProductShelf.types';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 export const ProductShelf: React.FC<ProductShelfProps> = ({
   product,
@@ -21,6 +22,8 @@ export const ProductShelf: React.FC<ProductShelfProps> = ({
   ...props
 }) => {
   const { theme } = useTheme();
+  const { show: showToast } = useToast();
+  const { addToCart, updateQuantity, isInCart, getItemQuantity } = useCart();
   const navigation = useNavigation<NavigationProp<any>>();
   const baseStyles = getBaseStyles(theme);
   const variantStyles = getVariantStyles(variant, theme);
@@ -28,11 +31,42 @@ export const ProductShelf: React.FC<ProductShelfProps> = ({
   const [imageLoading, setImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
 
+  const productInCart = isInCart(product.id);
+  const currentQuantity = getItemQuantity(product.id);
+
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('pt-BR', {
       style: 'currency',
       currency: 'BRL',
     }).format(price);
+  };
+
+  const handleAddToCart = () => {
+    addToCart(product);
+    showToast({
+      type: 'success',
+      message: 'Produto adicionado ao carrinho!',
+      duration: 3000,
+    });
+  };
+
+  const handleIncreaseQuantity = (e?: any) => {
+    e?.stopPropagation();
+    updateQuantity(product.id, currentQuantity + 1);
+  };
+
+  const handleDecreaseQuantity = (e?: any) => {
+    e?.stopPropagation();
+    if (currentQuantity > 1) {
+      updateQuantity(product.id, currentQuantity - 1);
+    } else {
+      updateQuantity(product.id, 0); // Remove do carrinho
+      showToast({
+        type: 'info',
+        message: 'Produto removido do carrinho',
+        duration: 3000,
+      });
+    }
   };
 
   const renderImage = () => {
@@ -137,19 +171,57 @@ export const ProductShelf: React.FC<ProductShelfProps> = ({
         {/* Botões de ação */}
         {!isCompact && (
           <View style={baseStyles.footer}>
-            {showAddToCart && (
+            {showAddToCart && !productInCart && (
               <Button
                 variant="primary"
                 size="sm"
                 style={{ flex: 1 }}
                 onPress={(e) => {
                   e?.stopPropagation();
-                  onAddToCart?.();
+                  handleAddToCart();
                 }}
                 leftIcon={<Icon name="add-shopping-cart" size={16} color="#FFF" />}
               >
                 Adicionar
               </Button>
+            )}
+
+            {showAddToCart && productInCart && (
+              <View style={baseStyles.quantityContainer}>
+                <TouchableOpacity
+                  onPress={handleDecreaseQuantity}
+                  style={[
+                    baseStyles.quantityButton,
+                    {
+                      backgroundColor: theme.colors.surface,
+                      borderColor: theme.colors.border,
+                    },
+                  ]}
+                  activeOpacity={0.7}
+                >
+                  <Icon name={'remove'} size={18} color={theme.colors.text.primary} />
+                </TouchableOpacity>
+
+                <View style={baseStyles.quantityTextContainer}>
+                  <Text style={[baseStyles.quantityText, { color: theme.colors.text.primary }]}>
+                    {currentQuantity}
+                  </Text>
+                </View>
+
+                <TouchableOpacity
+                  onPress={handleIncreaseQuantity}
+                  style={[
+                    baseStyles.quantityButton,
+                    {
+                      backgroundColor: theme.colors.primary,
+                      borderColor: theme.colors.primary,
+                    },
+                  ]}
+                  activeOpacity={0.7}
+                >
+                  <Icon name="add" size={18} color="#FFF" />
+                </TouchableOpacity>
+              </View>
             )}
 
             {variant === 'featured' && (

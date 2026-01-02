@@ -82,6 +82,33 @@ export const getBaseStyles = (theme: Theme) => ({
     alignItems: 'center' as const,
     gap: theme.spacing[2],
   } as ViewStyle,
+
+  quantityContainer: {
+    flexDirection: 'row' as const,
+    alignItems: 'center' as const,
+    gap: theme.spacing[2],
+    flex: 1,
+  } as ViewStyle,
+
+  quantityButton: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    borderWidth: 1,
+    justifyContent: 'center' as const,
+    alignItems: 'center' as const,
+  } as ViewStyle,
+
+  quantityTextContainer: {
+    flex: 1,
+    alignItems: 'center' as const,
+    justifyContent: 'center' as const,
+  } as ViewStyle,
+
+  quantityText: {
+    fontSize: theme.typography.fontSize.base,
+    fontWeight: theme.typography.fontWeight.semibold,
+  } as TextStyle,
 });
 
 export const getVariantStyles = (

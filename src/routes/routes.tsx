@@ -1,7 +1,8 @@
-import { Home } from '@screens/Home';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { CustomTabBar } from '@components/CustomTabBar';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Cart } from '@screens/Cart';
+import { Home } from '@screens/Home';
 import { ProductDetails } from '@screens/ProductDetails';
 
 const Tab = createBottomTabNavigator();
@@ -19,7 +20,7 @@ function Routes() {
     >
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Search" component={Home} />
-      <Tab.Screen name="Cart" component={Home} />
+      <Tab.Screen name="Cart" component={Cart} />
       <Tab.Screen name="Profile" component={Home} />
     </Tab.Navigator>
   );

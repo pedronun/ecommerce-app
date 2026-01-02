@@ -1,17 +1,14 @@
-/**
- * CustomTabBar - Integração do TabBar do Design System com React Navigation
- */
-
 import React from 'react';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { TabBar, TabBarItem } from '@design-system/components/TabBar';
+import { useCart } from '@contexts/useCart';
 
 export function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
-  // Mapeia as rotas para o formato esperado pelo TabBar
+  const { totalItems } = useCart();
+
   const items: TabBarItem[] = state.routes.map((route) => {
     const { options } = descriptors[route.key];
 
-    // Obtém o label e ícone das opções da rota
     const label =
       options.tabBarLabel !== undefined
         ? String(options.tabBarLabel)
@@ -19,7 +16,6 @@ export function CustomTabBar({ state, descriptors, navigation }: BottomTabBarPro
           ? options.title
           : route.name;
 
-    // Define ícones padrão baseado no nome da rota
     const iconMap: Record<string, { icon: string; family?: 'MaterialIcons' | 'Feather' }> = {
       Home: { icon: 'home' },
       Search: { icon: 'search' },
@@ -35,8 +31,7 @@ export function CustomTabBar({ state, descriptors, navigation }: BottomTabBarPro
       label,
       icon: iconConfig.icon,
       iconFamily: iconConfig.family,
-      // Você pode adicionar badge aqui baseado em algum estado global
-      // badge: route.name === 'Cart' ? cartItemsCount : undefined,
+      badge: route.name === 'Cart' ? totalItems : undefined,
     };
   });
 
