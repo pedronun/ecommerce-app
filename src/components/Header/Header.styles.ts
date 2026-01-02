@@ -20,6 +20,9 @@ export const createStyles = (theme: Theme) =>
       flex: 1,
       alignItems: 'flex-start',
     },
+    backButton: {
+      padding: theme.spacing[2],
+    },
     centerSection: {
       flex: 1,
       alignItems: 'center',

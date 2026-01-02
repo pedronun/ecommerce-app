@@ -2,7 +2,7 @@ import { ToastProvider } from '@design-system/components/Toast';
 import { ThemeProvider } from '@design-system/theme/ThemeContext';
 import { NavigationContainer } from '@react-navigation/native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import Routes from './src/routes/routes';
+import { StackRoutes } from './src/routes/routes';
 
 export default function App() {
   return (
@@ -10,7 +10,7 @@ export default function App() {
       <ThemeProvider initialMode="light">
         <ToastProvider>
           <NavigationContainer>
-            <Routes />
+            <StackRoutes />
           </NavigationContainer>
         </ToastProvider>
       </ThemeProvider>
