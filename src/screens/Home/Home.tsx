@@ -1,10 +1,12 @@
 import { Layout } from '@components/Layout/Layout';
-import { Text } from 'react-native';
+import { ScrollView, Text } from 'react-native';
 
 function Home() {
   return (
     <Layout>
-      <Text>Home</Text>
+      <ScrollView>
+        <Text>Home</Text>
+      </ScrollView>
     </Layout>
   );
 }

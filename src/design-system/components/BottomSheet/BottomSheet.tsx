@@ -13,7 +13,7 @@ import Animated, {
   runOnJS,
 } from 'react-native-reanimated';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
-import { useTheme } from '../../theme/ThemeContext';
+import { useTheme } from '@design-system/theme/ThemeContext';
 import { BottomSheetProps } from './BottomSheet.types';
 import {
   styles,

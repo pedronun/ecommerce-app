@@ -12,7 +12,7 @@ import Animated, {
   withTiming,
   interpolate,
 } from 'react-native-reanimated';
-import { useTheme } from '../../theme/ThemeContext';
+import { useTheme } from '@design-system/theme/ThemeContext';
 import { SkeletonProps, SkeletonPresetProps } from './Skeleton.types';
 import {
   getVariantStyles,

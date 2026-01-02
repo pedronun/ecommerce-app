@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { lightTheme, darkTheme, Theme } from './theme';
-import { SplashScreen } from '../components/SplashScreen';
+import { SplashScreen } from '@design-system/components/SplashScreen';
 
 type ThemeMode = 'light' | 'dark';
 

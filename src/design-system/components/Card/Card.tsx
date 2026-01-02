@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useTheme } from '@design-system/theme/ThemeContext';
 import { CardProps } from './Card.types';
 import { getBaseCardStyles, getVariantStyles } from './Card.styles';
 

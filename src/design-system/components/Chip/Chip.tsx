@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useTheme } from '@design-system/theme/ThemeContext';
 import { ChipProps } from './Chip.types';
 import { getBaseChipStyles, getVariantStyles, getTextStyles, getTextColor } from './Chip.styles';
 

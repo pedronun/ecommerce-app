@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { View, Image, Text } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useTheme } from '@design-system/theme/ThemeContext';
 import { AvatarProps } from './Avatar.types';
 import {
   getSizeStyles,

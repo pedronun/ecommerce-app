@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { TouchableOpacity, Text, ActivityIndicator, ViewStyle } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useTheme } from '@design-system/theme/ThemeContext';
 import { ButtonProps } from './Button.types';
 import {
   getSizeStyles,

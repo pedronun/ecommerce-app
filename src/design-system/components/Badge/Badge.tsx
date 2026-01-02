@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { View, Text } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useTheme } from '@design-system/theme/ThemeContext';
 import { BadgeProps } from './Badge.types';
 import { getSizeStyles, getVariantStyles, getTextSizeStyles } from './Badge.styles';
 

@@ -8,7 +8,7 @@ import { Pressable } from 'react-native';
 import * as VectorIcons from '@expo/vector-icons';
 import type { IconProps } from './Icon.types';
 import { styles } from './Icon.styles';
-import { useTheme } from '../../theme/ThemeContext';
+import { useTheme } from '@design-system/theme/ThemeContext';
 
 /**
  * Componente Icon

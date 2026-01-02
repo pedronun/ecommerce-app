@@ -3,7 +3,7 @@
  */
 
 import { ViewStyle, TextStyle } from 'react-native';
-import { Theme } from '../../theme/theme';
+import { Theme } from '@design-system/theme/theme';
 
 export const getContainerStyles = (theme: Theme): ViewStyle => ({
   position: 'absolute',
@@ -15,8 +15,8 @@ export const getContainerStyles = (theme: Theme): ViewStyle => ({
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'space-around',
-  paddingVertical: theme.spacing[3], // 12px vertical
-  paddingHorizontal: theme.spacing[2], // 8px horizontal
+  paddingVertical: theme.spacing[2], // 8px vertical
+  paddingHorizontal: theme.spacing[1], // 4px horizontal
   ...theme.shadows.lg, // Sombra grande para efeito flutuante
   // Adiciona borda sutil
   borderWidth: 1,

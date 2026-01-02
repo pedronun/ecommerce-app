@@ -1,7 +1,7 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import { useTheme } from '../../design-system/theme/ThemeContext';
+import { useTheme } from '@design-system/theme/ThemeContext';
 import { createStyles } from './Header.styles';
 
 export const Header: React.FC = () => {

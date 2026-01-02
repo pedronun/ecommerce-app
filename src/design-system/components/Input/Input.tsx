@@ -5,8 +5,8 @@
 
 import React, { useState } from 'react';
 import { View, TextInput } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
-import { Text } from '../Text';
+import { useTheme } from '@design-system/theme/ThemeContext';
+import { Text } from '@design-system/components/Text';
 import { InputProps } from './Input.types';
 import {
   getContainerStyles,

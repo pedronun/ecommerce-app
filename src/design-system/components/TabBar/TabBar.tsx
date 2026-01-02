@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, TouchableOpacity, Text, Animated } from 'react-native';
-import { useTheme } from '../../theme/ThemeContext';
+import { useTheme } from '@design-system/theme/ThemeContext';
 import { TabBarProps, TabBarItem } from './TabBar.types';
 import {
   getContainerStyles,
@@ -11,7 +11,7 @@ import {
   getBadgeTextStyles,
   getLabelStyles,
 } from './TabBar.styles';
-import { Icon } from '../Icon';
+import { Icon } from '@design-system/components/Icon';
 
 export const TabBar: React.FC<TabBarProps> = ({
   items,

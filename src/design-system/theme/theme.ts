@@ -3,7 +3,11 @@
  * Define os temas light e dark
  */
 
-import { colors, typography, spacing, radius, shadows } from '../tokens';
+import { colors } from '@design-system/tokens/colors';
+import { typography } from '@design-system/tokens/typography';
+import { spacing } from '@design-system/tokens/spacing';
+import { radius } from '@design-system/tokens/radius';
+import { shadows } from '@design-system/tokens/shadows';
 
 export type Theme = {
   colors: {

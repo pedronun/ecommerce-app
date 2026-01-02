@@ -3,33 +3,33 @@
  * Notificações temporárias que aparecem na tela
  */
 
+import { Text } from '@design-system/components/Text';
+import { useTheme } from '@design-system/theme/ThemeContext';
 import React, {
-  useEffect,
   createContext,
-  useContext,
-  useState,
   ReactNode,
   useCallback,
+  useContext,
+  useEffect,
+  useState,
 } from 'react';
-import { View, Dimensions } from 'react-native';
+import { Dimensions, View } from 'react-native';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
-  useSharedValue,
+  runOnJS,
   useAnimatedStyle,
+  useSharedValue,
   withSpring,
   withTiming,
-  runOnJS,
 } from 'react-native-reanimated';
-import { Gesture, GestureDetector } from 'react-native-gesture-handler';
-import { useTheme } from '../../theme/ThemeContext';
-import { Text } from '../Text';
-import { ToastOptions, ToastContextValue, ToastComponentProps } from './Toast.types';
 import {
-  styles,
-  TOAST_HEIGHT,
   getToastBackgroundColor,
   getToastIcon,
+  styles,
+  TOAST_HEIGHT,
   WHITE_COLOR,
 } from './Toast.styles';
+import { ToastComponentProps, ToastContextValue, ToastOptions } from './Toast.types';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
