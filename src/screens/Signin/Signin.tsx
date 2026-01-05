@@ -359,7 +359,7 @@ function SignIn() {
               <Text variant="body1" style={styles.loginText}>
                 Já tem uma conta?
               </Text>
-              <Pressable onPress={() => navigation.navigate('Login')}>
+              <Pressable onPress={() => navigation.goBack()}>
                 <Text variant="body1" style={styles.loginLink}>
                   Fazer login
                 </Text>

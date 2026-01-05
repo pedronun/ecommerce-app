@@ -28,6 +28,8 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     const userData = await getUserService(response.access_token);
     setUser(userData);
     setIsLoggedIn(true);
+
+    return { access_token: response.access_token, user: userData };
   }, []);
 
   const logout = useCallback(async () => {

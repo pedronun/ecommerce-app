@@ -27,7 +27,7 @@ export interface UserContextData {
   /**
    * Realiza o login
    */
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<{ access_token: string; user: User }>;
 
   /**
    * Realiza o logout

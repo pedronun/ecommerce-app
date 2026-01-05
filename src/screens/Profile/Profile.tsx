@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Layout } from '@components/Layout/Layout';
-import { Button, Card, Divider, Icon, Text } from '@design-system/components';
+import { useUser } from '@contexts/UserContext/useUser';
+import { Button, Card, Icon, Text } from '@design-system/components';
 import { useTheme } from '@design-system/theme/ThemeContext';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { ScrollView, Switch, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getProfileStyles } from './Profile.styles';
-import { useUser } from '@contexts/UserContext/useUser';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 function Profile() {
   const { theme, mode, toggleTheme } = useTheme();
@@ -61,8 +61,6 @@ function Profile() {
             </>
           )}
         </View>
-
-        <Divider style={styles.mainDivider} />
 
         <View style={styles.section}>
           <Text variant="h4" style={styles.sectionTitle}>

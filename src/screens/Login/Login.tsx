@@ -54,6 +54,7 @@ function Login() {
 
     try {
       await login(email, password);
+      navigation.navigate('Tabs', { screen: 'Profile' });
     } catch {
       setErrors({
         email: '',

@@ -17,6 +17,7 @@ export const getProfileStyles = (theme: Theme, insets: EdgeInsets) =>
       paddingBottom: theme.spacing[5],
       paddingHorizontal: theme.spacing[4],
       backgroundColor: theme.colors.surface,
+      marginBottom: theme.spacing[5],
     },
     avatarWrapper: {
       marginBottom: theme.spacing[3],
