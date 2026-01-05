@@ -11,7 +11,7 @@ export const createStyles = (theme: Theme) =>
       justifyContent: 'space-between',
       paddingHorizontal: theme.spacing[4],
       paddingVertical: theme.spacing[3],
-      backgroundColor: theme.colors.background,
+      backgroundColor: '#FFFFFF',
       borderBottomWidth: 1,
       borderBottomColor: theme.colors.border,
       ...theme.shadows.sm,

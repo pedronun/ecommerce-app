@@ -1,4 +1,4 @@
-import { ViewStyle, TextStyle, ImageStyle } from 'react-native';
+import { ViewStyle, TextStyle, ImageStyle, Dimensions } from 'react-native';
 import { Theme } from '@design-system/theme/theme';
 import { ProductShelfVariant } from './ProductShelf.types';
 
@@ -134,7 +134,7 @@ export const getVariantStyles = (
     },
     compact: {
       container: {
-        width: 320,
+        width: Dimensions.get('window').width - theme.spacing[4] * 2,
         flexDirection: 'row' as const,
         ...theme.shadows.sm,
       } as ViewStyle,

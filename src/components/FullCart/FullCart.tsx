@@ -1,4 +1,4 @@
-import { useCart } from '@contexts/useCart';
+import { useCart } from '@contexts/CartContext/useCart';
 import { Button, Card, Divider, Icon, Text } from '@design-system/components';
 import { useTheme } from '@design-system/theme/ThemeContext';
 import { Image, ScrollView, TouchableOpacity, View } from 'react-native';

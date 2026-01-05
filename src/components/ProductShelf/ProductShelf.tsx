@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useCart } from '@contexts/useCart';
+import { useCart } from '@contexts/CartContext/useCart';
 import { Button, Icon, Skeleton, useToast } from '@design-system/components';
 import { useTheme } from '@design-system/theme/ThemeContext';
 import { NavigationProp, useNavigation } from '@react-navigation/native';

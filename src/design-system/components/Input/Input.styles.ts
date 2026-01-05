@@ -3,6 +3,7 @@ import { Theme } from '@design-system/theme/theme';
 
 export const getContainerStyles = (theme: Theme): ViewStyle => ({
   marginBottom: theme.spacing[4],
+  borderRadius: theme.radius.md,
 });
 
 export const getLabelStyles = (theme: Theme): TextStyle => ({
@@ -18,7 +19,6 @@ export const getInputWrapperStyles = (theme: Theme, hasError: boolean): ViewStyl
   borderColor: hasError ? theme.colors.error : theme.colors.border,
   borderRadius: theme.radius.md,
   paddingHorizontal: theme.spacing[3],
-  backgroundColor: theme.colors.background,
   minHeight: 48,
 });
 

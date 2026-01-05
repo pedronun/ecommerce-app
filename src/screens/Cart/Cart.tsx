@@ -1,7 +1,7 @@
 import { EmptyCart } from '@components/EmptyCart';
 import { FullCart } from '@components/FullCart';
 import { Layout } from '@components/Layout/Layout';
-import { useCart } from '@contexts/useCart';
+import { useCart } from '@contexts/CartContext/useCart';
 import { View } from 'react-native';
 import { styles } from './Cart.styles';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { TabBar, TabBarItem } from '@design-system/components/TabBar';
-import { useCart } from '@contexts/useCart';
+import { useCart } from '@contexts/CartContext/useCart';
 
 export function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
   const { totalItems } = useCart();

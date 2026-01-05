@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Cart } from '@screens/Cart';
 import { Home } from '@screens/Home';
 import { ProductDetails } from '@screens/ProductDetails';
+import { Search } from '@screens/Search';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -19,7 +20,7 @@ function Routes() {
       backBehavior="history"
     >
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Search" component={Home} />
+      <Tab.Screen name="Search" component={Search} />
       <Tab.Screen name="Cart" component={Cart} />
       <Tab.Screen name="Profile" component={Home} />
     </Tab.Navigator>

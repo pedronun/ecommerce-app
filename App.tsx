@@ -1,4 +1,4 @@
-import { CartProvider } from '@contexts/index';
+import { CartProvider, SearchProvider } from '@contexts/index';
 import { ToastProvider } from '@design-system/components/Toast';
 import { ThemeProvider } from '@design-system/theme/ThemeContext';
 import { NavigationContainer } from '@react-navigation/native';
@@ -13,13 +13,15 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ThemeProvider initialMode="light">
         <ToastProvider>
-          <CartProvider>
-            <QueryClientProvider client={queryClient}>
-              <NavigationContainer>
-                <StackRoutes />
-              </NavigationContainer>
-            </QueryClientProvider>
-          </CartProvider>
+          <SearchProvider>
+            <CartProvider>
+              <QueryClientProvider client={queryClient}>
+                <NavigationContainer>
+                  <StackRoutes />
+                </NavigationContainer>
+              </QueryClientProvider>
+            </CartProvider>
+          </SearchProvider>
         </ToastProvider>
       </ThemeProvider>
     </GestureHandlerRootView>
