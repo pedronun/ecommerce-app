@@ -34,6 +34,7 @@ export const Button: React.FC<ButtonProps> = ({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: theme.radius.md,
+    gap: theme.spacing[2],
     ...getSizeStyles(size, theme),
     ...getVariantStyles(variant, theme),
     ...(fullWidth && { width: '100%' }),

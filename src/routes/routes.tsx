@@ -3,9 +3,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Cart } from '@screens/Cart';
 import { Home } from '@screens/Home';
+import { Login } from '@screens/Login';
 import { ProductDetails } from '@screens/ProductDetails';
-import { Search } from '@screens/Search';
 import { Profile } from '@screens/Profile';
+import { Search } from '@screens/Search';
+import { SignIn } from '@screens/Signin';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -37,6 +39,8 @@ export function StackRoutes() {
     >
       <Stack.Screen name="Tabs" component={Routes} />
       <Stack.Screen name="ProductDetails" component={ProductDetails} />
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="SignIn" component={SignIn} />
     </Stack.Navigator>
   );
 }

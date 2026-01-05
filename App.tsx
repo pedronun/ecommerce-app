@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { StackRoutes } from './src/routes/routes';
+import { UserProvider } from '@contexts/UserContext/UserContext';
 
 const queryClient = new QueryClient();
 
@@ -13,15 +14,17 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1, backgroundColor: '#121212' }}>
       <ThemeProvider initialMode="light">
         <ToastProvider>
-          <SearchProvider>
-            <CartProvider>
-              <QueryClientProvider client={queryClient}>
-                <NavigationContainer>
-                  <StackRoutes />
-                </NavigationContainer>
-              </QueryClientProvider>
-            </CartProvider>
-          </SearchProvider>
+          <UserProvider>
+            <SearchProvider>
+              <CartProvider>
+                <QueryClientProvider client={queryClient}>
+                  <NavigationContainer>
+                    <StackRoutes />
+                  </NavigationContainer>
+                </QueryClientProvider>
+              </CartProvider>
+            </SearchProvider>
+          </UserProvider>
         </ToastProvider>
       </ThemeProvider>
     </GestureHandlerRootView>
