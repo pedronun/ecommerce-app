@@ -71,8 +71,8 @@ function Search() {
             performSearch(inputValue);
           }
         }}
-        containerStyle={{ backgroundColor: '#FFFFFF' }}
-        inputStyle={{ backgroundColor: '#FFFFFF' }}
+        containerStyle={{ backgroundColor: theme.colors.surface }}
+        inputStyle={{ backgroundColor: theme.colors.surface }}
       />
     </View>
   );

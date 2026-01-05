@@ -5,6 +5,7 @@ import { Cart } from '@screens/Cart';
 import { Home } from '@screens/Home';
 import { ProductDetails } from '@screens/ProductDetails';
 import { Search } from '@screens/Search';
+import { Profile } from '@screens/Profile';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -22,7 +23,7 @@ function Routes() {
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Search" component={Search} />
       <Tab.Screen name="Cart" component={Cart} />
-      <Tab.Screen name="Profile" component={Home} />
+      <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
 }

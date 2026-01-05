@@ -3,6 +3,7 @@ import { ProductShelf } from '@components/ProductShelf';
 import { Product } from '@typings/product';
 import { ScrollView, View } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
+import { useTheme } from '@design-system/theme/ThemeContext';
 
 const mockProducts: Product[] = [
   {
@@ -142,9 +143,10 @@ const mockProducts: Product[] = [
 ];
 
 function Home() {
+  const { theme } = useTheme();
   return (
     <Layout>
-      <ScrollView>
+      <ScrollView style={{ backgroundColor: theme.colors.background }}>
         <FlashList
           data={mockProducts}
           horizontal

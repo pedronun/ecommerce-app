@@ -1,0 +1,105 @@
+import { StyleSheet } from 'react-native';
+import { type EdgeInsets } from 'react-native-safe-area-context';
+import { Theme } from '@design-system/theme/theme';
+
+export const getProfileStyles = (theme: Theme, insets: EdgeInsets) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.background,
+    },
+    contentContainer: {
+      paddingBottom: Math.max(insets.bottom, 16) + 60,
+    },
+    profileHeader: {
+      alignItems: 'center',
+      paddingTop: theme.spacing[6],
+      paddingBottom: theme.spacing[5],
+      paddingHorizontal: theme.spacing[4],
+      backgroundColor: theme.colors.surface,
+    },
+    avatarWrapper: {
+      marginBottom: theme.spacing[3],
+      width: 80,
+      height: 80,
+      borderRadius: 40,
+      backgroundColor: `${theme.colors.primary}10`,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    userName: {
+      color: theme.colors.text.primary,
+      marginBottom: theme.spacing[1],
+    },
+    userEmail: {
+      color: theme.colors.text.secondary,
+    },
+    mainDivider: {
+      marginVertical: theme.spacing[4],
+    },
+    section: {
+      paddingHorizontal: theme.spacing[4],
+      marginBottom: theme.spacing[5],
+    },
+    sectionTitle: {
+      color: theme.colors.text.primary,
+      marginBottom: theme.spacing[3],
+      fontWeight: '600',
+    },
+    card: {
+      backgroundColor: theme.colors.surface,
+      borderColor: theme.colors.border,
+    },
+    placeholderContainer: {
+      alignItems: 'center',
+      paddingVertical: theme.spacing[6],
+      paddingHorizontal: theme.spacing[4],
+    },
+    placeholderIcon: {
+      marginBottom: theme.spacing[3],
+      opacity: 0.5,
+    },
+    placeholderText: {
+      color: theme.colors.text.secondary,
+      marginBottom: theme.spacing[1],
+      textAlign: 'center',
+    },
+    placeholderDescription: {
+      color: theme.colors.text.hint,
+      textAlign: 'center',
+    },
+    settingItem: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingVertical: theme.spacing[3],
+      paddingHorizontal: theme.spacing[2],
+    },
+    settingLeft: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      flex: 1,
+      marginRight: theme.spacing[3],
+    },
+    settingIconContainer: {
+      width: 40,
+      height: 40,
+      borderRadius: theme.radius.md,
+      backgroundColor: `${theme.colors.primary}15`,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginRight: theme.spacing[3],
+    },
+    settingTextContainer: {
+      flex: 1,
+    },
+    settingTitle: {
+      color: theme.colors.text.primary,
+      marginBottom: theme.spacing[1],
+      fontWeight: '500',
+    },
+    settingDescription: {
+      color: theme.colors.text.secondary,
+      lineHeight: 18,
+    },
+  });

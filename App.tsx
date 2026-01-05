@@ -10,7 +10,7 @@ const queryClient = new QueryClient();
 
 export default function App() {
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{ flex: 1, backgroundColor: '#121212' }}>
       <ThemeProvider initialMode="light">
         <ToastProvider>
           <SearchProvider>
