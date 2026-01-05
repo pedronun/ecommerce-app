@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Cart } from '@screens/Cart';
 import { Home } from '@screens/Home';
 import { Login } from '@screens/Login';
+import { Menu } from '@screens/Menu';
 import { ProductDetails } from '@screens/ProductDetails';
 import { Profile } from '@screens/Profile';
 import { Search } from '@screens/Search';
@@ -26,6 +27,7 @@ function Routes() {
       <Tab.Screen name="Search" component={Search} />
       <Tab.Screen name="Cart" component={Cart} />
       <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen name="Menu" component={Menu} />
     </Tab.Navigator>
   );
 }

@@ -22,6 +22,7 @@ export function CustomTabBar({ state, descriptors, navigation }: BottomTabBarPro
       Cart: { icon: 'shopping-cart' },
       Favorites: { icon: 'favorite' },
       Profile: { icon: 'person' },
+      Menu: { icon: 'menu' },
     };
 
     const iconConfig = iconMap[route.name] || { icon: 'circle' };
