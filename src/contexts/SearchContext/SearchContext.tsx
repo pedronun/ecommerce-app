@@ -2,27 +2,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, useCallback, useEffect, useState } from 'react';
 
 import type { Product } from '@typings/product';
+import { getSearch as getSearchService } from '@services/search';
 
 import type { SearchContextData, SearchFilters, SearchHistoryItem } from './SearchContext.types';
 
-/**
- * Chave para armazenar o histórico de busca no AsyncStorage
- */
 const SEARCH_HISTORY_KEY = '@ecommerce:search-history';
-
-/**
- * Número máximo de itens no histórico
- */
 const MAX_HISTORY_ITEMS = 10;
 
-/**
- * Contexto de busca
- */
 export const SearchContext = createContext<SearchContextData>({} as SearchContextData);
 
-/**
- * Provider do contexto de busca
- */
 export function SearchProvider({ children }: { children: React.ReactNode }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<Product[]>([]);
@@ -30,9 +18,6 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(false);
   const [searchHistory, setSearchHistory] = useState<SearchHistoryItem[]>([]);
 
-  /**
-   * Carrega o histórico de busca do AsyncStorage
-   */
   const loadHistory = useCallback(async () => {
     try {
       const storedHistory = await AsyncStorage.getItem(SEARCH_HISTORY_KEY);
@@ -46,9 +31,6 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  /**
-   * Salva o histórico de busca no AsyncStorage
-   */
   const saveHistory = useCallback(async (history: SearchHistoryItem[]) => {
     try {
       await AsyncStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(history));
@@ -57,9 +39,6 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  /**
-   * Adiciona um termo ao histórico de busca
-   */
   const addToHistory = useCallback(
     async (query: string) => {
       if (!query.trim()) return;
@@ -68,19 +47,17 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
         const normalizedQuery = query.trim().toLowerCase();
 
         setSearchHistory((prevHistory) => {
-          // Remove o termo se já existir
           const filteredHistory = prevHistory.filter(
             (item) => item.query.toLowerCase() !== normalizedQuery
           );
 
-          // Adiciona o novo termo no início
           const newHistory = [
             {
               query: query.trim(),
               timestamp: Date.now(),
             },
             ...filteredHistory,
-          ].slice(0, MAX_HISTORY_ITEMS); // Limita o tamanho do histórico
+          ].slice(0, MAX_HISTORY_ITEMS);
 
           saveHistory(newHistory);
           return newHistory;
@@ -92,9 +69,6 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
     [saveHistory]
   );
 
-  /**
-   * Remove um termo do histórico
-   */
   const removeFromHistory = useCallback(
     async (query: string) => {
       try {
@@ -110,9 +84,6 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
     [saveHistory]
   );
 
-  /**
-   * Limpa todo o histórico de busca
-   */
   const clearHistory = useCallback(async () => {
     try {
       setSearchHistory([]);
@@ -122,25 +93,34 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  /**
-   * Limpa os filtros de busca
-   */
   const clearFilters = useCallback(() => {
     setFilters({});
   }, []);
 
-  /**
-   * Limpa a busca atual
-   */
   const clearSearch = useCallback(() => {
     setSearchQuery('');
     setSearchResults([]);
     clearFilters();
   }, [clearFilters]);
 
-  /**
-   * Carrega o histórico ao montar o componente
-   */
+  const performSearch = useCallback(
+    async (query: string) => {
+      try {
+        setIsLoading(true);
+        setSearchQuery(query);
+        const results = await getSearchService(query);
+        setSearchResults(results);
+        addToHistory(query);
+      } catch (error) {
+        console.error('Erro ao buscar produtos:', error);
+        setSearchResults([]);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [addToHistory]
+  );
+
   useEffect(() => {
     loadHistory();
   }, [loadHistory]);
@@ -162,6 +142,7 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
         removeFromHistory,
         clearHistory,
         clearSearch,
+        performSearch,
       }}
     >
       {children}

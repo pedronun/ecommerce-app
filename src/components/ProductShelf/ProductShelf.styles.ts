@@ -176,6 +176,7 @@ export const getCompactContentStyles = (theme: Theme) => ({
     fontWeight: theme.typography.fontWeight.semibold,
     color: theme.colors.text.primary,
     marginBottom: theme.spacing[1],
+    paddingRight: theme.spacing[6],
   } as TextStyle,
 
   description: {

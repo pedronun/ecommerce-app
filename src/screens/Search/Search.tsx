@@ -3,104 +3,10 @@ import { ProductShelf } from '@components/ProductShelf';
 import { useSearch } from '@contexts/SearchContext/useSearch';
 import { Icon, Input } from '@design-system/components';
 import { useTheme } from '@design-system/theme/ThemeContext';
-import { Product } from '@typings/product';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { getSearchStyles } from './Search.styles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
-const mockProducts: Product[] = [
-  {
-    id: 1,
-    title: 'Majestic Mountain Graphic T-Shirt',
-    slug: 'majestic-mountain-graphic-t-shirt',
-    price: 44,
-    description: 'Elevate your wardrobe with this stylish black t-shirt.',
-    category: {
-      id: 1,
-      name: 'Clothes',
-      slug: 'clothes',
-      image: 'https://i.imgur.com/QkIa5tT.jpeg',
-      creationAt: '2026-01-02T16:26:46.000Z',
-      updatedAt: '2026-01-02T16:26:46.000Z',
-    },
-    images: ['https://i.imgur.com/QkIa5tT.jpeg', 'https://i.imgur.com/jb5Yu0h.jpeg'],
-    creationAt: '2026-01-02T16:26:46.000Z',
-    updatedAt: '2026-01-02T16:26:46.000Z',
-  },
-  {
-    id: 2,
-    title: 'Classic Red Pullover Hoodie',
-    slug: 'classic-red-pullover-hoodie',
-    price: 10,
-    description: 'Elevate your casual wardrobe with our Classic Red Pullover Hoodie.',
-    category: {
-      id: 1,
-      name: 'Clothes',
-      slug: 'clothes',
-      image: 'https://i.imgur.com/QkIa5tT.jpeg',
-      creationAt: '2026-01-02T16:26:46.000Z',
-      updatedAt: '2026-01-02T16:26:46.000Z',
-    },
-    images: ['https://i.imgur.com/1twoaDy.jpeg', 'https://i.imgur.com/FDwQgLy.jpeg'],
-    creationAt: '2026-01-02T16:26:46.000Z',
-    updatedAt: '2026-01-02T16:26:46.000Z',
-  },
-  {
-    id: 3,
-    title: 'Classic Heather Gray Hoodie',
-    slug: 'classic-heather-gray-hoodie',
-    price: 69,
-    description: 'Stay cozy and stylish with our Classic Heather Gray Hoodie.',
-    category: {
-      id: 1,
-      name: 'Clothes',
-      slug: 'clothes',
-      image: 'https://i.imgur.com/QkIa5tT.jpeg',
-      creationAt: '2026-01-02T16:26:46.000Z',
-      updatedAt: '2026-01-02T16:26:46.000Z',
-    },
-    images: ['https://i.imgur.com/cHddUCu.jpeg', 'https://i.imgur.com/CFOjAgK.jpeg'],
-    creationAt: '2026-01-02T16:26:46.000Z',
-    updatedAt: '2026-01-02T16:26:46.000Z',
-  },
-  {
-    id: 5,
-    title: 'Classic Black Hooded Sweatshirt',
-    slug: 'classic-black-hooded-sweatshirt',
-    price: 79,
-    description: 'Elevate your casual wardrobe with our Classic Black Hooded Sweatshirt.',
-    category: {
-      id: 1,
-      name: 'Clothes',
-      slug: 'clothes',
-      image: 'https://i.imgur.com/QkIa5tT.jpeg',
-      creationAt: '2026-01-02T16:26:46.000Z',
-      updatedAt: '2026-01-02T16:26:46.000Z',
-    },
-    images: ['https://i.imgur.com/cSytoSD.jpeg', 'https://i.imgur.com/WwKucXb.jpeg'],
-    creationAt: '2026-01-02T16:26:46.000Z',
-    updatedAt: '2026-01-02T16:26:46.000Z',
-  },
-  {
-    id: 6,
-    title: 'Classic Comfort Fit Joggers',
-    slug: 'classic-comfort-fit-joggers',
-    price: 25,
-    description: 'Discover the perfect blend of style and comfort.',
-    category: {
-      id: 1,
-      name: 'Clothes',
-      slug: 'clothes',
-      image: 'https://i.imgur.com/QkIa5tT.jpeg',
-      creationAt: '2026-01-02T16:26:46.000Z',
-      updatedAt: '2026-01-02T16:26:46.000Z',
-    },
-    images: ['https://i.imgur.com/ZKGofuB.jpeg', 'https://i.imgur.com/GJi73H0.jpeg'],
-    creationAt: '2026-01-02T16:26:46.000Z',
-    updatedAt: '2026-01-02T16:26:46.000Z',
-  },
-];
+import { getSearchStyles } from './Search.styles';
 
 function Search() {
   const { theme } = useTheme();
@@ -112,62 +18,27 @@ function Search() {
     searchResults,
     setSearchResults,
     isLoading,
-    setIsLoading,
     searchHistory,
-    addToHistory,
     removeFromHistory,
     clearHistory,
+    performSearch,
   } = useSearch();
 
   const [inputValue, setInputValue] = useState(searchQuery);
 
-  const performSearch = useCallback(
-    async (query: string) => {
-      if (!query.trim()) {
-        setSearchResults([]);
-        return;
-      }
-
-      try {
-        setIsLoading(true);
-        setSearchQuery(query);
-
-        await new Promise((resolve) => setTimeout(resolve, 800));
-
-        const normalizedQuery = query.toLowerCase();
-        const results = mockProducts.filter(
-          (product) =>
-            product.title.toLowerCase().includes(normalizedQuery) ||
-            product.description.toLowerCase().includes(normalizedQuery) ||
-            product.category.name.toLowerCase().includes(normalizedQuery)
-        );
-
-        setSearchResults(results);
-
-        if (query.trim()) {
-          addToHistory(query);
-        }
-      } catch (error) {
-        console.error('Erro ao buscar produtos:', error);
-        setSearchResults([]);
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    [addToHistory, setIsLoading, setSearchQuery, setSearchResults]
-  );
-
   useEffect(() => {
     const timer = setTimeout(() => {
       if (inputValue.trim()) {
+        setSearchQuery(inputValue);
         performSearch(inputValue);
       } else {
+        setSearchQuery('');
         setSearchResults([]);
       }
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [inputValue, performSearch, setSearchResults]);
+  }, [inputValue, performSearch, setSearchResults, setSearchQuery]);
 
   const handleClearSearch = () => {
     setInputValue('');

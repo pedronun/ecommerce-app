@@ -113,4 +113,9 @@ export interface SearchContextData {
    * Limpa a busca atual
    */
   clearSearch: () => void;
+
+  /**
+   * Realiza a busca
+   */
+  performSearch: (query: string) => Promise<void>;
 }

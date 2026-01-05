@@ -1,0 +1,7 @@
+import api from '@services/api';
+import { Product } from '@typings/product';
+
+export const getSearch = async (query: string) => {
+  const response = await api.get<Product[]>(`/products?title=${query}`);
+  return response.data;
+};
