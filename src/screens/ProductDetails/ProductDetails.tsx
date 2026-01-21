@@ -1,6 +1,15 @@
 import { Layout } from '@components/Layout/Layout';
 import { useCart } from '@contexts/index';
-import { Badge, Button, Card, Chip, Divider, Skeleton, Text } from '@design-system/components';
+import {
+  Badge,
+  Button,
+  Card,
+  Chip,
+  Divider,
+  Icon,
+  Skeleton,
+  Text,
+} from '@design-system/components';
 import { useToast } from '@design-system/components/Toast';
 import { useTheme } from '@design-system/theme/ThemeContext';
 import { RouteProp, useRoute } from '@react-navigation/native';
@@ -21,6 +30,8 @@ function ProductDetails() {
   const { show: showToast } = useToast();
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const [imageError, setImageError] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
   const carouselRef = useRef<ICarouselInstance>(null);
   const { addToCart } = useCart();
 
@@ -94,49 +105,79 @@ function ProductDetails() {
     );
   }
 
+  const hasImages = product.images && product.images.length > 0 && !imageError;
+
   return (
     <Layout>
       <ScrollView style={styles.container}>
         <View>
-          <Carousel
-            ref={carouselRef}
-            width={SCREEN_WIDTH}
-            height={IMAGE_HEIGHT}
-            data={product.images}
-            onSnapToItem={(index) => setSelectedImageIndex(index)}
-            renderItem={({ item }) => (
-              <Image source={{ uri: item }} style={styles.mainImage} resizeMode="cover" />
-            )}
-            pagingEnabled
-            snapEnabled
-            mode="parallax"
-            modeConfig={{
-              parallaxScrollingScale: 0.9,
-              parallaxScrollingOffset: 50,
-            }}
-          />
+          {hasImages ? (
+            <>
+              {imageLoading && (
+                <Skeleton variant="rectangular" width={SCREEN_WIDTH} height={IMAGE_HEIGHT} />
+              )}
+              <Carousel
+                ref={carouselRef}
+                width={SCREEN_WIDTH}
+                height={IMAGE_HEIGHT}
+                data={product.images}
+                onSnapToItem={(index) => setSelectedImageIndex(index)}
+                renderItem={({ item }) => (
+                  <Image
+                    source={{ uri: item }}
+                    style={styles.mainImage}
+                    resizeMode="cover"
+                    onError={() => setImageError(true)}
+                    onLoad={() => setImageLoading(false)}
+                    onLoadStart={() => setImageLoading(true)}
+                    onLoadEnd={() => setImageLoading(false)}
+                  />
+                )}
+                pagingEnabled
+                snapEnabled
+                mode="parallax"
+                modeConfig={{
+                  parallaxScrollingScale: 0.9,
+                  parallaxScrollingOffset: 50,
+                }}
+              />
 
-          {product.images.length > 1 && (
+              {product.images.length > 1 && (
+                <View
+                  style={[
+                    styles.imageIndicators,
+                    { backgroundColor: theme.colors.overlay, borderRadius: theme.radius.full },
+                  ]}
+                >
+                  {product.images.map((_, index) => (
+                    <View
+                      key={index}
+                      style={[
+                        styles.indicator,
+                        {
+                          backgroundColor:
+                            selectedImageIndex === index
+                              ? theme.colors.primary
+                              : theme.colors.text.disabled,
+                        },
+                      ]}
+                    />
+                  ))}
+                </View>
+              )}
+            </>
+          ) : (
             <View
               style={[
-                styles.imageIndicators,
-                { backgroundColor: theme.colors.overlay, borderRadius: theme.radius.full },
+                styles.mainImage,
+                {
+                  backgroundColor: theme.colors.background,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                },
               ]}
             >
-              {product.images.map((_, index) => (
-                <View
-                  key={index}
-                  style={[
-                    styles.indicator,
-                    {
-                      backgroundColor:
-                        selectedImageIndex === index
-                          ? theme.colors.primary
-                          : theme.colors.text.disabled,
-                    },
-                  ]}
-                />
-              ))}
+              <Icon name="image" size={48} color={theme.colors.text.disabled} />
             </View>
           )}
         </View>
