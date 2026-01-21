@@ -26,8 +26,8 @@ function Routes() {
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Search" component={Search} />
       <Tab.Screen name="Cart" component={Cart} />
-      <Tab.Screen name="Profile" component={Profile} />
       <Tab.Screen name="Menu" component={Menu} />
+      <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
 }

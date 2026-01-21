@@ -1,11 +1,11 @@
-import { StyleSheet } from 'react-native';
-import Constants from 'expo-constants';
 import type { Theme } from '@design-system/theme/theme';
+import Constants from 'expo-constants';
+import { Platform, StyleSheet } from 'react-native';
 
 export const createStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
-      paddingTop: Constants.statusBarHeight,
+      paddingTop: Platform.OS === 'android' ? Constants.statusBarHeight : theme.spacing[3],
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',

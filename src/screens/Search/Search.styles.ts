@@ -99,7 +99,7 @@ export const getSearchStyles = (theme: Theme, insets: EdgeInsets) =>
     },
     productsList: {
       gap: theme.spacing[4],
-      paddingBottom: Math.max(insets.bottom, 16) + 60,
+      paddingBottom: Math.max(insets.bottom, 16) + 90,
     },
     filterButton: {
       marginTop: theme.spacing[3],

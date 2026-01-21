@@ -10,7 +10,7 @@ export function Layout({ children }: LayoutProps) {
   const { theme } = useTheme();
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: theme.colors.background }} edges={['bottom']}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: theme.colors.background }} edges={['top']}>
       <Header />
       {children}
     </SafeAreaView>

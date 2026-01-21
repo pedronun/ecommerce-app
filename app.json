@@ -14,7 +14,8 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.pedronun.ecommerceapp"
+      "bundleIdentifier": "com.pedronun.ecommerceapp",
+      "appleTeamId": "NS3YGCXFN8"
     },
     "android": {
       "adaptiveIcon": {

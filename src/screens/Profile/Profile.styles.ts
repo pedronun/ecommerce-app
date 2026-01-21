@@ -9,7 +9,7 @@ export const getProfileStyles = (theme: Theme, insets: EdgeInsets) =>
       backgroundColor: theme.colors.background,
     },
     contentContainer: {
-      paddingBottom: Math.max(insets.bottom, 16) + 60,
+      paddingBottom: Math.max(insets.bottom, 16) + 90,
     },
     profileHeader: {
       alignItems: 'center',
