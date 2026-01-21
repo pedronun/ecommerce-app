@@ -22,8 +22,8 @@ function Menu() {
   });
 
   const handleCategoryPress = (categoryId: number, categoryName: string) => {
-    // Navega para a tela de busca com filtro de categoria
-    navigation.navigate('Search', { categoryId, categoryName });
+    // Navega para a tela de produtos da categoria
+    navigation.navigate('CategoryProducts', { categoryId, categoryName });
   };
 
   const renderSkeleton = () => (

@@ -2,6 +2,7 @@ import { CustomTabBar } from '@components/CustomTabBar';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Cart } from '@screens/Cart';
+import { CategoryProducts } from '@screens/CategoryProducts';
 import { Home } from '@screens/Home';
 import { Login } from '@screens/Login';
 import { Menu } from '@screens/Menu';
@@ -41,6 +42,7 @@ export function StackRoutes() {
     >
       <Stack.Screen name="Tabs" component={Routes} />
       <Stack.Screen name="ProductDetails" component={ProductDetails} />
+      <Stack.Screen name="CategoryProducts" component={CategoryProducts} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="SignIn" component={SignIn} />
     </Stack.Navigator>
