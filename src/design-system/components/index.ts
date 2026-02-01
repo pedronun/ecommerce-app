@@ -51,5 +51,8 @@ export type {
 export { SplashScreen } from './SplashScreen';
 export type { SplashScreenProps } from './SplashScreen';
 
+export { UpdateScreen } from './UpdateScreen';
+export type { UpdateScreenProps } from './UpdateScreen';
+
 export { TabBar } from './TabBar';
 export type { TabBarProps, TabBarItem } from './TabBar';

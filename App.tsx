@@ -1,15 +1,18 @@
-import { CartProvider, SearchProvider } from '@contexts/index';
-import { ToastProvider } from '@design-system/components/Toast';
-import { ThemeProvider } from '@design-system/theme/ThemeContext';
 import { NavigationContainer } from '@react-navigation/native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { StackRoutes } from './src/routes/routes';
+
+import { CartProvider, SearchProvider } from '@contexts/index';
 import { UserProvider } from '@contexts/UserContext/UserContext';
+import { ToastProvider } from '@design-system/components/Toast';
+import { UpdateScreen } from '@design-system/components/UpdateScreen';
+import { ThemeProvider } from '@design-system/theme/ThemeContext';
+import { HotUpdater } from '@hot-updater/react-native';
+import { StackRoutes } from './src/routes/routes';
 
 const queryClient = new QueryClient();
 
-export default function App() {
+function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1, backgroundColor: '#121212' }}>
       <ThemeProvider initialMode="light">
@@ -30,3 +33,10 @@ export default function App() {
     </GestureHandlerRootView>
   );
 }
+
+export default HotUpdater.wrap({
+  baseURL: 'https://hot-updater-vjk2qqtqfa-uc.a.run.app/api/check-update',
+  updateMode: 'auto',
+  updateStrategy: 'appVersion',
+  fallbackComponent: ({ progress, status }) => <UpdateScreen progress={progress} status={status} />,
+})(App);

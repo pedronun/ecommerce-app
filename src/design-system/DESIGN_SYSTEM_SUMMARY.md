@@ -66,6 +66,8 @@ design-system/
 │   ├── BottomSheet/    # Novo: Modal deslizante
 │   ├── Toast/          # Novo: Notificações
 │   ├── TabBar/         # Novo: Barra de navegação flutuante
+│   ├── SplashScreen/   # Novo: Tela de carregamento inicial
+│   ├── UpdateScreen/   # Novo: Tela de atualização de app
 │   └── index.ts
 └── index.ts             # Ponto de entrada principal
 ```
@@ -561,6 +563,100 @@ const tabsCustom = [
 - **Customizável**: Cores e estilos podem ser personalizados
 - **Acessível**: Feedback visual claro para tab ativa
 
+### SplashScreen
+
+Tela de carregamento inicial com animações sofisticadas e feedback visual.
+
+```tsx
+// Uso básico
+<SplashScreen onAnimationEnd={() => console.log('Animação finalizada')} />
+
+// Com customização
+<SplashScreen
+  backgroundColor="#0066FF"
+  iconColor="#FFFFFF"
+  showLogo={true}
+  minSplashDuration={3000}
+  onAnimationEnd={() => setAppReady(true)}
+/>
+```
+
+**Props:**
+
+- `onAnimationEnd`: () => void - Callback executado quando a animação termina
+- `backgroundColor`: string (padrão: '#0066FF') - Cor de fundo
+- `iconColor`: string (padrão: '#FFFFFF') - Cor do ícone/logo
+- `showLogo`: boolean (padrão: true) - Mostrar o logo
+- `minSplashDuration`: number (padrão: 4000) - Duração mínima de exibição (ms)
+
+**Características:**
+
+- **Animações sofisticadas**: Círculos expansivos, pulso, rotação e fade
+- **Barra de progresso animada**: Feedback visual do carregamento
+- **Totalmente customizável**: Cores, duração e logo configuráveis
+- **Performance otimizada**: Usa react-native-reanimated para 60 FPS
+- **Integração com tema**: Funciona perfeitamente com ThemeProvider
+
+### UpdateScreen
+
+Tela de atualização de app com animações e feedback de progresso em tempo real. **Este componente é independente do ThemeProvider** para evitar conflitos de contexto durante atualizações OTA.
+
+```tsx
+// Uso básico
+<UpdateScreen progress={0.5} status="UPDATING" />
+
+// Com customização
+<UpdateScreen
+  progress={0.75}
+  status="UPDATING"
+  backgroundColor="#2196F3"
+  iconColor="#FFFFFF"
+  updatingText="Baixando atualização..."
+  checkingText="Verificando novas versões..."
+/>
+
+// Integração com HotUpdater (não precisa de ThemeProvider!)
+import { HotUpdater } from '@hot-updater/react-native';
+import { UpdateScreen } from '@design-system/components/UpdateScreen';
+
+export default HotUpdater.wrap({
+  baseURL: "https://...",
+  updateStrategy: "appVersion",
+  updateMode: "auto",
+  fallbackComponent: ({ progress, status }) => (
+    <UpdateScreen progress={progress} status={status} />
+  ),
+})(App);
+```
+
+**Props:**
+
+- `progress`: number (0 a 1) - Progresso da atualização (obrigatório)
+- `status`: string - Status da atualização (obrigatório)
+- `backgroundColor`: string (padrão: '#0066FF') - Cor de fundo
+- `iconColor`: string (padrão: '#FFFFFF') - Cor do ícone e textos
+- `updatingText`: string (padrão: 'Atualizando...') - Texto personalizado para status "UPDATING"
+- `checkingText`: string (padrão: 'Verificando atualização...') - Texto personalizado para status "CHECKING"
+
+**Características:**
+
+- **Animações avançadas**: Círculos expansivos, pulso no ícone e barra de progresso animada
+- **Feedback em tempo real**: Mostra percentual e progresso visual da atualização
+- **Design consistente**: Segue o mesmo padrão visual da SplashScreen
+- **Independente do tema**: Não usa ThemeProvider para evitar loops infinitos durante atualizações OTA
+- **Performance otimizada**: Animações com react-native-reanimated (60 FPS)
+- **Customizável**: Cores e textos totalmente personalizáveis
+- **Ideal para OTA Updates**: Perfeitamente integrado com soluções como HotUpdater
+
+**Estados:**
+
+- **CHECKING**: Verificando se há atualizações disponíveis (sem progresso)
+- **UPDATING**: Baixando e instalando atualização (com barra de progresso e %)
+
+**⚠️ Nota Importante:**
+
+Este componente **não utiliza o ThemeProvider** internamente. Isso é intencional para evitar conflitos quando usado como `fallbackComponent` em wrappers de atualização OTA, onde ter múltiplos ThemeProviders aninhados pode causar loops infinitos na SplashScreen.
+
 ## 📚 Uso
 
 ### Importação
@@ -623,6 +719,9 @@ import {
   BottomSheet,
   ToastProvider,
   useToast,
+  TabBar,
+  SplashScreen,
+  UpdateScreen,
 } from './design-system';
 
 function ProductScreen() {
@@ -813,4 +912,5 @@ Para expandir o design system, considere adicionar:
 
 **Changelog:**
 
+- **v2.2** (2026-01-22): Adicionado componente UpdateScreen para telas de atualização OTA
 - **v2.1** (2024-12-24): Adicionado componente TabBar com efeito flutuante

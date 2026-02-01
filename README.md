@@ -20,6 +20,11 @@ Este projeto é um aplicativo mobile de e-commerce completo, desenvolvido utiliz
 - **[React Native Reanimated](https://docs.swmansion.com/react-native-reanimated/)** `4.2.1` - Animações de alta performance (60 FPS)
 - **[React Native Gesture Handler](https://docs.swmansion.com/react-native-gesture-handler/)** `2.30.0` - Gestos nativos
 
+### OTA Updates
+
+- **[Hot Updater](https://hot-updater.dev)** `0.25.7` - Atualizações Over-The-Air (OTA)
+- **[Firebase](https://firebase.google.com/)** - Storage e Database para bundles
+
 ### Ferramentas de Desenvolvimento
 
 - **[Yarn](https://yarnpkg.com/)** `1.22.22` - Gerenciador de pacotes
@@ -354,15 +359,16 @@ expo start --clear
 ### Arquivos de Documentação
 
 - 📖 **README.md** - Este arquivo (documentação principal)
-- 📘 **src/design-system/README.md** - Documentação completa do Design System
-- 📗 **src/design-system/ANIMATED_COMPONENTS.md** - Guia dos componentes animados
-- 📙 **src/design-system/QUICKSTART.md** - Guia rápido de 5 minutos
+- 📘 **src/design-system/DESIGN_SYSTEM_SUMMARY.md** - Documentação completa do Design System
+- 🔥 **HOT_UPDATER_GUIDE.md** - Guia completo de OTA Updates
+- ⚡ **HOT_UPDATER_QUICKSTART.md** - Guia rápido do Hot Updater
 
 ### Links Úteis
 
 - [React Native Docs](https://reactnative.dev/docs/getting-started)
 - [Expo Docs](https://docs.expo.dev/)
 - [React Native Reanimated Docs](https://docs.swmansion.com/react-native-reanimated/)
+- [Hot Updater Docs](https://hot-updater.dev)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
 
 ## 🎓 Informações Acadêmicas (TCC)

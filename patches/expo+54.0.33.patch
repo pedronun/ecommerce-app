@@ -1,0 +1,80 @@
+diff --git a/node_modules/expo/build/dom/dom.types.d.ts b/node_modules/expo/build/dom/dom.types.d.ts
+index 0c33746..82a3134 100644
+--- a/node_modules/expo/build/dom/dom.types.d.ts
++++ b/node_modules/expo/build/dom/dom.types.d.ts
+@@ -20,7 +20,6 @@ export type WebViewRef = RNWebViewRef;
+ export type WebViewProps = RNWebViewProps;
+ export interface DOMProps extends Omit<RNWebViewProps, 'source'> {
+     /**
+-     * Whether to resize the native WebView size based on the DOM content size.
+      * @default false
+      */
+     matchContents?: boolean;
+@@ -29,6 +28,11 @@ export interface DOMProps extends Omit<RNWebViewProps, 'source'> {
+      * @default false
+      */
+     useExpoDOMWebView?: boolean;
++    /**
++     * Allows dynamically redirecting a component to a different source, for example a prebuilt version.
++     * @internal
++     */
++    overrideUri?: string;
+ }
+-export {};
++export { };
+ //# sourceMappingURL=dom.types.d.ts.map
+\ No newline at end of file
+diff --git a/node_modules/expo/src/dom/dom.types.ts b/node_modules/expo/src/dom/dom.types.ts
+index 306d264..6a12364 100644
+--- a/node_modules/expo/src/dom/dom.types.ts
++++ b/node_modules/expo/src/dom/dom.types.ts
+@@ -2,7 +2,7 @@ import type { RNWebView, RNWebViewProps } from './webview/RNWebView';
+ 
+ export type JSONValue = boolean | number | string | null | JSONArray | JSONObject;
+ 
+-export interface JSONArray extends Array<JSONValue> {}
++export interface JSONArray extends Array<JSONValue> { }
+ 
+ export interface JSONObject {
+   [key: string]: JSONValue | undefined;
+@@ -30,10 +30,15 @@ export interface DOMProps extends Omit<RNWebViewProps, 'source'> {
+    * @default false
+    */
+   matchContents?: boolean;
+-
+   /**
+    * Whether to use the `@expo/dom-webview` as the underlying WebView implementation.
+    * @default false
+    */
+   useExpoDOMWebView?: boolean;
++
++  /**
++   * Allows dynamically redirecting a component to a different source, for example a prebuilt version.
++   * @internal
++   */
++  overrideUri?: string;
+ }
+diff --git a/node_modules/expo/src/dom/webview-wrapper.tsx b/node_modules/expo/src/dom/webview-wrapper.tsx
+index 93041ac..f816e13 100644
+--- a/node_modules/expo/src/dom/webview-wrapper.tsx
++++ b/node_modules/expo/src/dom/webview-wrapper.tsx
+@@ -29,7 +29,9 @@ interface Props {
+ }
+ 
+ const RawWebView = React.forwardRef<object, Props>((props, ref) => {
+-  const { children, dom, filePath, ref: _ref, ...marshalProps } = props as Props;
++  const { children, dom: domProps, filePath, ref: _ref, ...marshalProps } = props as Props;
++  const { overrideUri, ...dom } = domProps || {};
++
+   if (__DEV__) {
+     if (children !== undefined) {
+       throw new Error(
+@@ -66,7 +68,7 @@ const RawWebView = React.forwardRef<object, Props>((props, ref) => {
+   const webView = resolveWebView(dom?.useExpoDOMWebView ?? false);
+   const webviewRef = React.useRef<WebViewRef>(null);
+   const domImperativeHandlePropsRef = React.useRef<string[]>([]);
+-  const source = { uri: `${getBaseURL()}/${filePath}` };
++  const source = { uri: overrideUri ?? `${getBaseURL()}/${filePath}` };
+   const [containerStyle, setContainerStyle] = React.useState<WebViewProps['containerStyle']>(null);
+ 
+   const { debugZeroHeightStyle, debugOnLayout } = useDebugZeroHeight(dom);

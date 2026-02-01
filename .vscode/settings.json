@@ -25,7 +25,6 @@
   "files.exclude": {
     "**/.git": true,
     "**/.DS_Store": true,
-    "**/node_modules": true,
     "**/.expo": true,
     "**/.expo-shared": true
   },

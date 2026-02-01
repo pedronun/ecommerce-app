@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "ecommerce-app",
+    "name": "Ecommerce App",
     "slug": "ecommerce-app",
-    "version": "1.0.0",
+    "version": "1.0.9",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -28,6 +28,14 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "@hot-updater/react-native",
+        {
+          "channel": "production"
+        }
+      ]
+    ]
   }
 }
