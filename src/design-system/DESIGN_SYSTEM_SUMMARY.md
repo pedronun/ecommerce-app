@@ -66,6 +66,7 @@ design-system/
 │   ├── BottomSheet/    # Novo: Modal deslizante
 │   ├── Toast/          # Novo: Notificações
 │   ├── TabBar/         # Novo: Barra de navegação flutuante
+│   ├── Carousel/       # Carrossel horizontal com autoplay e dots
 │   ├── SplashScreen/   # Novo: Tela de carregamento inicial
 │   ├── UpdateScreen/   # Novo: Tela de atualização de app
 │   └── index.ts
@@ -563,6 +564,64 @@ const tabsCustom = [
 - **Customizável**: Cores e estilos podem ser personalizados
 - **Acessível**: Feedback visual claro para tab ativa
 
+### Carousel
+
+Carrossel horizontal com suporte a autoplay, indicadores (dots) e snap por slide. Ideal para banners na Home ou galerias.
+
+```tsx
+// Banners com imagens (ex.: bloco da API Home)
+const bannerBlock = homeData?.blocks?.find((b) => b.images?.length);
+
+<Carousel
+  data={bannerBlock?.images ?? []}
+  keyExtractor={(img) => img.documentId}
+  renderItem={(img) => (
+    <Image
+      source={{ uri: img.url }}
+      style={{ width: SCREEN_WIDTH, height: 180 }}
+      resizeMode="cover"
+    />
+  )}
+  autoplay={bannerBlock?.autoplay ?? true}
+  autoplayInterval={(bannerBlock?.interval ?? 4) * 1000}
+  showDots={true}
+/>;
+
+// Carrossel genérico com itens customizados
+<Carousel
+  data={items}
+  keyExtractor={(item) => item.id}
+  renderItem={(item) => (
+    <Card>
+      <Text>{item.title}</Text>
+    </Card>
+  )}
+  autoplay
+  autoplayInterval={5000}
+  showDots
+/>;
+```
+
+**Props:**
+
+- `data`: T[] - Lista de itens
+- `renderItem`: (item: T, index: number) => ReactNode - Renderização de cada slide
+- `keyExtractor`: (item: T, index: number) => string - Chave única por item
+- `autoplay`: boolean (padrão: false) - Rotação automática
+- `autoplayInterval`: number (padrão: 4000) - Intervalo em ms
+- `showDots`: boolean (padrão: true) - Exibir indicadores de página
+- `slideWidth`: number (padrão: largura da tela) - Largura de cada slide
+- `gap`: number (padrão: 0) - Espaço entre slides
+- `onSlideChange`: (index: number) => void - Callback ao mudar de slide
+- `style`, `contentContainerStyle`: ViewStyle - Estilos opcionais
+
+**Características:**
+
+- Snap suave por slide (FlatList com snapToInterval)
+- Dots integrados ao tema (primary / border)
+- Autoplay com intervalo configurável
+- Compatível com dados da API Home (blocks com images, autoplay, interval)
+
 ### SplashScreen
 
 Tela de carregamento inicial com animações sofisticadas e feedback visual.
@@ -893,7 +952,6 @@ Para expandir o design system, considere adicionar:
    - Modal
    - Tabs
    - Accordion
-   - Carousel
    - ProgressBar
 
 2. **Funcionalidades**:
@@ -912,5 +970,6 @@ Para expandir o design system, considere adicionar:
 
 **Changelog:**
 
+- **v2.3** (2026-02-10): Adicionado componente Carousel para banners e galerias na Home
 - **v2.2** (2026-01-22): Adicionado componente UpdateScreen para telas de atualização OTA
 - **v2.1** (2024-12-24): Adicionado componente TabBar com efeito flutuante

@@ -1,13 +1,14 @@
+import { HotUpdater } from '@hot-updater/react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+import { NetworkStatusListener } from '@components/NetworkStatusListener';
 import { CartProvider, SearchProvider } from '@contexts/index';
 import { UserProvider } from '@contexts/UserContext/UserContext';
 import { ToastProvider } from '@design-system/components/Toast';
 import { UpdateScreen } from '@design-system/components/UpdateScreen';
 import { ThemeProvider } from '@design-system/theme/ThemeContext';
-import { HotUpdater } from '@hot-updater/react-native';
 import { StackRoutes } from './src/routes/routes';
 
 const queryClient = new QueryClient();
@@ -17,6 +18,7 @@ function App() {
     <GestureHandlerRootView style={{ flex: 1, backgroundColor: '#121212' }}>
       <ThemeProvider initialMode="light">
         <ToastProvider>
+          <NetworkStatusListener />
           <UserProvider>
             <SearchProvider>
               <CartProvider>

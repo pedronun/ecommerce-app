@@ -56,3 +56,6 @@ export type { UpdateScreenProps } from './UpdateScreen';
 
 export { TabBar } from './TabBar';
 export type { TabBarProps, TabBarItem } from './TabBar';
+
+export { Carousel } from './Carousel';
+export type { CarouselProps } from './Carousel';
