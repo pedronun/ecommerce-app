@@ -2,19 +2,22 @@
 import { Layout } from '@components/Layout/Layout';
 import { Icon, Text } from '@design-system/components';
 import { useTheme } from '@design-system/theme/ThemeContext';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation, useScrollToTop } from '@react-navigation/native';
 import { getCategories } from '@services/category';
 import { useQuery } from '@tanstack/react-query';
 import { Image, ScrollView, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { getMenuStyles } from './Menu.styles';
+import { useRef } from 'react';
 
 function Menu() {
   const { theme } = useTheme();
   const insets = useSafeAreaInsets();
   const styles = getMenuStyles(theme, insets);
   const navigation = useNavigation<NavigationProp<any>>();
+  const scrollRef = useRef<ScrollView>(null);
+  useScrollToTop(scrollRef);
 
   const { data: categories, isLoading } = useQuery({
     queryKey: ['categories'],
@@ -42,7 +45,11 @@ function Menu() {
 
   return (
     <Layout>
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+      <ScrollView
+        ref={scrollRef}
+        style={styles.container}
+        contentContainerStyle={styles.contentContainer}
+      >
         <View style={styles.header}>
           <Text variant="h1" style={styles.title}>
             Menu

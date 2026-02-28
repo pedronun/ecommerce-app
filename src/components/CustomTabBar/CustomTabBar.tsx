@@ -1,7 +1,8 @@
-import React from 'react';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { TabBar, TabBarItem } from '@design-system/components/TabBar';
+import React from 'react';
+
 import { useCart } from '@contexts/CartContext/useCart';
+import { TabBar, TabBarItem } from '@design-system/components/TabBar';
 
 export function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
   const { totalItems } = useCart();
@@ -42,11 +43,22 @@ export function CustomTabBar({ state, descriptors, navigation }: BottomTabBarPro
     const route = state.routes.find((r) => r.key === key);
     if (!route) return;
 
+    const isFocused = state.routes[state.index].key === key;
+
     const event = navigation.emit({
       type: 'tabPress',
       target: key,
       canPreventDefault: true,
     });
+
+    if (isFocused) {
+      navigation.emit({
+        type: 'tabPress',
+        target: route.key,
+        canPreventDefault: true,
+      });
+      return;
+    }
 
     if (!event.defaultPrevented) {
       navigation.navigate(route.name);

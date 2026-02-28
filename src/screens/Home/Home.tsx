@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Dimensions, Image, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -13,6 +13,7 @@ import { getSearch } from '@services/search';
 import { Image as ImageType } from '@typings/home';
 import { Product } from '@typings/product';
 import { getHomeStyles } from './Home.styles';
+import { useScrollToTop } from '@react-navigation/native';
 
 interface ISliderProductProps {
   searchTerm: string;
@@ -24,6 +25,8 @@ function Home() {
   const insets = useSafeAreaInsets();
   const styles = getHomeStyles(theme, insets);
   const [products, setProducts] = useState<ISliderProductProps[]>([]);
+  const scrollRef = useRef<ScrollView>(null);
+  useScrollToTop(scrollRef);
 
   const { data, isLoading } = useQuery({
     queryKey: ['home'],
@@ -61,7 +64,11 @@ function Home() {
 
   return (
     <Layout>
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+      <ScrollView
+        ref={scrollRef}
+        style={styles.container}
+        contentContainerStyle={styles.contentContainer}
+      >
         <View style={{ padding: theme.spacing[4], gap: theme.spacing[5] }}>
           {data.blocks.map((item, index) => {
             switch (item.__component) {

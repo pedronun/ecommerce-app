@@ -3,15 +3,17 @@ import { ProductShelf } from '@components/ProductShelf';
 import { useSearch } from '@contexts/SearchContext/useSearch';
 import { Icon, Input } from '@design-system/components';
 import { useTheme } from '@design-system/theme/ThemeContext';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getSearchStyles } from './Search.styles';
+import { useScrollToTop } from '@react-navigation/native';
 
 function Search() {
   const { theme } = useTheme();
   const insets = useSafeAreaInsets();
   const styles = getSearchStyles(theme, insets);
+  const scrollRef = useRef<ScrollView>(null);
   const {
     searchQuery,
     setSearchQuery,
@@ -23,6 +25,7 @@ function Search() {
     clearHistory,
     performSearch,
   } = useSearch();
+  useScrollToTop(scrollRef);
 
   const [inputValue, setInputValue] = useState(searchQuery);
 
@@ -171,6 +174,7 @@ function Search() {
         </View>
 
         <ScrollView
+          ref={scrollRef}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.productsList}
         >

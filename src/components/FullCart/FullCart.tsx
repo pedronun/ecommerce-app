@@ -4,12 +4,16 @@ import { useTheme } from '@design-system/theme/ThemeContext';
 import { Alert, Image, ScrollView, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getFullCartStyles } from './FullCart.styles';
+import { useScrollToTop } from '@react-navigation/native';
+import { useRef } from 'react';
 
 function FullCart() {
   const { items, totalPrice, totalItems, removeFromCart, updateQuantity } = useCart();
   const { theme } = useTheme();
   const insets = useSafeAreaInsets();
   const styles = getFullCartStyles(theme);
+  const scrollRef = useRef<ScrollView>(null);
+  useScrollToTop(scrollRef);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('pt-BR', {
@@ -28,6 +32,7 @@ function FullCart() {
   return (
     <View style={styles.container}>
       <ScrollView
+        ref={scrollRef}
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
