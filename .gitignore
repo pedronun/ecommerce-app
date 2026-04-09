@@ -46,3 +46,5 @@ package-lock.json
 .env.hotupdater
 # hot-updater
 .hot-updater/output
+
+firebase-adminsdk-credentials.json
