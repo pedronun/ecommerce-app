@@ -12,7 +12,6 @@ export const ProductShelf: React.FC<ProductShelfProps> = ({
   product,
   variant = 'default',
   onPress,
-  onAddToCart,
   onFavorite,
   isFavorite = false,
   showAddToCart = true,
