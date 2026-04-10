@@ -2,10 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import { Dimensions, Image, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Constants from 'expo-constants';
 
 import HomeSkeleton from '@components/HomeSkeleton/HomeSkeleton';
 import { Layout } from '@components/Layout/Layout';
-import { Carousel } from '@design-system/components';
+import { Carousel, Text } from '@design-system/components';
 import { Slider } from '@design-system/components/Slider/Slider';
 import { useTheme } from '@design-system/theme/ThemeContext';
 import { getHomeContent } from '@services/home';
@@ -27,6 +28,8 @@ function Home() {
   const [products, setProducts] = useState<ISliderProductProps[]>([]);
   const scrollRef = useRef<ScrollView>(null);
   useScrollToTop(scrollRef);
+
+  const versionApp = Constants.expoConfig?.version;
 
   const { data, isLoading } = useQuery({
     queryKey: ['home'],
@@ -114,6 +117,10 @@ function Home() {
                 return null;
             }
           })}
+
+          <View>
+            <Text variant="h2">{versionApp}</Text>
+          </View>
         </View>
       </ScrollView>
     </Layout>
