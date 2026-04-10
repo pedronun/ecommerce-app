@@ -57,6 +57,7 @@ export const getBaseStyles = (theme: Theme) => ({
     fontWeight: theme.typography.fontWeight.semibold,
     color: theme.colors.text.primary,
     marginBottom: theme.spacing[1],
+    height: theme.typography.fontSize.base * 3,
   } as TextStyle,
 
   description: {
