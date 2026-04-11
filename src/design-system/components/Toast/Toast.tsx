@@ -11,6 +11,7 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from 'react';
 import { Dimensions, View } from 'react-native';
@@ -63,8 +64,10 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
     }, 300);
   }, []);
 
+  const contextValue = useMemo(() => ({ show, hide }), [show, hide]);
+
   return (
-    <ToastContext.Provider value={{ show, hide }}>
+    <ToastContext.Provider value={contextValue}>
       {children}
       {toast && <ToastComponent {...toast} visible={isVisible} onHide={hide} />}
     </ToastContext.Provider>

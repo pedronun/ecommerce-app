@@ -2,19 +2,19 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import { Dimensions, Image, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Constants from 'expo-constants';
 
+import { HomeError } from '@components/HomeError';
 import HomeSkeleton from '@components/HomeSkeleton/HomeSkeleton';
 import { Layout } from '@components/Layout/Layout';
-import { Carousel, Text } from '@design-system/components';
+import { Carousel, useToast } from '@design-system/components';
 import { Slider } from '@design-system/components/Slider/Slider';
 import { useTheme } from '@design-system/theme/ThemeContext';
+import { useScrollToTop } from '@react-navigation/native';
 import { getHomeContent } from '@services/home';
 import { getSearch } from '@services/search';
 import { Image as ImageType } from '@typings/home';
 import { Product } from '@typings/product';
 import { getHomeStyles } from './Home.styles';
-import { useScrollToTop } from '@react-navigation/native';
 
 interface ISliderProductProps {
   searchTerm: string;
@@ -24,14 +24,13 @@ interface ISliderProductProps {
 function Home() {
   const { theme } = useTheme();
   const insets = useSafeAreaInsets();
+  const { show: showToast } = useToast();
   const styles = getHomeStyles(theme, insets);
   const [products, setProducts] = useState<ISliderProductProps[]>([]);
   const scrollRef = useRef<ScrollView>(null);
   useScrollToTop(scrollRef);
 
-  const versionApp = Constants.expoConfig?.version;
-
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ['home'],
     queryFn: getHomeContent,
   });
@@ -55,10 +54,29 @@ function Home() {
     }
   }, [data?.blocks]);
 
+  useEffect(() => {
+    if (isError) {
+      showToast({
+        type: 'error',
+        message: 'Erro ao carregar o conteúdo da home',
+        duration: 5000,
+        position: 'top',
+      });
+    }
+  }, [isError, showToast]);
+
   if (isLoading) {
     return (
       <Layout>
         <HomeSkeleton />
+      </Layout>
+    );
+  }
+
+  if (isError) {
+    return (
+      <Layout>
+        <HomeError onRetry={() => refetch()} />
       </Layout>
     );
   }
@@ -117,10 +135,6 @@ function Home() {
                 return null;
             }
           })}
-
-          <View>
-            <Text variant="h2">{versionApp}</Text>
-          </View>
         </View>
       </ScrollView>
     </Layout>

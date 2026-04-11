@@ -4,6 +4,7 @@ import { useUser } from '@contexts/UserContext/useUser';
 import { Button, Card, Icon, Text } from '@design-system/components';
 import { useTheme } from '@design-system/theme/ThemeContext';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import Constants from 'expo-constants';
 import { ScrollView, Switch, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getProfileStyles } from './Profile.styles';
@@ -14,6 +15,7 @@ function Profile() {
   const navigation = useNavigation<NavigationProp<any>>();
   const insets = useSafeAreaInsets();
   const styles = getProfileStyles(theme, insets);
+  const appVersion = Constants.expoConfig?.version ?? '—';
 
   const handleLogout = async () => {
     await logout();
@@ -163,6 +165,41 @@ function Profile() {
                 ios_backgroundColor={theme.colors.border}
               />
             </TouchableOpacity>
+
+            <View
+              style={{
+                height: 1,
+                backgroundColor: theme.colors.border,
+                marginHorizontal: theme.spacing[2],
+              }}
+            />
+
+            <View style={styles.settingItem}>
+              <View style={styles.settingLeft}>
+                <View style={styles.settingIconContainer}>
+                  <Icon
+                    family="MaterialCommunityIcons"
+                    name="information-outline"
+                    size={22}
+                    color={theme.colors.primary}
+                  />
+                </View>
+                <View style={styles.settingTextContainer}>
+                  <Text variant="body1" style={styles.settingTitle}>
+                    Versão do Aplicativo
+                  </Text>
+                  <Text variant="caption" style={styles.settingDescription}>
+                    Versão atual instalada
+                  </Text>
+                </View>
+              </View>
+              <Text
+                variant="caption"
+                style={{ color: theme.colors.text.secondary, fontWeight: '600' }}
+              >
+                v{appVersion}
+              </Text>
+            </View>
           </Card>
         </View>
 
