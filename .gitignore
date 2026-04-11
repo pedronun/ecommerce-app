@@ -40,7 +40,6 @@ yarn-error.*
 /ios
 /android
 
-yarn.lock
 package-lock.json
 # hot-updater
 .env.hotupdater
