@@ -354,6 +354,42 @@ expo start --clear
 - ⚡ **Tempo de Inicialização**: < 2s
 - 💾 **Tamanho do Bundle**: Otimizado com Expo
 
+## ⚙️ CI/CD
+
+O projeto conta com deploy OTA automático via **GitHub Actions** sempre que um push é feito na branch `main`.
+
+### Workflow: OTA Deploy (Hot Updater)
+
+**Arquivo:** `.github/workflows/hot-updater-deploy.yml`
+
+O pipeline executa os seguintes passos:
+
+1. Checkout do código
+2. Instalação das dependências com Yarn
+3. Deploy do bundle para **iOS** e **Android** via `hot-updater deploy`
+4. O bundle é enviado ao Firebase Storage e a versão registrada no Firebase Database
+
+### Secrets necessários no GitHub
+
+Configure os seguintes secrets em **Settings → Secrets and variables → Actions**:
+
+| Secret                                | Descrição                                                                                     |
+| ------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `FIREBASE_SERVICE_ACCOUNT_JSON`       | Conteúdo completo do JSON da Service Account do Firebase (firebase-adminsdk-credentials.json) |
+| `HOT_UPDATER_FIREBASE_PROJECT_ID`     | ID do projeto Firebase                                                                        |
+| `HOT_UPDATER_FIREBASE_STORAGE_BUCKET` | Bucket do Firebase Storage (ex: `seu-projeto.appspot.com`)                                    |
+
+### Como obter o `FIREBASE_SERVICE_ACCOUNT_JSON`
+
+```bash
+# Copiar o conteúdo do arquivo de credenciais
+cat firebase-adminsdk-credentials.json
+```
+
+Cole o conteúdo completo do JSON como valor do secret `FIREBASE_SERVICE_ACCOUNT_JSON`.
+
+---
+
 ## 📚 Documentação
 
 ### Arquivos de Documentação
@@ -428,7 +464,7 @@ expo start --clear
 
 - [ ] **Testes Unitários** - Jest e Testing Library
 - [ ] **Testes E2E** - Detox
-- [ ] **CI/CD** - GitHub Actions
+- [x] **CI/CD** - GitHub Actions (OTA deploy automático via Hot Updater)
 - [ ] **Storybook** - Documentação visual
 - [ ] **i18n** - Internacionalização
 - [ ] **Responsividade Avançada** - Breakpoints adaptativos

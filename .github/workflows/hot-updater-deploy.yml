@@ -1,0 +1,65 @@
+name: OTA Deploy (Hot Updater)
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: hot-updater-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy OTA Bundle
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Write Firebase credentials
+        run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}' > firebase-adminsdk-credentials.json
+
+      - name: Read app version
+        id: app_version
+        run: |
+          VERSION=$(node -e "console.log(require('./app.json').expo.version)")
+          echo "value=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Deploy iOS (Hot Updater)
+        env:
+          HOT_UPDATER_FIREBASE_PROJECT_ID: ${{ secrets.HOT_UPDATER_FIREBASE_PROJECT_ID }}
+          HOT_UPDATER_FIREBASE_STORAGE_BUCKET: ${{ secrets.HOT_UPDATER_FIREBASE_STORAGE_BUCKET }}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/firebase-adminsdk-credentials.json
+        run: |
+          yarn hot-updater deploy \
+            --platform ios \
+            --channel production \
+            --target-app-version ${{ steps.app_version.outputs.value }} \
+            --message "${{ github.event.head_commit.message }}"
+
+      - name: Deploy Android (Hot Updater)
+        env:
+          HOT_UPDATER_FIREBASE_PROJECT_ID: ${{ secrets.HOT_UPDATER_FIREBASE_PROJECT_ID }}
+          HOT_UPDATER_FIREBASE_STORAGE_BUCKET: ${{ secrets.HOT_UPDATER_FIREBASE_STORAGE_BUCKET }}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/firebase-adminsdk-credentials.json
+        run: |
+          yarn hot-updater deploy \
+            --platform android \
+            --channel production \
+            --target-app-version ${{ steps.app_version.outputs.value }} \
+            --message "${{ github.event.head_commit.message }}"
+
+      - name: Cleanup credentials
+        if: always()
+        run: rm -f firebase-adminsdk-credentials.json
