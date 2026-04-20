@@ -60,15 +60,6 @@ jobs:
             --target-app-version ${{ steps.app_version.outputs.value }} \
             --message "${{ github.event.head_commit.message }}"
 
-      - name: Clean up old bundles
-        env:
-          HOT_UPDATER_FIREBASE_PROJECT_ID: ${{ secrets.HOT_UPDATER_FIREBASE_PROJECT_ID }}
-          HOT_UPDATER_FIREBASE_STORAGE_BUCKET: ${{ secrets.HOT_UPDATER_FIREBASE_STORAGE_BUCKET }}
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/firebase-adminsdk-credentials.json
-        run: |
-          yarn hot-updater clean \
-            --keep-last 5
-
       - name: Cleanup credentials
         if: always()
         run: rm -f firebase-adminsdk-credentials.json
