@@ -127,6 +127,7 @@ function Home() {
                     key={index}
                     title={item.heading}
                     products={productsToRender?.products ?? []}
+                    isLoading={!productsToRender}
                     horizontal
                   />
                 );

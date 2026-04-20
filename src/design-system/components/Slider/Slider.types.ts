@@ -19,6 +19,7 @@ export interface SliderProps extends FlashListExtras {
   products: Product[];
   horizontal?: boolean;
   showSeparator?: boolean;
+  isLoading?: boolean;
   onProductPress?: (product: Product) => void;
   ListEmptyComponent?: FlashListProps<Product>['ListEmptyComponent'];
   ListHeaderComponent?: FlashListProps<Product>['ListHeaderComponent'];
