@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Layout } from '@components/Layout/Layout';
+import { StoreUpdateCard } from '@components/StoreUpdateCard';
 import { useUser } from '@contexts/UserContext/useUser';
 import { Button, Card, Icon, Text } from '@design-system/components';
 import { useTheme } from '@design-system/theme/ThemeContext';
+import { useAppUpdate } from '@hooks/useAppUpdate';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import Constants from 'expo-constants';
 import { ScrollView, Switch, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getProfileStyles } from './Profile.styles';
@@ -12,10 +13,10 @@ import { getProfileStyles } from './Profile.styles';
 function Profile() {
   const { theme, mode, toggleTheme } = useTheme();
   const { user, isLoggedIn, logout } = useUser();
+  const { currentVersion } = useAppUpdate();
   const navigation = useNavigation<NavigationProp<any>>();
   const insets = useSafeAreaInsets();
   const styles = getProfileStyles(theme, insets);
-  const appVersion = Constants.expoConfig?.version ?? '—';
 
   const handleLogout = async () => {
     await logout();
@@ -63,6 +64,8 @@ function Profile() {
             </>
           )}
         </View>
+
+        <StoreUpdateCard />
 
         <View style={styles.section}>
           <Text variant="h4" style={styles.sectionTitle}>
@@ -197,7 +200,7 @@ function Profile() {
                 variant="caption"
                 style={{ color: theme.colors.text.secondary, fontWeight: '600' }}
               >
-                v{appVersion}
+                v{currentVersion}
               </Text>
             </View>
           </Card>
