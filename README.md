@@ -58,14 +58,19 @@ Este projeto é um aplicativo mobile de e-commerce completo, desenvolvido utiliz
 - ✅ **BottomSheet** - Modal deslizante com gestos
 - ✅ **Toast** - Notificações temporárias
 
+### 🪝 Custom Hooks
+
+- ✅ **useAppUpdate** - Detecta nova versão na loja e expõe `openStore`, `hasUpdate`, `latestVersion`
+
 ### 🎯 Características Técnicas
 
-- ⚡ **Animações 60 FPS** - Executadas na UI thread
+- ⚡ **Animações 60 FPS** - Executadas na UI thread via `useAnimatedStyle`
 - 👆 **Gestos Nativos** - Processados nativamente
 - 🌓 **Modo Claro/Escuro** - Suporte completo a temas
 - 📱 **Mobile First** - Otimizado para dispositivos móveis
 - 🔧 **100% TypeScript** - Código totalmente tipado
 - 📐 **Design Consistente** - Tokens unificados em todo o app
+- 🔔 **Notificação de atualização** - Banner animado na tela de perfil
 
 ## 📁 Estrutura do Projeto
 
@@ -177,15 +182,14 @@ Envolva seu aplicativo com os providers necessários:
 ```tsx
 // App.tsx
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { ThemeProvider, ToastProvider } from './src/design-system';
+import { ThemeProvider, Toast } from './src/design-system';
 
 export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ThemeProvider initialMode="light">
-        <ToastProvider>
-          <YourApp />
-        </ToastProvider>
+        <YourApp />
+        <Toast /> {/* montar uma vez — posicionado absolutamente */}
       </ThemeProvider>
     </GestureHandlerRootView>
   );
@@ -202,13 +206,12 @@ import {
   Input,
   Skeleton,
   BottomSheet,
-  useToast,
+  toast,
   useTheme,
 } from './src/design-system';
 
 function MyComponent() {
   const { theme, toggleTheme } = useTheme();
-  const toast = useToast();
 
   const handleAction = () => {
     toast.show({
@@ -435,11 +438,12 @@ Cole o conteúdo completo do JSON como valor do secret `FIREBASE_SERVICE_ACCOUNT
 
 - ✅ Componentização e reutilização
 - ✅ Context API para estado global
-- ✅ Custom Hooks
+- ✅ Custom Hooks (`useAppUpdate`, `useTheme`, `useUser`…)
 - ✅ Design System
-- ✅ Animações performáticas
+- ✅ Animações performáticas (`react-native-reanimated` + `Animated` API)
 - ✅ TypeScript avançado
 - ✅ Arquitetura limpa
+- ✅ Resolução de ciclos de dependência em barrels
 
 ## 🔜 Roadmap / Próximas Implementações
 
@@ -525,4 +529,4 @@ Desenvolvido como Trabalho de Conclusão de Curso (TCC)
 
 Design System completo e funcional. Próximas etapas: Features de e-commerce e integração com backend.
 
-**Última atualização:** Dezembro 2024
+**Última atualização:** Abril 2026

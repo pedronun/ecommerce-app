@@ -32,8 +32,9 @@ export type { SkeletonProps } from './Skeleton';
 export { BottomSheet } from './BottomSheet';
 export type { BottomSheetProps } from './BottomSheet';
 
-export { ToastProvider, useToast } from './Toast';
+export { Toast } from './Toast';
 export type { ToastOptions } from './Toast';
+export { toast } from './Toast/Toast.types';
 
 export { Icon } from './Icon';
 export type {

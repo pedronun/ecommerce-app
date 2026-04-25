@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCart } from '@contexts/CartContext/useCart';
-import { Button, Icon, Skeleton, useToast } from '@design-system/components';
+import { Button, Icon, Skeleton, toast } from '@design-system/components';
 import { useTheme } from '@design-system/theme/ThemeContext';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
@@ -21,7 +21,6 @@ export const ProductShelf: React.FC<ProductShelfProps> = ({
   ...props
 }) => {
   const { theme } = useTheme();
-  const { show: showToast } = useToast();
   const { addToCart, updateQuantity, isInCart, getItemQuantity } = useCart();
   const navigation = useNavigation<NavigationProp<any>>();
   const baseStyles = getBaseStyles(theme);
@@ -42,7 +41,7 @@ export const ProductShelf: React.FC<ProductShelfProps> = ({
 
   const handleAddToCart = () => {
     addToCart(product);
-    showToast({
+    toast.show({
       type: 'success',
       message: 'Produto adicionado ao carrinho!',
       duration: 3000,
@@ -60,7 +59,7 @@ export const ProductShelf: React.FC<ProductShelfProps> = ({
       updateQuantity(product.id, currentQuantity - 1);
     } else {
       updateQuantity(product.id, 0); // Remove do carrinho
-      showToast({
+      toast.show({
         type: 'info',
         message: 'Produto removido do carrinho',
         duration: 3000,

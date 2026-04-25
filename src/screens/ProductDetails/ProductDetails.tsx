@@ -9,8 +9,8 @@ import {
   Icon,
   Skeleton,
   Text,
+  toast,
 } from '@design-system/components';
-import { useToast } from '@design-system/components/Toast';
 import { useTheme } from '@design-system/theme/ThemeContext';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { getProductBySlug } from '@services/product';
@@ -27,7 +27,6 @@ const IMAGE_HEIGHT = SCREEN_WIDTH;
 function ProductDetails() {
   const { slug } = useRoute<RouteProp<{ ProductDetails: { slug: string } }>>().params;
   const { theme } = useTheme();
-  const { show: showToast } = useToast();
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const [imageError, setImageError] = useState(false);
@@ -55,13 +54,13 @@ function ProductDetails() {
     try {
       setIsAddingToCart(true);
       await addToCart(product);
-      showToast({
+      toast.show({
         type: 'success',
         message: 'Produto adicionado ao carrinho!',
         duration: 3000,
       });
     } catch (error) {
-      showToast({
+      toast.show({
         type: 'error',
         message: 'Erro ao adicionar produto ao carrinho',
         duration: 3000,

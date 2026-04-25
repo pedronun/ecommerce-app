@@ -6,7 +6,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { HomeError } from '@components/HomeError';
 import HomeSkeleton from '@components/HomeSkeleton/HomeSkeleton';
 import { Layout } from '@components/Layout/Layout';
-import { Carousel, useToast } from '@design-system/components';
+import { Carousel, toast } from '@design-system/components';
 import { Slider } from '@design-system/components/Slider/Slider';
 import { useTheme } from '@design-system/theme/ThemeContext';
 import { useScrollToTop } from '@react-navigation/native';
@@ -24,7 +24,6 @@ interface ISliderProductProps {
 function Home() {
   const { theme } = useTheme();
   const insets = useSafeAreaInsets();
-  const { show: showToast } = useToast();
   const styles = getHomeStyles(theme, insets);
   const [products, setProducts] = useState<ISliderProductProps[]>([]);
   const scrollRef = useRef<ScrollView>(null);
@@ -56,14 +55,14 @@ function Home() {
 
   useEffect(() => {
     if (isError) {
-      showToast({
+      toast.show({
         type: 'error',
         message: 'Erro ao carregar o conteúdo da home',
         duration: 5000,
         position: 'top',
       });
     }
-  }, [isError, showToast]);
+  }, [isError]);
 
   if (isLoading) {
     return (

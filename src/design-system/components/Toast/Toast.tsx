@@ -1,190 +1,136 @@
-/**
- * Componente Toast
- * Notificações temporárias que aparecem na tela
- */
-
-import { Text } from '@design-system/components/Text';
 import { useTheme } from '@design-system/theme/ThemeContext';
-import React, {
-  createContext,
-  ReactNode,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
-import { Dimensions, View } from 'react-native';
-import { Gesture, GestureDetector } from 'react-native-gesture-handler';
-import Animated, {
-  runOnJS,
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-  withTiming,
-} from 'react-native-reanimated';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Animated, TouchableOpacity, View } from 'react-native';
+import { Icon } from '../Icon';
+import { Text } from '../Text';
 import {
-  getToastBackgroundColor,
+  ANIMATION_DURATION,
+  getToastColors,
   getToastIcon,
-  styles,
-  TOAST_HEIGHT,
-  WHITE_COLOR,
+  getToastStyles,
+  SLIDE_OFFSET,
 } from './Toast.styles';
-import { ToastComponentProps, ToastContextValue, ToastOptions } from './Toast.types';
+import { toastEmitter, ToastPayload } from './Toast.types';
 
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
+export const Toast: React.FC = () => {
+  const { theme } = useTheme();
+  const styles = getToastStyles(theme);
+  const [visible, setVisible] = useState(false);
+  const [payload, setPayload] = useState<ToastPayload>({
+    title: '',
+    message: '',
+    type: 'info',
+    duration: 3500,
+  });
+  const { bg, indicator, textColor } = getToastColors(payload.type, theme);
 
-const ToastContext = createContext<ToastContextValue | undefined>(undefined);
+  const translateY = useRef(new Animated.Value(SLIDE_OFFSET)).current;
+  const opacity = useRef(new Animated.Value(0)).current;
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-export const useToast = (): ToastContextValue => {
-  const context = useContext(ToastContext);
-  if (!context) {
-    throw new Error('useToast deve ser usado dentro de um ToastProvider');
-  }
-  return context;
-};
-
-interface ToastProviderProps {
-  children: ReactNode;
-}
-
-export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
-  const [toast, setToast] = useState<ToastOptions | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  const show = useCallback((toastOptions: ToastOptions) => {
-    setToast(toastOptions);
-    setIsVisible(true);
-  }, []);
+  const clearTimer = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+  };
 
   const hide = useCallback(() => {
-    setIsVisible(false);
-    setTimeout(() => {
-      setToast(null);
-    }, 300);
-  }, []);
+    clearTimer();
+    Animated.parallel([
+      Animated.timing(translateY, {
+        toValue: SLIDE_OFFSET,
+        duration: ANIMATION_DURATION,
+        useNativeDriver: true,
+      }),
+      Animated.timing(opacity, {
+        toValue: 0,
+        duration: ANIMATION_DURATION,
+        useNativeDriver: true,
+      }),
+    ]).start(() => setVisible(false));
+  }, [translateY, opacity]);
 
-  const contextValue = useMemo(() => ({ show, hide }), [show, hide]);
+  const show = useCallback(
+    (data: ToastPayload) => {
+      clearTimer();
 
-  return (
-    <ToastContext.Provider value={contextValue}>
-      {children}
-      {toast && <ToastComponent {...toast} visible={isVisible} onHide={hide} />}
-    </ToastContext.Provider>
-  );
-};
+      const runAnimation = () => {
+        translateY.setValue(SLIDE_OFFSET);
+        opacity.setValue(0);
 
-const ToastComponent: React.FC<ToastComponentProps> = ({
-  message,
-  type = 'info',
-  duration = 3000,
-  position = 'top',
-  action,
-  visible,
-  onHide,
-}) => {
-  const { theme } = useTheme();
-  const translateY = useSharedValue(position === 'top' ? -TOAST_HEIGHT : TOAST_HEIGHT);
-  const translateX = useSharedValue(0);
-  const context = useSharedValue({ x: 0 });
+        Animated.parallel([
+          Animated.spring(translateY, {
+            toValue: 0,
+            bounciness: 5,
+            speed: 14,
+            useNativeDriver: true,
+          }),
+          Animated.timing(opacity, {
+            toValue: 1,
+            duration: ANIMATION_DURATION,
+            useNativeDriver: true,
+          }),
+        ]).start();
 
-  const hideToast = useCallback(() => {
-    translateY.value = withTiming(
-      position === 'top' ? -TOAST_HEIGHT : TOAST_HEIGHT,
-      { duration: 300 },
-      () => {
-        runOnJS(onHide)();
+        timerRef.current = setTimeout(hide, data.duration);
+      };
+
+      if (visible) {
+        Animated.parallel([
+          Animated.timing(translateY, {
+            toValue: SLIDE_OFFSET,
+            duration: 150,
+            useNativeDriver: true,
+          }),
+          Animated.timing(opacity, {
+            toValue: 0,
+            duration: 150,
+            useNativeDriver: true,
+          }),
+        ]).start(() => {
+          setPayload(data);
+          runAnimation();
+        });
+      } else {
+        setPayload(data);
+        setVisible(true);
+        runAnimation();
       }
-    );
-  }, [onHide, position, translateY]);
+    },
+    [translateY, opacity, hide, visible]
+  );
 
   useEffect(() => {
-    if (visible) {
-      translateY.value = withSpring(0, {
-        damping: 20,
-        stiffness: 300,
-      });
+    toastEmitter.on('show', show);
+    toastEmitter.on('hide', hide);
 
-      if (duration > 0) {
-        const timer = setTimeout(() => {
-          hideToast();
-        }, duration);
-
-        return () => {
-          clearTimeout(timer);
-        };
-      }
-    } else {
-      hideToast();
-    }
-  }, [visible, duration, hideToast, translateY]);
-
-  const gesture = Gesture.Pan()
-    .onStart(() => {
-      context.value = { x: translateX.value };
-    })
-    .onUpdate((event) => {
-      translateX.value = event.translationX + context.value.x;
-    })
-    .onEnd((event) => {
-      if (Math.abs(event.translationX) > SCREEN_WIDTH * 0.3 || Math.abs(event.velocityX) > 500) {
-        translateX.value = withTiming(
-          event.velocityX > 0 ? SCREEN_WIDTH : -SCREEN_WIDTH,
-          { duration: 200 },
-          () => {
-            runOnJS(hideToast)();
-          }
-        );
-      } else {
-        translateX.value = withSpring(0);
-      }
-    });
-
-  const rToastStyle = useAnimatedStyle(() => ({
-    transform: [{ translateY: translateY.value }, { translateX: translateX.value }],
-  }));
-
-  const backgroundColor = getToastBackgroundColor(type, theme);
-  const icon = getToastIcon(type);
+    return () => {
+      toastEmitter.off('show', show);
+      toastEmitter.off('hide', hide);
+    };
+  }, [show, hide]);
 
   return (
-    <View
-      style={[styles.container, position === 'top' ? styles.topPosition : styles.bottomPosition]}
-      pointerEvents="box-none"
+    <Animated.View
+      style={[styles.container, { backgroundColor: bg }, { transform: [{ translateY }], opacity }]}
     >
-      <GestureDetector gesture={gesture}>
-        <Animated.View
-          style={[
-            styles.toast,
-            {
-              backgroundColor,
-              borderRadius: theme.radius.lg,
-              ...theme.shadows.lg,
-            },
-            rToastStyle,
-          ]}
-        >
-          <View style={styles.iconContainer}>
-            <Text variant="h5">{icon}</Text>
-          </View>
-          <View style={styles.messageContainer}>
-            <Text variant="body2" style={{ color: WHITE_COLOR }} numberOfLines={2}>
-              {message}
+      <View style={[styles.indicator, { backgroundColor: indicator }]} />
+      <TouchableOpacity style={styles.content} onPress={hide} activeOpacity={0.85}>
+        <View>
+          <Icon name={getToastIcon(payload.type)} size={24} color={textColor} />
+        </View>
+        <View style={styles.textContainer}>
+          {!!payload.title && (
+            <Text variant="body1" style={[styles.title, { color: textColor }]} numberOfLines={1}>
+              {payload.title}
             </Text>
-          </View>
-          {action && (
-            <View style={styles.actionContainer}>
-              <Text
-                variant="button"
-                style={{ color: WHITE_COLOR, fontSize: 14 }}
-                onPress={action.onPress}
-              >
-                {action.label}
-              </Text>
-            </View>
           )}
-        </Animated.View>
-      </GestureDetector>
-    </View>
+          <Text variant="body1" style={[styles.message, { color: textColor }]} numberOfLines={2}>
+            {payload.message}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    </Animated.View>
   );
 };

@@ -1,11 +1,10 @@
-import { useToast } from '@design-system/components/Toast';
+import { toast } from '@design-system/components/Toast/Toast.types';
 import { addNetworkStateListener } from 'expo-network';
 import { useEffect, useRef } from 'react';
 
 const OFFLINE_TOAST_MESSAGE = 'A conexão com a internet está instável. Verifique sua rede.';
 
 function NetworkStatusListener() {
-  const toast = useToast();
   const wasOfflineRef = useRef<boolean | null>(null);
 
   useEffect(() => {
@@ -25,7 +24,7 @@ function NetworkStatusListener() {
     });
 
     return () => subscription.remove();
-  }, [toast]);
+  }, []);
 
   return null;
 }

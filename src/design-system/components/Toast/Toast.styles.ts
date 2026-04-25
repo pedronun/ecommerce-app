@@ -1,40 +1,77 @@
 import { StyleSheet, Platform } from 'react-native';
-import { ToastType } from './Toast.types';
+import { colors } from '@design-system/tokens/colors';
 import { Theme } from '@design-system/theme/theme';
+import { ToastType } from './Toast.types';
 
-export const TOAST_HEIGHT = 60;
 export const TOP_OFFSET = Platform.OS === 'ios' ? 50 : 20;
 export const WHITE_COLOR = '#FFFFFF';
+export const SLIDE_OFFSET = -120;
+export const ANIMATION_DURATION = 220;
 
-export const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    left: 16,
-    right: 16,
-    zIndex: 9999,
-  },
-  topPosition: {
-    top: TOP_OFFSET,
-  },
-  bottomPosition: {
-    bottom: 20,
-  },
-  toast: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 16,
-    minHeight: TOAST_HEIGHT,
-  },
-  iconContainer: {
-    marginRight: 12,
-  },
-  messageContainer: {
-    flex: 1,
-  },
-  actionContainer: {
-    marginLeft: 12,
-  },
-});
+export const getToastStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      position: 'absolute',
+      top: TOP_OFFSET,
+      left: theme.spacing[4],
+      right: theme.spacing[4],
+      zIndex: 9999,
+      borderRadius: theme.radius.sm,
+      ...theme.shadows.xl,
+    },
+    content: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: theme.spacing[4],
+      paddingVertical: theme.spacing[3],
+      gap: theme.spacing[2],
+    },
+    textContainer: {
+      flex: 1,
+    },
+    title: {},
+    message: {
+      opacity: 0.9,
+    },
+    indicator: {
+      position: 'absolute',
+      left: 0,
+      top: 0,
+      bottom: 0,
+      width: theme.spacing[2],
+      borderTopLeftRadius: theme.radius.sm,
+      borderBottomLeftRadius: theme.radius.sm,
+    },
+  });
+
+export const getToastColors = (
+  type: ToastType,
+  theme: Theme
+): { bg: string; indicator: string; textColor: string } => {
+  const map: Record<ToastType, { bg: string; indicator: string; textColor: string }> = {
+    success: {
+      bg: theme.colors.success,
+      indicator: colors.success.light,
+      textColor: WHITE_COLOR,
+    },
+    error: {
+      bg: theme.colors.error,
+      indicator: colors.error.light,
+      textColor: WHITE_COLOR,
+    },
+    warning: {
+      bg: theme.colors.warning,
+      indicator: colors.warning.light,
+      textColor: WHITE_COLOR,
+    },
+    info: {
+      bg: theme.colors.info,
+      indicator: colors.info.light,
+      textColor: WHITE_COLOR,
+    },
+  };
+  return map[type];
+};
 
 export const getToastBackgroundColor = (type: ToastType, theme: Theme): string => {
   const colors: Record<ToastType, string> = {
@@ -48,10 +85,10 @@ export const getToastBackgroundColor = (type: ToastType, theme: Theme): string =
 
 export const getToastIcon = (type: ToastType): string => {
   const icons: Record<ToastType, string> = {
-    success: '✓',
-    error: '✕',
-    warning: '⚠',
-    info: 'ℹ',
+    success: 'check-circle',
+    error: 'error',
+    warning: 'warning',
+    info: 'info',
   };
   return icons[type];
 };

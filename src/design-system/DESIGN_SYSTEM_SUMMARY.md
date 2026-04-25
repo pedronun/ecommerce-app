@@ -449,57 +449,134 @@ const [visible, setVisible] = useState(false);
 
 ### Toast
 
-Sistema de notificações temporárias com animações.
+Sistema de notificações temporárias baseado em **event emitter** (singleton). Não requer Provider nem hook — basta montar `<Toast />` uma vez e chamar `toast.show()` de qualquer lugar do app.
+
+**Setup — montar uma única vez no App.tsx:**
 
 ```tsx
-// Setup: Envolver app com ToastProvider
-<ToastProvider>
-  <App />
-</ToastProvider>;
+import { Toast } from '@design-system/components';
 
-// Uso: Hook useToast
-const toast = useToast();
+function App() {
+  return (
+    <ThemeProvider>
+      {/* resto dos providers */}
+      <NavigationContainer>
+        <StackRoutes />
+        <Toast /> {/* posicionado absolutamente, não afeta o layout */}
+      </NavigationContainer>
+    </ThemeProvider>
+  );
+}
+```
 
-// Mostrar toast simples
+**Uso — singleton `toast` de qualquer arquivo:**
+
+```tsx
+import { toast } from '@design-system/components';
+// ou importação direta:
+import { toast } from '@design-system/components/Toast/Toast.types';
+
+// Toast simples
 toast.show({
-  message: 'Operação realizada com sucesso!',
+  message: 'Produto adicionado ao carrinho!',
   type: 'success',
-  duration: 3000,
-  position: 'top',
 });
 
-// Toast com ação
+// Toast com título e duração customizada
 toast.show({
-  message: 'Item adicionado ao carrinho',
-  type: 'success',
+  title: 'Sem conexão',
+  message: 'Verifique sua rede e tente novamente.',
+  type: 'warning',
   duration: 5000,
-  position: 'bottom',
-  action: {
-    label: 'VER',
-    onPress: () => console.log('Ver carrinho'),
-  },
 });
 
 // Fechar manualmente
 toast.hide();
 ```
 
-**ToastOptions:**
+**`ToastOptions`:**
 
-- `message`: string
-- `type`: 'success' | 'error' | 'warning' | 'info'
-- `duration`: number (milissegundos, 0 para persistente)
-- `position`: 'top' | 'bottom'
-- `action`: { label: string, onPress: () => void }
+| Prop       | Tipo                                          | Padrão   | Descrição                     |
+| ---------- | --------------------------------------------- | -------- | ----------------------------- |
+| `message`  | `string`                                      | —        | Texto principal (obrigatório) |
+| `title`    | `string`                                      | `""`     | Título opcional acima da msg  |
+| `type`     | `'success' \| 'error' \| 'warning' \| 'info'` | `'info'` | Define cor e ícone do toast   |
+| `duration` | `number`                                      | `3500`   | Auto-dismiss em milissegundos |
 
 **Características:**
 
-- Suporte a gestos (arrastar para os lados para fechar)
-- 4 tipos visuais (success, error, warning, info)
-- Animações de entrada/saída suaves
-- Ação opcional com callback
-- Auto-dismiss configurável
-- Posicionamento top/bottom
+- **Sem Provider**: padrão event emitter via `mitt` — `toast.show()` emite, `<Toast />` escuta e anima
+- **4 tipos visuais**: success, error, warning, info — cores via `theme` (respeita light/dark)
+- **Barra indicadora lateral**: variante `light` do token de cor para contraste
+- **Animações com `useAnimatedStyle`**: slide + fade, 220ms, executados na UI thread
+- **Toque para fechar**: o componente responde a `onPress` chamando `hide`
+- **Auto-dismiss**: timer reiniciado a cada `show`, cancelado no `hide`
+- **Intercalação suave**: se um toast estiver visível ao receber um novo, anima saída → troca de payload → anima entrada
+
+**Arquitetura interna:**
+
+```
+toast.show()  ──►  toastEmitter.emit("show")
+                         │
+                   <Toast /> escuta via useEffect
+                         │
+                   setVisible(true) + runAnimation()
+```
+
+**⚠️ Regra de importação — sem ciclo:**
+
+`Toast.tsx` importa `Icon` e `Text` **diretamente** (`'../Icon'`, `'../Text'`), nunca pelo barrel `@design-system/components`, evitando o ciclo:
+
+```
+Toast/index.ts → Toast.tsx → components/index.ts → Toast/index.ts
+```
+
+---
+
+## 🪝 Hooks de Aplicativo
+
+### useAppUpdate
+
+Hook para verificar e gerenciar atualizações de versão do aplicativo nas lojas (App Store / Google Play).
+
+```tsx
+import { useAppUpdate } from '@hooks/useAppUpdate';
+
+function MyScreen() {
+  const { hasUpdate, isLoading, latestVersion, currentVersion, openStore, checkUpdate } =
+    useAppUpdate();
+
+  if (!isLoading && hasUpdate) {
+    return (
+      <TouchableOpacity onPress={openStore}>
+        <Text>Versão {latestVersion} disponível — Atualizar</Text>
+      </TouchableOpacity>
+    );
+  }
+}
+```
+
+**Retorno:**
+
+| Propriedade      | Tipo                  | Descrição                                          |
+| ---------------- | --------------------- | -------------------------------------------------- |
+| `hasUpdate`      | `boolean`             | `true` se a versão da loja é maior que a instalada |
+| `isLoading`      | `boolean`             | `true` enquanto a checagem está em andamento       |
+| `latestVersion`  | `string \| null`      | Versão mais recente disponível na loja             |
+| `currentVersion` | `string`              | Versão atualmente instalada no dispositivo         |
+| `openStore`      | `() => Promise<void>` | Abre a App Store (iOS) ou Play Store (Android)     |
+| `checkUpdate`    | `() => Promise<void>` | Força uma nova checagem manualmente                |
+
+**Características:**
+
+- Compara versões com `semver.lt` para precisão semântica
+- `currentVersion` memoizado com `useMemo` (não recalcula por render)
+- `openStore` aguarda a Promise de `VersionCheck.getAppStoreUrl/getPlayStoreUrl` antes de chamar `Linking.openURL`
+- Checagem automática ao montar o componente via `useEffect`
+
+**Dependências:** `react-native-device-info`, `react-native-version-check`, `semver`
+
+---
 
 ### TabBar
 
@@ -732,8 +809,8 @@ import {
   Icon,
   Skeleton,
   BottomSheet,
-  ToastProvider,
-  useToast,
+  Toast,
+  toast,
   TabBar,
   colors,
   spacing,
@@ -750,9 +827,8 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 <GestureHandlerRootView style={{ flex: 1 }}>
   <ThemeProvider>
-    <ToastProvider>
-      <App />
-    </ToastProvider>
+    <App />
+    <Toast /> {/* montar uma vez, fora da árvore de rotas se preferir */}
   </ThemeProvider>
 </GestureHandlerRootView>;
 ```
@@ -776,8 +852,8 @@ import {
   Skeleton,
   SkeletonText,
   BottomSheet,
-  ToastProvider,
-  useToast,
+  Toast,
+  toast,
   TabBar,
   SplashScreen,
   UpdateScreen,
@@ -785,7 +861,6 @@ import {
 
 function ProductScreen() {
   const { theme } = useTheme();
-  const toast = useToast();
   const [loading, setLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
 
@@ -799,7 +874,6 @@ function ProductScreen() {
       message: 'Produto adicionado ao carrinho!',
       type: 'success',
       duration: 3000,
-      position: 'bottom',
     });
   };
 
@@ -874,9 +948,8 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ThemeProvider>
-        <ToastProvider>
-          <ProductScreen />
-        </ToastProvider>
+        <ProductScreen />
+        <Toast />
       </ThemeProvider>
     </GestureHandlerRootView>
   );
@@ -923,17 +996,18 @@ module.exports = {
 };
 ```
 
-3. **Envolver app com providers:**
+3. **Configurar providers e montar o Toast:**
 
 ```tsx
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { ThemeProvider, ToastProvider } from './design-system';
+import { ThemeProvider, Toast } from './design-system';
 
 export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ThemeProvider>
-        <ToastProvider>{/* Seu app aqui */}</ToastProvider>
+        {/* Seu app aqui */}
+        <Toast />
       </ThemeProvider>
     </GestureHandlerRootView>
   );
@@ -970,6 +1044,7 @@ Para expandir o design system, considere adicionar:
 
 **Changelog:**
 
+- **v2.4** (2026-04-24): Toast migrado para padrão event emitter puro — removidos `ToastProvider`/`useToast`, componente `<Toast />` agora é standalone e controlado pelo singleton `toast.show/hide()`; `getToastColors` refatorado para função `(type, theme)`; ciclo de dependência corrigido; `useAnimatedStyle` aplicado corretamente; Hook `useAppUpdate` adicionado; seção de atualização na tela Profile com animação `Animated.timing`
 - **v2.3** (2026-02-10): Adicionado componente Carousel para banners e galerias na Home
 - **v2.2** (2026-01-22): Adicionado componente UpdateScreen para telas de atualização OTA
 - **v2.1** (2024-12-24): Adicionado componente TabBar com efeito flutuante

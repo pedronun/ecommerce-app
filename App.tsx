@@ -6,7 +6,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { NetworkStatusListener } from '@components/NetworkStatusListener';
 import { CartProvider, SearchProvider } from '@contexts/index';
 import { UserProvider } from '@contexts/UserContext/UserContext';
-import { ToastProvider } from '@design-system/components/Toast';
+import { Toast } from '@design-system/components/Toast';
 import { UpdateScreen } from '@design-system/components/UpdateScreen';
 import { ThemeProvider } from '@design-system/theme/ThemeContext';
 import { StackRoutes } from './src/routes/routes';
@@ -17,20 +17,19 @@ function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1, backgroundColor: '#121212' }}>
       <ThemeProvider initialMode="light">
-        <ToastProvider>
-          <NetworkStatusListener />
-          <UserProvider>
-            <SearchProvider>
-              <CartProvider>
-                <QueryClientProvider client={queryClient}>
-                  <NavigationContainer>
-                    <StackRoutes />
-                  </NavigationContainer>
-                </QueryClientProvider>
-              </CartProvider>
-            </SearchProvider>
-          </UserProvider>
-        </ToastProvider>
+        <NetworkStatusListener />
+        <UserProvider>
+          <SearchProvider>
+            <CartProvider>
+              <QueryClientProvider client={queryClient}>
+                <NavigationContainer>
+                  <StackRoutes />
+                  <Toast />
+                </NavigationContainer>
+              </QueryClientProvider>
+            </CartProvider>
+          </SearchProvider>
+        </UserProvider>
       </ThemeProvider>
     </GestureHandlerRootView>
   );
