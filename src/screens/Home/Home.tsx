@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Dimensions, Image, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { env } from '@config/env';
 import { HomeError } from '@components/HomeError';
 import HomeSkeleton from '@components/HomeSkeleton/HomeSkeleton';
 import { Layout } from '@components/Layout/Layout';
@@ -107,7 +108,7 @@ function Home() {
                     renderItem={(img: ImageType) => (
                       <View style={{ borderRadius: theme.radius.md, overflow: 'hidden' }}>
                         <Image
-                          source={{ uri: `http://localhost:1337${img.url}` }}
+                          source={{ uri: `${env.strapi.baseURL}${img.url}` }}
                           style={{ width: BANNER_WIDTH, height: 500 }}
                           resizeMode="cover"
                         />
