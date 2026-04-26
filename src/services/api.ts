@@ -82,7 +82,7 @@ const handleResponseError = (error: AxiosError): Promise<never> => {
 };
 
 const api = axios.create({
-  baseURL: 'https://api.escuelajs.co/api/v1/',
+  baseURL: `${env.api.baseURL}/`,
   timeout: 10000,
 });
 

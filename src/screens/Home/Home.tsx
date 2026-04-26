@@ -41,13 +41,13 @@ function Home() {
 
     if (!hasProductsToRequest.length) return;
 
-    // Limpa resultados anteriores antes de iniciar novo lote de requisições
     setProducts([]);
 
     let cancelled = false;
 
-    hasProductsToRequest.forEach((item) => {
-      getSearch(item.searchTerm ?? '').then((response) => {
+    hasProductsToRequest.forEach(async (item) => {
+      try {
+        const response = await getSearch(item.searchTerm ?? '');
         if (cancelled) return;
         setProducts((prev) => [
           ...prev,
@@ -56,7 +56,10 @@ function Home() {
             products: response,
           },
         ]);
-      });
+      } catch (error) {
+        console.error('Erro ao buscar produtos:', error);
+        setProducts([]);
+      }
     });
 
     return () => {

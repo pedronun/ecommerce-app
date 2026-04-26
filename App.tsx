@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+import { env } from '@config/env';
 import { NetworkStatusListener } from '@components/NetworkStatusListener';
 import { CartProvider, SearchProvider } from '@contexts/index';
 import { UserProvider } from '@contexts/UserContext/UserContext';
@@ -39,7 +40,7 @@ function App() {
 }
 
 export default HotUpdater.wrap({
-  baseURL: 'https://hot-updater-vjk2qqtqfa-uc.a.run.app/api/check-update',
+  baseURL: env.hotUpdater.url,
   updateMode: 'auto',
   updateStrategy: 'appVersion',
   fallbackComponent: ({ progress, status }) => <UpdateScreen progress={progress} status={status} />,

@@ -20,10 +20,19 @@ const getEnvVar = (key: string, fallback?: string): string => {
 };
 
 export const env = {
+  /** API pública de produtos e autenticação (Escuela JS) */
+  api: {
+    baseURL: getEnvVar('EXPO_PUBLIC_API_URL', 'https://api.escuelajs.co/api/v1'),
+  },
+  /** CMS Strapi — conteúdo da home */
   strapi: {
     /** URL base do Strapi, sem barra final. Ex.: http://localhost:1337 */
     baseURL: getEnvVar('EXPO_PUBLIC_STRAPI_URL', 'http://localhost:1337'),
     /** Token de acesso à API do Strapi */
     apiToken: getEnvVar('EXPO_PUBLIC_STRAPI_TOKEN'),
+  },
+  /** Hot Updater — OTA updates */
+  hotUpdater: {
+    url: getEnvVar('EXPO_PUBLIC_HOT_UPDATER_URL'),
   },
 } as const;

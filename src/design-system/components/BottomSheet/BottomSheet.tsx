@@ -3,7 +3,7 @@
  * Modal deslizante com gestos que aparece na parte inferior da tela
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, View, Dimensions, Pressable } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -37,17 +37,25 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
   const context = useSharedValue({ y: 0 });
   const backdropAnimatedOpacity = useSharedValue(0);
 
+  // Controla quando o JSX está realmente montado.
+  // Fica true enquanto a animação de saída ainda está rodando,
+  // evitando que o Modal desapareça abruptamente antes do fim da animação.
+  const [isRendered, setIsRendered] = useState(visible);
+
   const sheetHeight = calculateSnapPoint(snapPoint, SCREEN_HEIGHT);
 
   useEffect(() => {
     if (visible) {
+      setIsRendered(true);
       translateY.value = withSpring(SCREEN_HEIGHT - sheetHeight, {
         damping: 50,
         stiffness: 400,
       });
       backdropAnimatedOpacity.value = withTiming(backdropOpacity, { duration: 300 });
     } else {
-      translateY.value = withTiming(SCREEN_HEIGHT, { duration: 300 });
+      translateY.value = withTiming(SCREEN_HEIGHT, { duration: 300 }, () => {
+        runOnJS(setIsRendered)(false);
+      });
       backdropAnimatedOpacity.value = withTiming(0, { duration: 300 });
     }
   }, [visible, sheetHeight, backdropOpacity, translateY, backdropAnimatedOpacity]);
@@ -86,12 +94,12 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
     opacity: backdropAnimatedOpacity.value,
   }));
 
-  if (!visible) {
+  if (!isRendered) {
     return null;
   }
 
   return (
-    <Modal visible={visible} transparent animationType="none" statusBarTranslucent>
+    <Modal visible={isRendered} transparent animationType="none" statusBarTranslucent>
       <View style={{ flex: 1 }}>
         <Pressable style={{ flex: 1 }} onPress={onClose}>
           <Animated.View style={[styles.backdrop, rBackdropStyle]} />

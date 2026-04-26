@@ -1,10 +1,10 @@
 import { Layout } from '@components/Layout/Layout';
 import { ProductShelf } from '@components/ProductShelf';
 import { useSearch } from '@contexts/SearchContext/useSearch';
-import { Icon, Input } from '@design-system/components';
+import { Icon, Input, Text } from '@design-system/components';
 import { useTheme } from '@design-system/theme/ThemeContext';
 import React, { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, ScrollView, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getSearchStyles } from './Search.styles';
 import { useScrollToTop } from '@react-navigation/native';
