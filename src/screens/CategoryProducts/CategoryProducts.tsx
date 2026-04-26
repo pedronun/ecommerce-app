@@ -174,7 +174,7 @@ function CategoryProducts() {
           keyExtractor={(item, index) => `${item.id}-${index}`}
           renderItem={({ item }) => (
             <View style={styles.productItem}>
-              <ProductShelf product={item} />
+              <ProductShelf product={item} style={{ width: '100%' }} />
             </View>
           )}
           numColumns={2}
