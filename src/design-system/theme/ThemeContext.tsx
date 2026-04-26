@@ -96,7 +96,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   if (showSplash && showSplashScreen) {
     return (
       <SplashScreen
-        backgroundColor={splashConfig?.backgroundColor || theme.colors.primary[500]}
+        backgroundColor={splashConfig?.backgroundColor || theme.colors.primary}
         iconColor={splashConfig?.iconColor || '#FFFFFF'}
         minSplashDuration={minSplashDuration}
         onAnimationEnd={() => {

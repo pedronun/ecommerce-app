@@ -4,15 +4,18 @@ import { Theme } from '@design-system/theme/theme';
 import { ToastType } from './Toast.types';
 
 export const TOP_OFFSET = Platform.OS === 'ios' ? 50 : 20;
+export const BOTTOM_OFFSET = Platform.OS === 'ios' ? 120 : 100;
 export const WHITE_COLOR = '#FFFFFF';
-export const SLIDE_OFFSET = -120;
+export const TOP_SLIDE_OFFSET = -120;
+export const BOTTOM_SLIDE_OFFSET = 120;
+/** @deprecated use TOP_SLIDE_OFFSET or BOTTOM_SLIDE_OFFSET */
+export const SLIDE_OFFSET = TOP_SLIDE_OFFSET;
 export const ANIMATION_DURATION = 220;
 
 export const getToastStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
       position: 'absolute',
-      top: TOP_OFFSET,
       left: theme.spacing[4],
       right: theme.spacing[4],
       zIndex: 9999,

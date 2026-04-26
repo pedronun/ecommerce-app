@@ -5,10 +5,13 @@ import { Icon } from '../Icon';
 import { Text } from '../Text';
 import {
   ANIMATION_DURATION,
+  BOTTOM_OFFSET,
+  BOTTOM_SLIDE_OFFSET,
   getToastColors,
   getToastIcon,
   getToastStyles,
-  SLIDE_OFFSET,
+  TOP_OFFSET,
+  TOP_SLIDE_OFFSET,
 } from './Toast.styles';
 import { toastEmitter, ToastPayload } from './Toast.types';
 
@@ -21,12 +24,15 @@ export const Toast: React.FC = () => {
     message: '',
     type: 'info',
     duration: 3500,
+    position: 'top',
   });
   const { bg, indicator, textColor } = getToastColors(payload.type, theme);
 
-  const translateY = useRef(new Animated.Value(SLIDE_OFFSET)).current;
+  const translateY = useRef(new Animated.Value(TOP_SLIDE_OFFSET)).current;
   const opacity = useRef(new Animated.Value(0)).current;
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // tracks the slide direction of the currently visible toast for the hide animation
+  const slideOffsetRef = useRef(TOP_SLIDE_OFFSET);
 
   const clearTimer = () => {
     if (timerRef.current) {
@@ -39,7 +45,7 @@ export const Toast: React.FC = () => {
     clearTimer();
     Animated.parallel([
       Animated.timing(translateY, {
-        toValue: SLIDE_OFFSET,
+        toValue: slideOffsetRef.current,
         duration: ANIMATION_DURATION,
         useNativeDriver: true,
       }),
@@ -55,8 +61,11 @@ export const Toast: React.FC = () => {
     (data: ToastPayload) => {
       clearTimer();
 
+      const offset = data.position === 'bottom' ? BOTTOM_SLIDE_OFFSET : TOP_SLIDE_OFFSET;
+
       const runAnimation = () => {
-        translateY.setValue(SLIDE_OFFSET);
+        slideOffsetRef.current = offset;
+        translateY.setValue(offset);
         opacity.setValue(0);
 
         Animated.parallel([
@@ -79,7 +88,7 @@ export const Toast: React.FC = () => {
       if (visible) {
         Animated.parallel([
           Animated.timing(translateY, {
-            toValue: SLIDE_OFFSET,
+            toValue: slideOffsetRef.current,
             duration: 150,
             useNativeDriver: true,
           }),
@@ -111,9 +120,17 @@ export const Toast: React.FC = () => {
     };
   }, [show, hide]);
 
+  const positionStyle =
+    payload.position === 'bottom' ? { bottom: BOTTOM_OFFSET } : { top: TOP_OFFSET };
+
   return (
     <Animated.View
-      style={[styles.container, { backgroundColor: bg }, { transform: [{ translateY }], opacity }]}
+      style={[
+        styles.container,
+        positionStyle,
+        { backgroundColor: bg },
+        { transform: [{ translateY }], opacity },
+      ]}
     >
       <View style={[styles.indicator, { backgroundColor: indicator }]} />
       <TouchableOpacity style={styles.content} onPress={hide} activeOpacity={0.85}>

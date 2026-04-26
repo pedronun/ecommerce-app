@@ -13,7 +13,7 @@ const CART_STORAGE_KEY = '@ecommerce:cart';
 /**
  * Contexto do carrinho
  */
-export const CartContext = createContext<CartContextData>({} as CartContextData);
+export const CartContext = createContext<CartContextData | null>(null);
 
 /**
  * Provider do contexto do carrinho

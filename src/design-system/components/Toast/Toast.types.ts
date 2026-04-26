@@ -16,6 +16,7 @@ export interface ToastPayload {
   message: string;
   type: ToastType;
   duration: number;
+  position: ToastPosition;
 }
 
 type ToastEvents = {
@@ -26,8 +27,14 @@ type ToastEvents = {
 export const toastEmitter = mitt<ToastEvents>();
 
 export const toast = {
-  show: ({ type = 'info', duration = 3500, title = '', message }: ToastOptions) => {
-    toastEmitter.emit('show', { type, duration, title, message });
+  show: ({
+    type = 'info',
+    duration = 3500,
+    title = '',
+    message,
+    position = 'top',
+  }: ToastOptions) => {
+    toastEmitter.emit('show', { type, duration, title, message, position });
   },
   hide: () => {
     toastEmitter.emit('hide');

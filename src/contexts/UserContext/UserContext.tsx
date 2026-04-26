@@ -12,24 +12,30 @@ import { UserContextData } from './UserContext.types';
 
 const USER_TOKEN_KEY = '@ecommerce:user-token';
 
-export const UserContext = createContext<UserContextData>({} as UserContextData);
+export const UserContext = createContext<UserContextData | null>(null);
 
 export function UserProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isAuthPending, setIsAuthPending] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState<string | null>(null);
 
   const login = useCallback(async (email: string, password: string) => {
-    const response = await postAuth(email, password);
-    await AsyncStorage.setItem(USER_TOKEN_KEY, response.access_token);
-    setToken(response.access_token);
+    setIsAuthPending(true);
+    try {
+      const response = await postAuth(email, password);
+      await AsyncStorage.setItem(USER_TOKEN_KEY, response.access_token);
+      setToken(response.access_token);
 
-    const userData = await getUserService(response.access_token);
-    setUser(userData);
-    setIsLoggedIn(true);
+      const userData = await getUserService(response.access_token);
+      setUser(userData);
+      setIsLoggedIn(true);
 
-    return { access_token: response.access_token, user: userData };
+      return { access_token: response.access_token, user: userData };
+    } finally {
+      setIsAuthPending(false);
+    }
   }, []);
 
   const logout = useCallback(async () => {
@@ -40,7 +46,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const getUser = useCallback(async () => {
-    if (!token) return null;
+    if (!token) return;
     const response = await getUserService(token);
     setUser(response);
     setIsLoggedIn(true);
@@ -87,6 +93,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
         user,
         token,
         isLoading,
+        isAuthPending,
         isLoggedIn,
         login,
         logout,

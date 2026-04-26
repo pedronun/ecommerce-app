@@ -1,29 +1,24 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Layout } from '@components/Layout/Layout';
 import { useUser } from '@contexts/UserContext/useUser';
 import { Button, Icon, Input, Text } from '@design-system/components';
 import { useTheme } from '@design-system/theme/ThemeContext';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { isValidEmail } from '@utils/validators';
 import { useState } from 'react';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getLoginStyles } from './Login.styles';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 function Login() {
   const { theme } = useTheme();
   const insets = useSafeAreaInsets();
   const styles = getLoginStyles(theme, insets);
-  const { login, isLoading } = useUser();
+  const { login, isAuthPending } = useUser();
   const navigation = useNavigation<NavigationProp<any>>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({ email: '', password: '', general: '' });
-
-  const validateEmail = (email: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
 
   const handleLogin = async () => {
     setErrors({ email: '', password: '', general: '' });
@@ -34,7 +29,7 @@ function Login() {
     if (!email.trim()) {
       newErrors.email = 'E-mail é obrigatório';
       hasError = true;
-    } else if (!validateEmail(email)) {
+    } else if (!isValidEmail(email)) {
       newErrors.email = 'E-mail inválido';
       hasError = true;
     }
@@ -162,7 +157,12 @@ function Login() {
               </View>
 
               <View style={styles.buttonContainer}>
-                <Button fullWidth onPress={handleLogin} loading={isLoading} disabled={isLoading}>
+                <Button
+                  fullWidth
+                  onPress={handleLogin}
+                  loading={isAuthPending}
+                  disabled={isAuthPending}
+                >
                   Entrar
                 </Button>
               </View>

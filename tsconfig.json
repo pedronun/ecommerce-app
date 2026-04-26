@@ -13,7 +13,6 @@
       "@typings/*": ["./src/typings/*"],
       "@utils/*": ["./src/utils/*"],
       "@contexts/*": ["./src/contexts/*"],
-      "@constants/*": ["./src/constants/*"],
       "@config/*": ["./src/config/*"],
       "@design-system/*": ["./src/design-system/*"]
     },

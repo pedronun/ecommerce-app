@@ -1,8 +1,5 @@
 import { CreateUserRequest, User } from '@typings/user';
 
-/**
- * Filtros de busca disponíveis
- */
 export interface UserContextData {
   /**
    * Usuário logado
@@ -20,9 +17,14 @@ export interface UserContextData {
   isLoggedIn: boolean;
 
   /**
-   * Indica se está carregando
+   * Indica se o app está carregando a sessão salva (hidratação inicial)
    */
   isLoading: boolean;
+
+  /**
+   * Indica se um request de login ou cadastro está em andamento
+   */
+  isAuthPending: boolean;
 
   /**
    * Realiza o login
@@ -35,9 +37,9 @@ export interface UserContextData {
   logout: () => Promise<void>;
 
   /**
-   * Obtém o usuário logado
+   * Obtém e atualiza os dados do usuário logado
    */
-  getUser: () => Promise<null | undefined>;
+  getUser: () => Promise<void>;
 
   /**
    * Cria um novo usuário

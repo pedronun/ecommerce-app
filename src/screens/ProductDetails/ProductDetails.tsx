@@ -1,3 +1,4 @@
+import { HomeError } from '@components/HomeError';
 import { Layout } from '@components/Layout/Layout';
 import { useCart } from '@contexts/index';
 import {
@@ -16,6 +17,7 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import { getProductBySlug } from '@services/product';
 import { useQuery } from '@tanstack/react-query';
 import { Product } from '@typings/product';
+import { formatCurrency } from '@utils/formatCurrency';
 import { useRef, useState } from 'react';
 import { Dimensions, Image, ScrollView, View } from 'react-native';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
@@ -34,19 +36,17 @@ function ProductDetails() {
   const carouselRef = useRef<ICarouselInstance>(null);
   const { addToCart } = useCart();
 
-  const { data: product, isLoading } = useQuery<Product, Error>({
+  const {
+    data: product,
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery<Product, Error>({
     queryKey: ['product', slug],
     queryFn: () => getProductBySlug(slug),
     staleTime: 1000 * 60 * 5, // 5 minutos - dados considerados frescos
     gcTime: 1000 * 60 * 30, // 30 minutos - tempo em cache após não ser usado
   });
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    }).format(price);
-  };
 
   const handleAddToCart = async () => {
     if (!product) return;
@@ -88,6 +88,14 @@ function ProductDetails() {
             <Skeleton width="60%" height={20} />
           </View>
         </ScrollView>
+      </Layout>
+    );
+  }
+
+  if (isError) {
+    return (
+      <Layout>
+        <HomeError onRetry={() => refetch()} />
       </Layout>
     );
   }
@@ -196,7 +204,7 @@ function ProductDetails() {
               variant="h1"
               style={{ color: theme.colors.primary, marginBottom: theme.spacing[4] }}
             >
-              {formatPrice(product.price)}
+              {formatCurrency(product.price)}
             </Text>
             <Badge variant="success">Em estoque</Badge>
           </View>

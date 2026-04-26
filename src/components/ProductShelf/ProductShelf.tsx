@@ -3,6 +3,7 @@ import { useCart } from '@contexts/CartContext/useCart';
 import { Button, Icon, Skeleton, toast } from '@design-system/components';
 import { useTheme } from '@design-system/theme/ThemeContext';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { formatCurrency } from '@utils/formatCurrency';
 import React, { useState } from 'react';
 import { Image, Text, TouchableOpacity, TouchableOpacityProps, View } from 'react-native';
 import { getBaseStyles, getCompactContentStyles, getVariantStyles } from './ProductShelf.styles';
@@ -31,13 +32,6 @@ export const ProductShelf: React.FC<ProductShelfProps> = ({
 
   const productInCart = isInCart(product.id);
   const currentQuantity = getItemQuantity(product.id);
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    }).format(price);
-  };
 
   const handleAddToCart = () => {
     addToCart(product);
@@ -163,7 +157,7 @@ export const ProductShelf: React.FC<ProductShelfProps> = ({
 
         {/* Preço */}
         <View style={baseStyles.priceContainer}>
-          <Text style={priceStyle}>{formatPrice(product.price)}</Text>
+          <Text style={priceStyle}>{formatCurrency(product.price)}</Text>
         </View>
 
         {/* Botões de ação */}

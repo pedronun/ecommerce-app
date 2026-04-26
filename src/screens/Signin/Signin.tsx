@@ -7,8 +7,9 @@ import { useState } from 'react';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { getSignInStyles } from './Signin.styles';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { isValidEmail } from '@utils/validators';
+import { getSignInStyles } from './Signin.styles';
 
 function SignIn() {
   const { theme } = useTheme();
@@ -32,11 +33,6 @@ function SignIn() {
     confirmPassword: '',
     general: '',
   });
-
-  const validateEmail = (email: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
 
   const validateUrl = (url: string): boolean => {
     if (!url) return true; // Avatar é opcional
@@ -74,7 +70,7 @@ function SignIn() {
     if (!email.trim()) {
       newErrors.email = 'E-mail é obrigatório';
       hasError = true;
-    } else if (!validateEmail(email)) {
+    } else if (!isValidEmail(email)) {
       newErrors.email = 'E-mail inválido';
       hasError = true;
     }

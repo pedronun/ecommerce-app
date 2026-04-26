@@ -1,11 +1,12 @@
 import { useCart } from '@contexts/CartContext/useCart';
 import { Button, Icon, Text } from '@design-system/components';
 import { useTheme } from '@design-system/theme/ThemeContext';
+import { useScrollToTop } from '@react-navigation/native';
+import { formatCurrency } from '@utils/formatCurrency';
+import { useRef } from 'react';
 import { Alert, Image, ScrollView, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getFullCartStyles } from './FullCart.styles';
-import { useScrollToTop } from '@react-navigation/native';
-import { useRef } from 'react';
 
 function FullCart() {
   const { items, totalPrice, totalItems, removeFromCart, updateQuantity } = useCart();
@@ -14,13 +15,6 @@ function FullCart() {
   const styles = getFullCartStyles(theme);
   const scrollRef = useRef<ScrollView>(null);
   useScrollToTop(scrollRef);
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    }).format(price);
-  };
 
   const handleQuantityChange = (productId: number, quantity: number, increment: number) => {
     const newQuantity = quantity + increment;
@@ -77,7 +71,7 @@ function FullCart() {
 
                 <View style={styles.itemFooter}>
                   <Text variant="h4" style={styles.itemPrice}>
-                    {formatPrice(item.product.price)}
+                    {formatCurrency(item.product.price)}
                   </Text>
 
                   <View style={styles.quantityControl}>
@@ -125,7 +119,7 @@ function FullCart() {
               Subtotal
             </Text>
             <Text variant="body1" style={styles.summaryValue}>
-              {formatPrice(totalPrice)}
+              {formatCurrency(totalPrice)}
             </Text>
           </View>
           <View style={styles.summaryRow}>
@@ -145,7 +139,7 @@ function FullCart() {
               Total
             </Text>
             <Text variant="h2" style={styles.totalPrice}>
-              {formatPrice(totalPrice)}
+              {formatCurrency(totalPrice)}
             </Text>
           </View>
           <Button

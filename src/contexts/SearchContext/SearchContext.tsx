@@ -9,7 +9,7 @@ import type { SearchContextData, SearchFilters, SearchHistoryItem } from './Sear
 const SEARCH_HISTORY_KEY = '@ecommerce:search-history';
 const MAX_HISTORY_ITEMS = 10;
 
-export const SearchContext = createContext<SearchContextData>({} as SearchContextData);
+export const SearchContext = createContext<SearchContextData | null>(null);
 
 export function SearchProvider({ children }: { children: React.ReactNode }) {
   const [searchQuery, setSearchQuery] = useState('');
