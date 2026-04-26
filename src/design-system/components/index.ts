@@ -60,3 +60,6 @@ export type { TabBarProps, TabBarItem } from './TabBar';
 
 export { Carousel } from './Carousel';
 export type { CarouselProps } from './Carousel';
+
+export { ErrorBoundary } from './ErrorBoundary';
+export type { ErrorBoundaryProps } from './ErrorBoundary';
