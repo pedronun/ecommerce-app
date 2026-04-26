@@ -39,19 +39,29 @@ function Home() {
     const hasProductsToRequest =
       data?.blocks.filter((block) => block.__component === 'home.product-showcase-search') ?? [];
 
-    if (hasProductsToRequest.length) {
-      hasProductsToRequest.forEach((item) => {
-        getSearch(item.searchTerm ?? '').then((response) => {
-          setProducts((prev) => [
-            ...prev,
-            {
-              searchTerm: item.searchTerm ?? '',
-              products: response,
-            },
-          ]);
-        });
+    if (!hasProductsToRequest.length) return;
+
+    // Limpa resultados anteriores antes de iniciar novo lote de requisições
+    setProducts([]);
+
+    let cancelled = false;
+
+    hasProductsToRequest.forEach((item) => {
+      getSearch(item.searchTerm ?? '').then((response) => {
+        if (cancelled) return;
+        setProducts((prev) => [
+          ...prev,
+          {
+            searchTerm: item.searchTerm ?? '',
+            products: response,
+          },
+        ]);
       });
-    }
+    });
+
+    return () => {
+      cancelled = true;
+    };
   }, [data?.blocks]);
 
   useEffect(() => {

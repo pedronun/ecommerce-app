@@ -3,6 +3,7 @@ import { ProductShelf } from '@components/ProductShelf';
 import { Icon, Text } from '@design-system/components';
 import { useTheme } from '@design-system/theme/ThemeContext';
 import { RouteProp, useRoute } from '@react-navigation/native';
+import { RootStackParamList } from '@typings/navigation';
 import { getProductsByCategory } from '@services/product';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import React, { useMemo } from 'react';
@@ -13,18 +14,11 @@ import { getCategoryProductsStyles } from './CategoryProducts.styles';
 
 const LIMIT = 20;
 
-type RouteParams = {
-  CategoryProducts: {
-    categoryId: number;
-    categoryName: string;
-  };
-};
-
 function CategoryProducts() {
   const { theme } = useTheme();
   const insets = useSafeAreaInsets();
   const styles = getCategoryProductsStyles(theme, insets);
-  const route = useRoute<RouteProp<RouteParams, 'CategoryProducts'>>();
+  const route = useRoute<RouteProp<RootStackParamList, 'CategoryProducts'>>();
 
   const { categoryId, categoryName } = route.params;
 

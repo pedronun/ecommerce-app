@@ -4,11 +4,19 @@
  */
 
 import React from 'react';
-import { Pressable } from 'react-native';
+import { Pressable, StyleProp, TextStyle } from 'react-native';
 import * as VectorIcons from '@expo/vector-icons';
 import type { IconProps } from './Icon.types';
 import { styles } from './Icon.styles';
 import { useTheme } from '@design-system/theme/ThemeContext';
+
+interface VectorIconComponentProps {
+  name: string;
+  size?: number;
+  color?: string;
+  style?: StyleProp<TextStyle>;
+  testID?: string;
+}
 
 /**
  * Componente Icon
@@ -40,9 +48,7 @@ export const Icon: React.FC<IconProps> = ({
   // Define a cor padrão se não fornecida
   const iconColor = color || theme.colors.text.primary;
 
-  // Obtém o componente de ícone da família especificada
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const IconComponent = VectorIcons[family] as React.ComponentType<any>;
+  const IconComponent = VectorIcons[family] as React.ComponentType<VectorIconComponentProps>;
 
   // Verifica se a família de ícones existe
   if (!IconComponent) {

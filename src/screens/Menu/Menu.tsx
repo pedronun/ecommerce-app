@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Layout } from '@components/Layout/Layout';
 import { Icon, Text } from '@design-system/components';
 import { useTheme } from '@design-system/theme/ThemeContext';
-import { NavigationProp, useNavigation, useScrollToTop } from '@react-navigation/native';
+import { useNavigation, useScrollToTop } from '@react-navigation/native';
+import { AppNavigationProp } from '@typings/navigation';
 import { getCategories } from '@services/category';
 import { useQuery } from '@tanstack/react-query';
 import { Image, ScrollView, TouchableOpacity, View } from 'react-native';
@@ -15,7 +15,7 @@ function Menu() {
   const { theme } = useTheme();
   const insets = useSafeAreaInsets();
   const styles = getMenuStyles(theme, insets);
-  const navigation = useNavigation<NavigationProp<any>>();
+  const navigation = useNavigation<AppNavigationProp>();
   const scrollRef = useRef<ScrollView>(null);
   useScrollToTop(scrollRef);
 

@@ -10,9 +10,10 @@ import { ProductDetails } from '@screens/ProductDetails';
 import { Profile } from '@screens/Profile';
 import { Search } from '@screens/Search';
 import { SignIn } from '@screens/Signin';
+import { RootStackParamList, TabParamList } from '@typings/navigation';
 
-const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator<TabParamList>();
+const Stack = createStackNavigator<RootStackParamList>();
 
 function Routes() {
   return (

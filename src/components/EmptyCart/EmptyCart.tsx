@@ -1,13 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Icon, Text } from '@design-system/components';
 import { useTheme } from '@design-system/theme/ThemeContext';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { AppNavigationProp } from '@typings/navigation';
 import { styles } from './EmptyCart.styles';
 import { View } from 'react-native';
 
 function EmptyCart() {
   const { theme } = useTheme();
-  const navigation = useNavigation<NavigationProp<any>>();
+  const navigation = useNavigation<AppNavigationProp>();
   return (
     <View style={styles.emptyStateContainer}>
       <View style={[styles.iconContainer, { backgroundColor: theme.colors.surface }]}>

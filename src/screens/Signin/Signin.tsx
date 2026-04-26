@@ -1,13 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Layout } from '@components/Layout/Layout';
 import { useUser } from '@contexts/UserContext/useUser';
 import { Button, Icon, Input, Text } from '@design-system/components';
 import { useTheme } from '@design-system/theme/ThemeContext';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { AppNavigationProp } from '@typings/navigation';
 import { isValidEmail } from '@utils/validators';
 import { getSignInStyles } from './Signin.styles';
 
@@ -16,7 +16,7 @@ function SignIn() {
   const insets = useSafeAreaInsets();
   const styles = getSignInStyles(theme, insets);
   const { createUser, login } = useUser();
-  const navigation = useNavigation<NavigationProp<any>>();
+  const navigation = useNavigation<AppNavigationProp>();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -33,6 +33,15 @@ function SignIn() {
     confirmPassword: '',
     general: '',
   });
+  const autoLoginTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (autoLoginTimerRef.current) {
+        clearTimeout(autoLoginTimerRef.current);
+      }
+    };
+  }, []);
 
   const validateUrl = (url: string): boolean => {
     if (!url) return true; // Avatar é opcional
@@ -115,8 +124,7 @@ function SignIn() {
       });
       setSuccess(true);
 
-      // Aguarda 1 segundo e faz login automaticamente
-      setTimeout(async () => {
+      autoLoginTimerRef.current = setTimeout(async () => {
         try {
           await login(email.trim(), password);
           navigation.navigate('Tabs', { screen: 'Profile' });

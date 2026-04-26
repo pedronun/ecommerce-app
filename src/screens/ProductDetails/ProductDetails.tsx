@@ -14,6 +14,7 @@ import {
 } from '@design-system/components';
 import { useTheme } from '@design-system/theme/ThemeContext';
 import { RouteProp, useRoute } from '@react-navigation/native';
+import { RootStackParamList } from '@typings/navigation';
 import { getProductBySlug } from '@services/product';
 import { useQuery } from '@tanstack/react-query';
 import { Product } from '@typings/product';
@@ -27,7 +28,7 @@ const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const IMAGE_HEIGHT = SCREEN_WIDTH;
 
 function ProductDetails() {
-  const { slug } = useRoute<RouteProp<{ ProductDetails: { slug: string } }>>().params;
+  const { slug } = useRoute<RouteProp<RootStackParamList, 'ProductDetails'>>().params;
   const { theme } = useTheme();
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isAddingToCart, setIsAddingToCart] = useState(false);

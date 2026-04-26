@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCart } from '@contexts/CartContext/useCart';
 import { Button, Icon, Skeleton, toast } from '@design-system/components';
 import { useTheme } from '@design-system/theme/ThemeContext';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { AppNavigationProp } from '@typings/navigation';
 import { formatCurrency } from '@utils/formatCurrency';
 import React, { useState } from 'react';
 import { Image, Text, TouchableOpacity, TouchableOpacityProps, View } from 'react-native';
@@ -23,7 +23,7 @@ export const ProductShelf: React.FC<ProductShelfProps> = ({
 }) => {
   const { theme } = useTheme();
   const { addToCart, updateQuantity, isInCart, getItemQuantity } = useCart();
-  const navigation = useNavigation<NavigationProp<any>>();
+  const navigation = useNavigation<AppNavigationProp>();
   const baseStyles = getBaseStyles(theme);
   const variantStyles = getVariantStyles(variant, theme);
   const compactStyles = getCompactContentStyles(theme);
@@ -42,17 +42,15 @@ export const ProductShelf: React.FC<ProductShelfProps> = ({
     });
   };
 
-  const handleIncreaseQuantity = (e?: any) => {
-    e?.stopPropagation();
+  const handleIncreaseQuantity = () => {
     updateQuantity(product.id, currentQuantity + 1);
   };
 
-  const handleDecreaseQuantity = (e?: any) => {
-    e?.stopPropagation();
+  const handleDecreaseQuantity = () => {
     if (currentQuantity > 1) {
       updateQuantity(product.id, currentQuantity - 1);
     } else {
-      updateQuantity(product.id, 0); // Remove do carrinho
+      updateQuantity(product.id, 0);
       toast.show({
         type: 'info',
         message: 'Produto removido do carrinho',
@@ -168,10 +166,7 @@ export const ProductShelf: React.FC<ProductShelfProps> = ({
                 variant="primary"
                 size="sm"
                 style={{ flex: 1 }}
-                onPress={(e) => {
-                  e?.stopPropagation();
-                  handleAddToCart();
-                }}
+                onPress={handleAddToCart}
                 leftIcon={<Icon name="add-shopping-cart" size={16} color="#FFF" />}
               >
                 Adicionar
@@ -217,14 +212,7 @@ export const ProductShelf: React.FC<ProductShelfProps> = ({
             )}
 
             {variant === 'featured' && (
-              <Button
-                variant="outline"
-                size="sm"
-                onPress={(e) => {
-                  e?.stopPropagation();
-                  onPress?.();
-                }}
-              >
+              <Button variant="outline" size="sm" onPress={() => onPress?.()}>
                 Ver Detalhes
               </Button>
             )}
@@ -232,10 +220,7 @@ export const ProductShelf: React.FC<ProductShelfProps> = ({
         )}
         {isCompact && showFavoriteButton && (
           <TouchableOpacity
-            onPress={(e) => {
-              e?.stopPropagation();
-              onFavorite?.();
-            }}
+            onPress={() => onFavorite?.()}
             activeOpacity={0.7}
             style={{ position: 'absolute', top: theme.spacing[2], right: theme.spacing[2] }}
           >
