@@ -6,33 +6,47 @@
  * utilize um backend/proxy intermediário em vez de acessar a API diretamente.
  */
 
-const getEnvVar = (key: string, fallback?: string): string => {
-  const value = process.env[key] ?? fallback;
+/**
+ * O `babel-preset-expo` só substitui referências estáticas a
+ * `process.env.EXPO_PUBLIC_*` por literais em build time. Acesso com chave
+ * computada (`process.env[key]`) não é transformado e resolve para `undefined`
+ * no bundle de produção, por isso cada variável é lida estaticamente abaixo.
+ */
+const resolveEnvVar = (key: string, value: string | undefined, fallback?: string): string => {
+  const resolved = value || fallback;
 
-  if (!value && __DEV__) {
+  if (!resolved && __DEV__) {
     console.warn(
       `[Config] Variável de ambiente "${key}" não está definida. ` +
         'Crie um arquivo .env.local baseado no .env.example.'
     );
   }
 
-  return value ?? '';
+  return resolved ?? '';
 };
 
 export const env = {
   /** API pública de produtos e autenticação (Escuela JS) */
   api: {
-    baseURL: getEnvVar('EXPO_PUBLIC_API_URL', 'https://api.escuelajs.co/api/v1'),
+    baseURL: resolveEnvVar(
+      'EXPO_PUBLIC_API_URL',
+      process.env.EXPO_PUBLIC_API_URL,
+      'https://api.escuelajs.co/api/v1'
+    ),
   },
   /** CMS Strapi — conteúdo da home */
   strapi: {
     /** URL base do Strapi, sem barra final. Ex.: http://localhost:1337 */
-    baseURL: getEnvVar('EXPO_PUBLIC_STRAPI_URL', 'http://localhost:1337'),
+    baseURL: resolveEnvVar(
+      'EXPO_PUBLIC_STRAPI_URL',
+      process.env.EXPO_PUBLIC_STRAPI_URL,
+      'http://localhost:1337'
+    ),
     /** Token de acesso à API do Strapi */
-    apiToken: getEnvVar('EXPO_PUBLIC_STRAPI_TOKEN'),
+    apiToken: resolveEnvVar('EXPO_PUBLIC_STRAPI_TOKEN', process.env.EXPO_PUBLIC_STRAPI_TOKEN),
   },
   /** Hot Updater — OTA updates */
   hotUpdater: {
-    url: getEnvVar('EXPO_PUBLIC_HOT_UPDATER_URL'),
+    url: resolveEnvVar('EXPO_PUBLIC_HOT_UPDATER_URL', process.env.EXPO_PUBLIC_HOT_UPDATER_URL),
   },
 } as const;
