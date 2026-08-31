@@ -13,6 +13,9 @@ jobs:
   deploy:
     name: Deploy OTA Bundle
     runs-on: ubuntu-latest
+    # As variáveis EXPO_PUBLIC_* são environment secrets deste ambiente e só
+    # ficam acessíveis ao job que o declara.
+    environment: PROD
 
     # Variáveis EXPO_PUBLIC_* são embutidas no bundle em build time. O runner não
     # tem o .env.local (gitignored) e o Expo ignora .env.local quando CI=true,
