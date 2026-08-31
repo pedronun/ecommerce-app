@@ -14,7 +14,29 @@ jobs:
     name: Deploy OTA Bundle
     runs-on: ubuntu-latest
 
+    # Variáveis EXPO_PUBLIC_* são embutidas no bundle em build time. O runner não
+    # tem o .env.local (gitignored) e o Expo ignora .env.local quando CI=true,
+    # portanto elas precisam vir do ambiente ou o bundle sobe sem configuração.
+    env:
+      EXPO_PUBLIC_API_URL: ${{ secrets.EXPO_PUBLIC_API_URL }}
+      EXPO_PUBLIC_STRAPI_URL: ${{ secrets.EXPO_PUBLIC_STRAPI_URL }}
+      EXPO_PUBLIC_STRAPI_TOKEN: ${{ secrets.EXPO_PUBLIC_STRAPI_TOKEN }}
+      EXPO_PUBLIC_HOT_UPDATER_URL: ${{ secrets.EXPO_PUBLIC_HOT_UPDATER_URL }}
+
     steps:
+      # Um bundle publicado sem essas variáveis quebra na inicialização do app e
+      # é revertido pelo hot-updater, então falhar aqui é mais barato.
+      - name: Validate required environment variables
+        run: |
+          missing=""
+          for var in EXPO_PUBLIC_API_URL EXPO_PUBLIC_STRAPI_URL EXPO_PUBLIC_STRAPI_TOKEN EXPO_PUBLIC_HOT_UPDATER_URL; do
+            [ -z "${!var}" ] && missing="$missing $var"
+          done
+          if [ -n "$missing" ]; then
+            echo "::error::Secrets ausentes:$missing"
+            exit 1
+          fi
+
       - name: Checkout
         uses: actions/checkout@v4
 
