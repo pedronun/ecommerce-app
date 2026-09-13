@@ -55,10 +55,28 @@ jobs:
       - name: Write Firebase credentials
         run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}' > firebase-adminsdk-credentials.json
 
+      - name: Write bundle signing key
+        env:
+          HOT_UPDATER_PRIVATE_KEY: ${{ secrets.HOT_UPDATER_PRIVATE_KEY_BASE64 }}
+        run: |
+          if [ -z "$HOT_UPDATER_PRIVATE_KEY_BASE64" ]; then
+            echo "::error::Secret ausente: HOT_UPDATER_PRIVATE_KEY_BASE64"
+            exit 1
+          fi
+          mkdir -p keys
+          printf '%s\n' "$HOT_UPDATER_PRIVATE_KEY" > keys/private-key.pem
+          chmod 600 keys/private-key.pem
+
       - name: Read app version
         id: app_version
         run: |
-          VERSION=$(node -e "console.log(require('./app.json').expo.version)")
+          VERSION=$(npx expo config --type public --json | node -e "
+            let d='';process.stdin.on('data',c=>d+=c).on('end',()=>console.log(JSON.parse(d).version))
+          ")
+          if [ -z "$VERSION" ]; then
+            echo "::error::Não foi possível ler a versão do app.config.js"
+            exit 1
+          fi
           echo "value=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Deploy iOS (Hot Updater)
