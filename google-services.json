@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "634803823605",
+    "project_id": "ecommerce-app-45909",
+    "storage_bucket": "ecommerce-app-45909.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:634803823605:android:41ec7e92a2ce7c499076bc",
+        "android_client_info": {
+          "package_name": "com.pedronun.ecommerceapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq4nomGFS62-TTg6E2eouu-cuEWjqSLIc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

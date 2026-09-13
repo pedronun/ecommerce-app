@@ -16,6 +16,7 @@ export default {
       supportsTablet: true,
       bundleIdentifier: 'com.pedronun.ecommerceapp',
       appleTeamId: 'NS3YGCXFN8',
+      googleServicesFile: './GoogleService-Info.plist',
     },
     android: {
       adaptiveIcon: {
@@ -25,11 +26,31 @@ export default {
       edgeToEdgeEnabled: true,
       predictiveBackGestureEnabled: false,
       package: 'com.pedronun.ecommerceapp',
+      googleServicesFile: './google-services.json',
     },
     web: {
       favicon: './assets/favicon.png',
     },
     plugins: [
+      [
+        'expo-build-properties',
+        {
+          ios: {
+            useFrameworks: 'static',
+            forceStaticLinking: ['RNFBApp', 'RNFBCrashlytics'],
+          },
+        },
+      ],
+      [
+        '@react-native-firebase/app',
+        {
+          ios: {
+            disableSPM: true,
+          },
+        },
+      ],
+      '@react-native-firebase/crashlytics',
+      './plugins/withCrashlyticsDsym',
       [
         '@hot-updater/react-native',
         {

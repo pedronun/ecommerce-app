@@ -10,6 +10,18 @@ import globals from 'globals';
 export default [
   // Configuração base JavaScript
   js.configs.recommended,
+  {
+    ignores: [
+      'node_modules/**',
+      '.expo/**',
+      '.expo-shared/**',
+      'ios/**',
+      'android/**',
+      'dist/**',
+      'build/**',
+      'plugins/**',
+    ],
+  },
 
   // Arquivos a serem lintados
   {
@@ -25,6 +37,7 @@ export default [
       'babel.config.js',
       '*.config.js',
       '*.config.mjs',
+      'plugins/**',
     ],
     languageOptions: {
       ecmaVersion: 'latest',

@@ -47,5 +47,7 @@ package-lock.json
 .hot-updater/output
 
 firebase-adminsdk-credentials.json
+firebase-debug.log
+.firebase/
 # hot-updater
 keys/

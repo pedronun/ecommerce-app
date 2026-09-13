@@ -1,6 +1,7 @@
 import React, { createContext, useCallback, useEffect, useState } from 'react';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { identifyCrashlyticsUser } from '@services/crashlytics';
 import {
   createUser as createUserService,
   getUser as getUserService,
@@ -58,6 +59,10 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     setIsLoggedIn(true);
     return response;
   }, []);
+
+  useEffect(() => {
+    void identifyCrashlyticsUser(user);
+  }, [user]);
 
   useEffect(() => {
     const loadUser = async () => {
