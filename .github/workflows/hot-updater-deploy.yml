@@ -57,15 +57,19 @@ jobs:
 
       - name: Write bundle signing key
         env:
-          HOT_UPDATER_PRIVATE_KEY: ${{ secrets.HOT_UPDATER_PRIVATE_KEY_BASE64 }}
+          HOT_UPDATER_PRIVATE_KEY_BASE64: ${{ secrets.HOT_UPDATER_PRIVATE_KEY_BASE64 }}
         run: |
           if [ -z "$HOT_UPDATER_PRIVATE_KEY_BASE64" ]; then
             echo "::error::Secret ausente: HOT_UPDATER_PRIVATE_KEY_BASE64"
             exit 1
           fi
           mkdir -p keys
-          printf '%s\n' "$HOT_UPDATER_PRIVATE_KEY" > keys/private-key.pem
+          printf '%s' "$HOT_UPDATER_PRIVATE_KEY_BASE64" | base64 -d > keys/private-key.pem
           chmod 600 keys/private-key.pem
+          if ! grep -q "BEGIN.*PRIVATE KEY" keys/private-key.pem; then
+            echo "::error::Chave decodificada não está em formato PEM — confira o conteúdo do secret"
+            exit 1
+          fi
 
       - name: Read app version
         id: app_version
