@@ -22,6 +22,10 @@ export default defineConfig({
     projectId: process.env.HOT_UPDATER_FIREBASE_PROJECT_ID!,
     credential,
   }),
+  signing: {
+    enabled: true,
+    privateKeyPath: './keys/private-key.pem',
+  },
   console: {
     gitUrl: 'https://github.com/pedronun/ecommerce-app',
   },
