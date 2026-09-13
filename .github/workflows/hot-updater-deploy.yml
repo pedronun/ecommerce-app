@@ -105,4 +105,4 @@ jobs:
 
       - name: Cleanup credentials
         if: always()
-        run: rm -f firebase-adminsdk-credentials.json
+        run: rm -f firebase-adminsdk-credentials.json keys/private-key.pem
