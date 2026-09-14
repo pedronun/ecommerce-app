@@ -15,6 +15,7 @@ Sentry.init({
   enableLogs: true,
   replaysSessionSampleRate: 0.1,
   replaysOnErrorSampleRate: 1,
+  tracesSampleRate: 1.0,
   integrations: [Sentry.mobileReplayIntegration()],
   spotlight: __DEV__,
 });
