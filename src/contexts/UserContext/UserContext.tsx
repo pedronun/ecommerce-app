@@ -1,7 +1,7 @@
 import React, { createContext, useCallback, useEffect, useState } from 'react';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { identifyCrashlyticsUser } from '@services/crashlytics';
+import { identifyAppUser } from '@services/monitoring';
 import {
   createUser as createUserService,
   getUser as getUserService,
@@ -61,7 +61,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    void identifyCrashlyticsUser(user);
+    void identifyAppUser(user);
   }, [user]);
 
   useEffect(() => {

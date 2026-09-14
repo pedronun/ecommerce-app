@@ -18,7 +18,7 @@ const resolveEnvVar = (key: string, value: string | undefined, fallback?: string
   if (!resolved && __DEV__) {
     console.warn(
       `[Config] Variável de ambiente "${key}" não está definida. ` +
-        'Crie um arquivo .env.local baseado no .env.example.'
+      'Crie um arquivo .env.local baseado no .env.example.'
     );
   }
 
@@ -48,5 +48,9 @@ export const env = {
   /** Hot Updater — OTA updates */
   hotUpdater: {
     url: resolveEnvVar('EXPO_PUBLIC_HOT_UPDATER_URL', process.env.EXPO_PUBLIC_HOT_UPDATER_URL),
+  },
+  /** Sentry — monitoramento de erros e logs */
+  sentry: {
+    dsn: resolveEnvVar('EXPO_PUBLIC_SENTRY_DSN', process.env.EXPO_PUBLIC_SENTRY_DSN),
   },
 } as const;
