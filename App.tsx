@@ -14,6 +14,21 @@ import { UpdateScreen } from '@design-system/components/UpdateScreen';
 import { ThemeProvider } from '@design-system/theme/ThemeContext';
 import { handleReactError, logCrashlytics } from '@services/crashlytics';
 import { StackRoutes } from './src/routes/routes';
+import * as Sentry from '@sentry/react-native';
+
+Sentry.init({
+  dsn: 'https://6bf1fedea2ad31f66cc81346b429e23a@o4512081791614976.ingest.us.sentry.io/4512081796464640',
+
+  sendDefaultPii: true,
+
+  enableLogs: true,
+
+  replaysSessionSampleRate: 0.1,
+  replaysOnErrorSampleRate: 1,
+  integrations: [Sentry.mobileReplayIntegration()],
+
+  spotlight: __DEV__,
+});
 
 const queryClient = new QueryClient();
 
@@ -45,9 +60,17 @@ function App() {
   );
 }
 
-export default HotUpdater.wrap({
+const AppWithHotUpdater = HotUpdater.wrap({
   baseURL: env.hotUpdater.url,
   updateMode: 'auto',
   updateStrategy: 'appVersion',
-  fallbackComponent: ({ progress, status }) => <UpdateScreen progress={progress} status={status} />,
+  fallbackComponent: ({ progress, status }) => (
+    <UpdateScreen progress={progress} status={status} />
+  ),
 })(App);
+
+function Root(_props: Record<string, unknown>) {
+  return <AppWithHotUpdater />;
+}
+
+export default Sentry.wrap(Root);

@@ -57,6 +57,14 @@ export default {
           channel: 'production',
         },
       ],
+      [
+        '@sentry/react-native/expo',
+        {
+          url: 'https://sentry.io/',
+          project: 'react-native',
+          organization: 'ecommerce-app-dh',
+        },
+      ],
     ],
   },
 };

@@ -51,3 +51,5 @@ firebase-debug.log
 .firebase/
 # hot-updater
 keys/
+
+.env.local
